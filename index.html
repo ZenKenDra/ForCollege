@@ -3,794 +3,561 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ForCollege — Persiapan Kampus & Evaluasi Jurusan</title>
-  <!-- Tailwind CSS CDN -->
+  <title>ForCollege — Platform Persiapan Kuliah</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Nunito (Khas Duolingo yang bulat & ramah) -->
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: {
-            sans: ['Nunito', 'sans-serif'],
-          },
-          colors: {
-            brand: {
-              light: '#A855F7',
-              DEFAULT: '#7C3AED',
-              dark: '#5B21B6',
-              accent: '#C084FC'
-            }
-          }
+          fontFamily: { sans: ['Inter', 'sans-serif'] }
         }
       }
     }
   </script>
-  <style>
-    body {
-      font-family: 'Nunito', sans-serif;
-      transition: background-color 0.2s ease, color 0.2s ease;
-    }
-    /* Gaya Tombol 3D Khas Duolingo */
-    .duo-btn {
-      transition: all 0.1s ease;
-      border-bottom-width: 4px;
-    }
-    .duo-btn:active {
-      transform: translateY(2px);
-      border-bottom-width: 2px;
-    }
-    .duo-card {
-      border-width: 2px;
-      border-bottom-width: 5px;
-      border-radius: 1.25rem;
-    }
-    /* Node Peta Jalan Duolingo */
-    .path-node {
-      width: 84px;
-      height: 84px;
-      border-radius: 9999px;
-      border-bottom-width: 7px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: transform 0.12s ease;
-      position: relative;
-    }
-    .path-node:active {
-      transform: translateY(4px);
-      border-bottom-width: 3px;
-    }
-  </style>
 </head>
-<body class="bg-white text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen">
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors">
 
-  <!-- TOP BAR MOBILE & STATUS AUTO-SAVE -->
-  <header class="sticky top-0 z-30 bg-white/95 dark:bg-slate-950/95 backdrop-blur border-b-2 border-slate-200 dark:border-slate-800 px-4 py-3">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
-      <!-- Brand Logo -->
-      <div class="flex items-center gap-3">
-        <div class="w-11 h-11 rounded-2xl bg-purple-600 border-b-4 border-purple-800 flex items-center justify-center text-white font-black text-xl shadow-sm">
+  <!-- =====================================================
+       NAVBAR ATAS (Simpel, Bersih, & Tombol Login Jelas)
+  ====================================================== -->
+  <header class="sticky top-0 z-30 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Logo -->
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-lg bg-purple-600 text-white font-extrabold flex items-center justify-center text-lg">
           FC
         </div>
         <div>
-          <span class="font-black text-2xl tracking-tight text-purple-600 dark:text-purple-400">ForCollege</span>
-          <span class="hidden sm:inline-block ml-2 text-xs font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300 border border-purple-300 dark:border-purple-800">
-            SDG 4 • Quality Education
+          <span class="font-extrabold text-lg text-purple-600 dark:text-purple-400">ForCollege</span>
+          <span class="hidden sm:inline-block ml-2 text-[11px] font-semibold px-2 py-0.5 rounded bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
+            Auto-Save Aktif
           </span>
         </div>
       </div>
 
-      <!-- Status Bar Kanan: Auto-Save, Streak, XP, & Tema Putih-Ungu / Hitam-Ungu -->
-      <div class="flex items-center gap-2 sm:gap-4">
-        <div id="autosave-badge" class="hidden md:flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-950/70 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span id="autosave-text">Auto-Save Aktif</span>
-        </div>
-
-        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800 font-extrabold text-amber-600 dark:text-amber-400 text-sm">
-          🔥 <span id="streak-count">5</span> <span class="hidden sm:inline">Hari</span>
-        </div>
-
-        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-50 dark:bg-purple-950/60 border border-purple-200 dark:border-purple-800 font-extrabold text-purple-600 dark:text-purple-300 text-sm">
-          💎 <span id="xp-count">340</span> XP
-        </div>
-
-        <!-- Tombol Ganti Tema Putih-Ungu / Hitam-Ungu -->
-        <button onclick="toggleTheme()" class="duo-btn px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 border-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 dark:border-slate-900 font-extrabold text-xs sm:text-sm flex items-center gap-2">
-          <span id="theme-icon">🌙</span>
-          <span id="theme-label" class="hidden sm:inline">Hitam-Ungu</span>
+      <!-- Kanan: Tombol Tema & Tombol Login / Profil -->
+      <div class="flex items-center gap-2.5">
+        <button onclick="toggleTheme()" id="theme-btn" class="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-xs font-semibold hover:bg-slate-200">
+          🌙 Hitam-Ungu
         </button>
+
+        <!-- Tombol Login Utama (Muncul saat belum login) -->
+        <button id="nav-login-btn" onclick="openLoginModal()" class="px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white text-xs sm:text-sm font-bold shadow-sm flex items-center gap-2">
+          <span>🔑 Masuk / Login</span>
+        </button>
+
+        <!-- Info User & Tombol Logout (Muncul setelah login) -->
+        <div id="nav-user-box" class="hidden items-center gap-2">
+          <span id="nav-user-name" class="text-xs sm:text-sm font-bold text-purple-600 dark:text-purple-400"></span>
+          <button onclick="logoutUser()" class="px-3 py-1.5 rounded-lg bg-rose-50 text-rose-600 dark:bg-rose-950 dark:text-rose-300 text-xs font-bold border border-rose-200 dark:border-rose-800">
+            Keluar
+          </button>
+        </div>
       </div>
+
     </div>
   </header>
 
-  <!-- LAYOUT 3 KOLOM KHAS DUOLINGO -->
-  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 px-4 py-6">
+  <!-- =====================================================
+       CONTAINER UTAMA
+  ====================================================== -->
+  <div class="max-w-5xl mx-auto px-4 py-6 space-y-6">
 
-    <!-- KOLOM KIRI: NAVIGASI UTAMA (2.5 Kolom) -->
-    <aside class="lg:col-span-3 space-y-2">
-      <nav class="flex lg:flex-col gap-2 overflow-x-auto pb-2 lg:pb-0">
-        <button onclick="switchTab('path')" id="nav-path" class="nav-btn duo-btn w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl font-extrabold text-left bg-purple-100 text-purple-700 border-purple-300 dark:bg-purple-950 dark:text-purple-300 dark:border-purple-800">
-          <span class="text-xl">🗺️</span>
-          <span class="whitespace-nowrap">Jalur Pre-Test & Evaluasi</span>
-        </button>
-
-        <button onclick="switchTab('forum')" id="nav-forum" class="nav-btn duo-btn w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl font-extrabold text-left bg-white hover:bg-slate-50 text-slate-600 border-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-300 dark:border-slate-800">
-          <span class="text-xl">🤝</span>
-          <span class="whitespace-nowrap">Forum & Relasi Teman</span>
-        </button>
-
-        <button onclick="switchTab('seminar')" id="nav-seminar" class="nav-btn duo-btn w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl font-extrabold text-left bg-white hover:bg-slate-50 text-slate-600 border-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-300 dark:border-slate-800">
-          <span class="text-xl">🎙️</span>
-          <span class="whitespace-nowrap">Seminar & Alumni Hub</span>
-        </button>
-
-        <button onclick="switchTab('parent')" id="nav-parent" class="nav-btn duo-btn w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl font-extrabold text-left bg-white hover:bg-slate-50 text-slate-600 border-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-300 dark:border-slate-800">
-          <span class="text-xl">📊</span>
-          <span class="whitespace-nowrap">Rapor Evaluasi & Ortu</span>
-        </button>
-      </nav>
-
-      <!-- Box Info Segmen Aktif di Sidebar -->
-      <div class="hidden lg:block duo-card p-4 bg-purple-50/70 border-purple-200 dark:bg-slate-900 dark:border-purple-900/60 mt-4">
-        <p class="text-xs font-extrabold uppercase tracking-wider text-purple-600 dark:text-purple-400 mb-1">Status Segmen Kamu</p>
-        <p id="sidebar-segment-title" class="font-black text-sm text-slate-800 dark:text-slate-100">Belum Menentukan Jurusan (Eksplorasi)</p>
-        <p id="sidebar-segment-desc" class="text-xs text-slate-500 dark:text-slate-400 mt-1">Fokus: Kuis AI Minat Bakat, Daily Trivia & Relasi Teman Awal.</p>
+    <!-- BANNER AJAKAN LOGIN & STATUS AKUN -->
+    <div id="login-banner" class="p-4 rounded-xl bg-purple-600 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
+      <div>
+        <h2 class="font-bold text-base">Selamat Datang di Portal Evaluasi & Persiapan Kuliah ForCollege</h2>
+        <p class="text-xs text-purple-100 mt-0.5">Silakan login terlebih dahulu agar hasil Pre-Test, simulasi tugas, dan riwayat (history) Anda tersimpan otomatis.</p>
       </div>
-    </aside>
+      <button onclick="openLoginModal()" class="shrink-0 px-4 py-2.5 rounded-lg bg-white text-purple-700 font-bold text-xs sm:text-sm shadow hover:bg-purple-50">
+        🔑 Login dengan Google Sekarang
+      </button>
+    </div>
 
-    <!-- KOLOM TENGAH: KONTEN UTAMA (6 Kolom) -->
-    <main class="lg:col-span-6 space-y-6">
+    <!-- NAVIGASI 4 TAB MENU STANDAR -->
+    <div class="flex overflow-x-auto gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
+      <button onclick="switchMenu('pretest')" id="menu-pretest" class="px-4 py-2.5 rounded-lg font-bold text-xs sm:text-sm bg-purple-600 text-white whitespace-nowrap">
+        1. Pre-Test & Simulasi
+      </button>
+      <button onclick="switchMenu('forum')" id="menu-forum" class="px-4 py-2.5 rounded-lg font-semibold text-xs sm:text-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">
+        2. Forum & Relasi Teman
+      </button>
+      <button onclick="switchMenu('seminar')" id="menu-seminar" class="px-4 py-2.5 rounded-lg font-semibold text-xs sm:text-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">
+        3. Seminar & Alumni
+      </button>
+      <button onclick="switchMenu('ortu')" id="menu-ortu" class="px-4 py-2.5 rounded-lg font-semibold text-xs sm:text-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">
+        4. Rapor Orang Tua
+      </button>
+    </div>
 
-      <!-- ==========================================
-           TAB 1: JALUR PRE-TEST & EVALUASI (DUOLINGO PATH)
-      =========================================== -->
-      <section id="tab-path" class="space-y-6">
-        <!-- Gerbang Pemilihan Segmen Siswa -->
-        <div class="duo-card p-5 bg-gradient-to-r from-purple-600 to-indigo-600 border-purple-800 text-white">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+    <!-- GRID KONTEN UTAMA (Kiri: Fitur Aktif, Kanan: History Aktivitas) -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- AREA KIRI (2 Kolom): ISI FITUR -->
+      <div class="lg:col-span-2 space-y-6">
+
+        <!-- ==========================================
+             TAB 1: PRE-TEST & SIMULASI TUGAS
+        =========================================== -->
+        <section id="sec-pretest" class="space-y-5">
+          
+          <!-- Pilihan Segmen Siswa -->
+          <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
+            <h3 class="font-bold text-sm text-slate-500 dark:text-slate-400 uppercase">Langkah 1: Pilih Kondisi Anda Saat Ini</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button onclick="setSegment('eksplorasi')" id="seg-eksplorasi" class="p-3.5 rounded-xl border-2 border-purple-600 bg-purple-50/60 dark:bg-purple-950/40 text-left">
+                <div class="font-bold text-sm text-purple-700 dark:text-purple-300">🧭 Belum Menentukan Kuliah</div>
+                <div class="text-xs text-slate-500 mt-0.5">Kelas 10–11 • Cari jurusan lewat kuis minat AI</div>
+              </button>
+              <button onclick="setSegment('penentuan')" id="seg-penentuan" class="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-left">
+                <div class="font-bold text-sm">🎯 Sudah Punya Jurusan Incaran</div>
+                <div class="text-xs text-slate-500 mt-0.5">Kelas 12 • Uji kesiapan & simulasi tugas kuliah</div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Kartu Kuis Pre-Test -->
+          <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-xs font-bold text-purple-600 dark:text-purple-400">Langkah 2 • Evaluasi Minat</span>
+                <h3 id="pretest-card-title" class="font-bold text-base mt-0.5">Pre-Test Pencocokan Jurusan (AI Matcher)</h3>
+              </div>
+              <span id="pretest-status" class="text-xs font-semibold px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800">Belum Dikerjakan</span>
+            </div>
+
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              Pilih satu aktivitas yang paling menggambarkan minat dan keahlian Anda saat ini:
+            </p>
+
+            <div class="space-y-2">
+              <button onclick="submitPretest('Teknik Informatika & Sistem Informasi (95% Cocok)')" class="w-full p-3 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-purple-500 hover:bg-purple-50/40 dark:hover:bg-purple-950/30 text-left text-xs sm:text-sm font-medium">
+                💻 Menyusun logika pemrograman, analisis data, dan teknologi digital
+              </button>
+              <button onclick="submitPretest('Desain Komunikasi Visual / UI-UX (94% Cocok)')" class="w-full p-3 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-purple-500 hover:bg-purple-50/40 dark:hover:bg-purple-950/30 text-left text-xs sm:text-sm font-medium">
+                🎨 Membuat ilustrasi visual, desain antarmuka, dan media kreatif
+              </button>
+              <button onclick="submitPretest('Manajemen & Bisnis Digital (93% Cocok)')" class="w-full p-3 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-purple-500 hover:bg-purple-50/40 dark:hover:bg-purple-950/30 text-left text-xs sm:text-sm font-medium">
+                📈 Merancang strategi bisnis, manajemen organisasi, dan pemasaran
+              </button>
+            </div>
+          </div>
+
+          <!-- Kartu Simulasi Studi Kasus Jurusan -->
+          <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-xs font-bold text-indigo-600 dark:text-indigo-400">Langkah 3 • Evaluasi Kesiapan Akademik</span>
+                <h3 class="font-bold text-base mt-0.5">Simulasi Studi Kasus Tugas Mahasiswa Baru</h3>
+              </div>
+              <span id="sim-status" class="text-xs font-semibold px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800">Belum Dikerjakan</span>
+            </div>
+
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              <strong>Studi Kasus:</strong> Pada minggu ke-3 perkuliahan, dosen memberikan tugas riset kelompok dengan tenggat 10 hari. Apa tindakan Anda?
+            </p>
+
+            <div class="space-y-2">
+              <button onclick="submitSimulasi('94 / 100 (Sangat Siap Kuliah)')" class="w-full p-3 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-purple-500 hover:bg-purple-50/40 dark:hover:bg-purple-950/30 text-left text-xs sm:text-sm font-medium">
+                ✅ Membagi rincian tugas di hari pertama dan berdiskusi dengan kakak tingkat/alumni
+              </button>
+              <button onclick="submitSimulasi('72 / 100 (Perlu Adaptasi Manajemen Waktu)')" class="w-full p-3 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-purple-500 hover:bg-purple-50/40 dark:hover:bg-purple-950/30 text-left text-xs sm:text-sm font-medium">
+                ⏳ Menunggu mendekati batas pengumpulan baru mulai membaca materi
+              </button>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ==========================================
+             TAB 2: FORUM & RELASI TEMAN
+        =========================================== -->
+        <section id="sec-forum" class="hidden space-y-5">
+          
+          <!-- Relasi Teman Seperjuangan -->
+          <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
             <div>
-              <span class="text-xs uppercase font-black tracking-wider bg-white/20 px-2.5 py-1 rounded-lg">Pilih Kondisimu Saat Ini</span>
-              <h1 class="text-xl sm:text-2xl font-black mt-2">Mulai Perjalanan Menuju Kampus!</h1>
-              <p class="text-xs sm:text-sm text-purple-100 mt-0.5">Sesuaikan jalur Pre-Test & evaluasi dengan tahap persiapanmu.</p>
+              <h3 class="font-bold text-base">🤝 Cari Teman Seperjuangan (Relasi Awal Sebelum Kuliah)</h3>
+              <p class="text-xs text-slate-500">Terhubung dengan siswa SMA lain yang mengincar jurusan serupa.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="p-3.5 rounded-lg border border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <div>
+                  <p class="font-bold text-sm">Raka Pratama</p>
+                  <p class="text-xs text-slate-500">Kelas 12 • Incaran: Teknik Informatika</p>
+                </div>
+                <button onclick="addRelation(this, 'Raka Pratama')" class="px-3 py-1.5 rounded-lg bg-purple-600 text-white text-xs font-bold">
+                  + Hubungkan
+                </button>
+              </div>
+
+              <div class="p-3.5 rounded-lg border border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <div>
+                  <p class="font-bold text-sm">Nadia Putri</p>
+                  <p class="text-xs text-slate-500">Kelas 11 • Incaran: DKV & UI/UX</p>
+                </div>
+                <button onclick="addRelation(this, 'Nadia Putri')" class="px-3 py-1.5 rounded-lg bg-purple-600 text-white text-xs font-bold">
+                  + Hubungkan
+                </button>
+              </div>
             </div>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
-            <button onclick="setSegment('eksplorasi')" id="btn-seg-eksplorasi" class="duo-btn p-3.5 rounded-xl bg-white text-purple-800 border-purple-300 font-extrabold text-left flex items-start gap-3">
-              <span class="text-2xl">🧭</span>
-              <div>
-                <div class="text-sm font-black">Belum Tentukan Kuliah</div>
-                <div class="text-xs text-slate-600 font-bold">Kelas 10–11 • Cari tahu minat lewat Pre-Test AI</div>
-              </div>
-            </button>
+          <!-- Diskusi & Q&A Anonim -->
+          <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
+            <h3 class="font-bold text-base">💬 Ruang Tanya-Jawab Alumni (Mode Anonim)</h3>
+            <div class="flex gap-2">
+              <input id="forum-text" type="text" placeholder="Tanyakan beban tugas atau kehidupan kampus secara anonim..." class="flex-1 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-xs sm:text-sm" />
+              <button onclick="postForum()" class="px-4 py-2 rounded-lg bg-purple-600 text-white font-bold text-xs sm:text-sm">
+                Kirim
+              </button>
+            </div>
 
-            <button onclick="setSegment('penentuan')" id="btn-seg-penentuan" class="duo-btn p-3.5 rounded-xl bg-purple-800/60 hover:bg-purple-800 text-white border-purple-950 font-extrabold text-left flex items-start gap-3">
-              <span class="text-2xl">🎯</span>
-              <div>
-                <div class="text-sm font-black">Sudah Punya Incaran</div>
-                <div class="text-xs text-purple-200 font-bold">Kelas 12 • Uji kesiapan & simulasi tugas kuliah</div>
+            <div id="forum-feed" class="space-y-2.5 pt-2">
+              <div class="p-3.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs space-y-1">
+                <p class="font-bold text-purple-600 dark:text-purple-400">🕵️ Siswa Anonim bertanya:</p>
+                <p>"Kak, apakah tugas semester awal di jurusan IT sangat berat bagi yang belum pernah coding?"</p>
+                <p class="text-emerald-600 dark:text-emerald-400 font-semibold pt-1">🎓 Alumni Menjawab: "Semester 1 dimulai dari pengenalan algoritma dasar, jadi sangat aman asalkan rajin latihan studi kasus."</p>
               </div>
-            </button>
+            </div>
           </div>
-        </div>
 
-        <!-- Peta Jalan Stepping Stones Khas Duolingo -->
-        <div class="duo-card p-6 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 flex flex-col items-center relative">
-          <div class="w-full flex items-center justify-between mb-6 pb-3 border-b border-slate-200 dark:border-slate-800">
+        </section>
+
+        <!-- ==========================================
+             TAB 3: SEMINAR & ALUMNI HUB
+        =========================================== -->
+        <section id="sec-seminar" class="hidden space-y-4">
+          <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
             <div>
-              <h2 id="path-header-title" class="font-black text-lg text-purple-600 dark:text-purple-400">UNIT 1: Eksplorasi & Pencocokan AI</h2>
-              <p id="path-header-subtitle" class="text-xs font-bold text-slate-500 dark:text-slate-400">Klik tombol bulat di bawah untuk menjalankan Pre-Test & Evaluasi</p>
+              <h3 class="font-bold text-base">🎙️ Jadwal Seminar Persiapan Kuliah & Sharing Alumni</h3>
+              <p class="text-xs text-slate-500">Bandingkan informasi jurusan secara mendalam bersama alumni kapan saja.</p>
             </div>
-            <span class="text-xs font-black px-3 py-1 rounded-xl bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
-              Progres: <span id="unit-progress-text">1/4</span>
-            </span>
-          </div>
 
-          <!-- Alur Node Melingkar -->
-          <div class="flex flex-col items-center space-y-8 py-4 w-full max-w-md">
-
-            <!-- NODE 1: PRE-TEST KUIS INTERAKTIF -->
-            <div class="flex flex-col items-center">
-              <div class="mb-2 px-3 py-1 rounded-xl bg-purple-600 text-white font-black text-xs shadow animate-bounce">
-                MULAI PRE-TEST DI SINI 👇
+            <div class="space-y-3">
+              <div class="p-4 rounded-lg border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">Sabtu, 16.00 WIB</span>
+                  <h4 class="font-bold text-sm mt-1">Live Sharing Alumni: Bedah Realita Perkuliahan & Tugas Mahasiswa</h4>
+                  <p class="text-xs text-slate-500">Terbuka untuk siswa kelas 10, 11, dan 12 SMA.</p>
+                </div>
+                <button onclick="joinSeminar(this, 'Live Sharing Alumni')" class="shrink-0 px-4 py-2 rounded-lg bg-purple-600 text-white text-xs font-bold">
+                  Daftar Seminar
+                </button>
               </div>
-              <button onclick="openQuizModal('pretest')" class="path-node bg-purple-600 hover:bg-purple-500 border-purple-800 text-white shadow-lg">
-                <span class="text-3xl">🧠</span>
-              </button>
-              <span id="node1-label" class="mt-2 font-black text-sm text-center">Pre-Test AI Smart Matcher</span>
-              <span class="text-xs font-bold text-slate-500 dark:text-slate-400">Kuis Interaktif Pemetaan Minat</span>
+
+              <div class="p-4 rounded-lg border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300">Minggu, 19.00 WIB</span>
+                  <h4 class="font-bold text-sm mt-1">Seminar Orang Tua & Siswa: Perencanaan Studi & Prospek Karier</h4>
+                  <p class="text-xs text-slate-500">Panduan menyamakan persepsi pilihan jurusan antara anak dan orang tua.</p>
+                </div>
+                <button onclick="joinSeminar(this, 'Seminar Orang Tua & Siswa')" class="shrink-0 px-4 py-2 rounded-lg bg-purple-600 text-white text-xs font-bold">
+                  Daftar Seminar
+                </button>
+              </div>
             </div>
-
-            <!-- Garis Penghubung -->
-            <div class="w-1.5 h-8 bg-purple-200 dark:bg-slate-800 rounded-full"></div>
-
-            <!-- NODE 2: SIMULASI TUGAS KULIAH (EVALUASI AKADEMIK) -->
-            <div class="flex flex-col items-center sm:translate-x-10">
-              <button onclick="openQuizModal('simulasi')" class="path-node bg-indigo-600 hover:bg-indigo-500 border-indigo-800 text-white shadow-lg">
-                <span class="text-3xl">💻</span>
-              </button>
-              <span class="mt-2 font-black text-sm text-center">Simulasi Kasus Kuliah Nyata</span>
-              <span class="text-xs font-bold text-slate-500 dark:text-slate-400">Coba Tugas Mahasiswa Baru</span>
-            </div>
-
-            <!-- Garis Penghubung -->
-            <div class="w-1.5 h-8 bg-purple-200 dark:bg-slate-800 rounded-full"></div>
-
-            <!-- NODE 3: RELASI TEMAN & DISKUSI ALUMNI -->
-            <div class="flex flex-col items-center sm:-translate-x-10">
-              <button onclick="switchTab('forum')" class="path-node bg-fuchsia-600 hover:bg-fuchsia-500 border-fuchsia-800 text-white shadow-lg">
-                <span class="text-3xl">💬</span>
-              </button>
-              <span class="mt-2 font-black text-sm text-center">Relasi Teman & Q&A Anonim</span>
-              <span class="text-xs font-bold text-slate-500 dark:text-slate-400">Cari Teman Seperjuangan</span>
-            </div>
-
-            <!-- Garis Penghubung -->
-            <div class="w-1.5 h-8 bg-purple-200 dark:bg-slate-800 rounded-full"></div>
-
-            <!-- NODE 4: SEMINAR & EVALUASI ORANG TUA (CHEST) -->
-            <div class="flex flex-col items-center">
-              <button onclick="switchTab('parent')" class="path-node bg-amber-500 hover:bg-amber-400 border-amber-700 text-white shadow-lg">
-                <span class="text-3xl">🏆</span>
-              </button>
-              <span class="mt-2 font-black text-sm text-center">Buka Rapor Evaluasi & Ortu</span>
-              <span class="text-xs font-bold text-slate-500 dark:text-slate-400">Bukti Logis Diskusi Keluarga</span>
-            </div>
-
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- ==========================================
-           TAB 2: FORUM, RELASI TEMAN & Q&A ANONIM
-      =========================================== -->
-      <section id="tab-forum" class="hidden space-y-6">
-        <div class="duo-card p-5 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
-          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-            <div>
-              <h2 class="text-xl font-black text-purple-600 dark:text-purple-400">🤝 Cari Teman Seperjuangan (Relasi Awal)</h2>
-              <p class="text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400">Bangun relasi dengan sesama siswa SMA yang mengincar jurusan/kampus serupa sebelum kuliah dimulai.</p>
-            </div>
-            <span class="text-xs font-black px-3 py-1 rounded-xl bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
-              128 Siswa Online
-            </span>
-          </div>
-
-          <!-- Daftar Kartu Teman Seperjuangan -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div class="p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex items-center justify-between gap-3">
+        <!-- ==========================================
+             TAB 4: RAPOR EVALUASI ORANG TUA
+        =========================================== -->
+        <section id="sec-ortu" class="hidden space-y-5">
+          <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-5">
+            <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
               <div>
-                <div class="font-black text-sm">Raka Pratama <span class="text-xs font-bold text-purple-600 dark:text-purple-400">• Kelas 12</span></div>
-                <div class="text-xs font-bold text-slate-500 mt-0.5">Incaran: Teknik Informatika (ITB / UB)</div>
-                <div class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 mt-1">Kecocokan Minat: 94%</div>
+                <h3 class="font-bold text-base">📊 Rapor Evaluasi Siswa & Simulasi Biaya (Parent-Convincer Report)</h3>
+                <p class="text-xs text-slate-500">Ringkasan data objektif untuk diskusi bersama Orang Tua dan Guru.</p>
               </div>
-              <button onclick="connectFriend(this, 'Raka')" class="duo-btn px-3 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 border-purple-800 text-white font-extrabold text-xs">
-                + Ajak Relasi
+              <button onclick="window.print()" class="px-3.5 py-2 rounded-lg bg-purple-600 text-white text-xs font-bold">
+                📥 Cetak PDF
               </button>
             </div>
 
-            <div class="p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex items-center justify-between gap-3">
-              <div>
-                <div class="font-black text-sm">Nadia Putri <span class="text-xs font-bold text-purple-600 dark:text-purple-400">• Kelas 11</span></div>
-                <div class="text-xs font-bold text-slate-500 mt-0.5">Incaran: Desain Komunikasi Visual / UIUX</div>
-                <div class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 mt-1">Kecocokan Minat: 89%</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="p-4 rounded-lg bg-purple-50 dark:bg-purple-950/50 border border-purple-200 dark:border-purple-800">
+                <p class="text-xs text-slate-500">Rekomendasi Pre-Test AI:</p>
+                <p id="report-major" class="font-extrabold text-sm sm:text-base text-purple-700 dark:text-purple-300 mt-1">Teknik Informatika (92% Cocok)</p>
               </div>
-              <button onclick="connectFriend(this, 'Nadia')" class="duo-btn px-3 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 border-purple-800 text-white font-extrabold text-xs">
-                + Ajak Relasi
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Form Kirim Pertanyaan / Sharing (Bisa Anonim) -->
-        <div class="duo-card p-5 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 space-y-4">
-          <div class="flex items-center justify-between">
-            <h3 class="font-black text-lg">💬 Ruang Diskusi Jurusan & Q&A Anonim</h3>
-            <span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">🔒 Enkripsi Privasi Aktif</span>
-          </div>
-
-          <div class="space-y-3">
-            <div class="flex flex-wrap gap-2">
-              <select id="forum-major" class="px-3 py-2 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 font-bold text-xs">
-                <option value="Teknik Informatika">💻 Teknik Informatika & Sistem Informasi</option>
-                <option value="DKV & Desain">🎨 DKV & Desain Produk</option>
-                <option value="Manajemen & Bisnis">📈 Manajemen & Bisnis</option>
-                <option value="Psikologi">🧠 Psikologi</option>
-              </select>
-
-              <label class="flex items-center gap-2 text-xs font-extrabold px-3 py-2 rounded-xl border-2 border-purple-200 dark:border-purple-800 bg-purple-50 dark:bg-purple-950/50 text-purple-700 dark:text-purple-300 cursor-pointer">
-                <input type="checkbox" id="anon-toggle" checked class="accent-purple-600 w-4 h-4" />
-                Tanya sebagai Anonim (Bebas Malu)
-              </label>
-            </div>
-
-            <textarea id="forum-input" rows="2" placeholder="Tanyakan beban tugas kuliah, kultur jurusan, atau ajak diskusi santai..." class="w-full p-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 font-bold text-sm focus:outline-none focus:border-purple-500"></textarea>
-
-            <div class="flex justify-end">
-              <button onclick="addForumPost()" class="duo-btn px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 border-purple-800 text-white font-extrabold text-sm">
-                Kirim ke Forum (+15 XP)
-              </button>
-            </div>
-          </div>
-
-          <!-- Daftar Diskusi -->
-          <div id="forum-list" class="space-y-3 pt-3 border-t border-slate-200 dark:border-slate-800">
-            <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800">
-              <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-1">
-                <span>🕵️ Siswa Anonim (Kelas 12) • <strong class="text-purple-600 dark:text-purple-400">Teknik Informatika</strong></span>
-                <span>10 menit lalu</span>
-              </div>
-              <p class="font-bold text-sm">Kak, kalau dari SMA belum jago coding sama sekali, apakah bakal keteteran banget di semester 1 Teknik Informatika? Dan gimana cara jelasin prospeknya ke ortu?</p>
-              <div class="mt-2 p-3 rounded-xl bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-900 text-xs font-bold">
-                <span class="text-purple-700 dark:text-purple-300 font-black">🎓 Balasan Alumni Terverifikasi (Kak Dimas - Alumni IT):</span>
-                <p class="mt-1 text-slate-700 dark:text-slate-300">Semester 1 dimulai dari dasar logika dan algoritma kok! Kamu bisa coba fitur <em>Simulasi Kasus Kuliah</em> di ForCollege dulu buat ngetes logika dasar sekaligus jadi bukti ke orang tua.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ==========================================
-           TAB 3: PUSAT SEMINAR, ALUMNI & VIRTUAL EXPO
-      =========================================== -->
-      <section id="tab-seminar" class="hidden space-y-6">
-        <!-- Tracker Kelancaran Menuju Kampus -->
-        <div class="duo-card p-5 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
-          <h2 class="text-xl font-black text-purple-600 dark:text-purple-400">🚀 Tracker Perjalanan Menuju Kampus</h2>
-          <p class="text-xs sm:text-sm font-bold text-slate-500 dark:text-slate-400 mt-1">Ikuti seminar persiapan dan sesi alumni agar langkahmu menuju SNBP/SNBT berjalan lancar tanpa disorientasi.</p>
-
-          <div class="grid grid-cols-3 gap-2 mt-4 text-center text-xs font-extrabold">
-            <div class="p-3 rounded-xl bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
-              1. Pre-Test & Eksplorasi ✅
-            </div>
-            <div class="p-3 rounded-xl bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300 border border-purple-300 dark:border-purple-800">
-              2. Seminar & Alumni (<span id="seminar-joined-count">0</span>/2)
-            </div>
-            <div class="p-3 rounded-xl bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400">
-              3. Siap Daftar Kampus 🎓
-            </div>
-          </div>
-        </div>
-
-        <!-- Daftar Seminar & Live Sharing Alumni -->
-        <div class="space-y-4">
-          <div class="duo-card p-5 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div class="space-y-1">
-              <span class="text-[11px] font-black uppercase px-2.5 py-0.5 rounded-md bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">Live Sharing Alumni</span>
-              <h3 class="font-black text-base sm:text-lg">Bedah Realita Tugas & Kultur Kuliah Teknik Informatika vs Sistem Informasi</h3>
-              <p class="text-xs font-bold text-slate-500 dark:text-slate-400">Narasumber: Alumni ITB, UI, & Universitas Brawijaya • Sabtu, 16.00 WIB</p>
-            </div>
-            <button onclick="joinSeminar(this)" class="duo-btn shrink-0 px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 border-purple-800 text-white font-extrabold text-xs sm:text-sm">
-              Daftar Seminar (+30 XP)
-            </button>
-          </div>
-
-          <div class="duo-card p-5 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div class="space-y-1">
-              <span class="text-[11px] font-black uppercase px-2.5 py-0.5 rounded-md bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300">Seminar Persiapan & Ortu</span>
-              <h3 class="font-black text-base sm:text-lg">Strategi Menyusun Rencana Studi & Meyakinkan Orang Tua Tanpa Drama</h3>
-              <p class="text-xs font-bold text-slate-500 dark:text-slate-400">Narasumber: Konselor Pendidikan & Praktisi HRD • Minggu, 19.00 WIB</p>
-            </div>
-            <button onclick="joinSeminar(this)" class="duo-btn shrink-0 px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 border-purple-800 text-white font-extrabold text-xs sm:text-sm">
-              Daftar Seminar (+30 XP)
-            </button>
-          </div>
-
-          <div class="duo-card p-5 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div class="space-y-1">
-              <span class="text-[11px] font-black uppercase px-2.5 py-0.5 rounded-md bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">Virtual Campus Expo (B2B Partner)</span>
-              <h3 class="font-black text-base sm:text-lg">Pameran Kampus Digital 24/7 & Brosur Ringan Anti-Kuota Boros</h3>
-              <p class="text-xs font-bold text-slate-500 dark:text-slate-400">Bandingkan kurikulum, beasiswa, dan daya saing kampus kapan saja.</p>
-            </div>
-            <button onclick="joinSeminar(this)" class="duo-btn shrink-0 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 border-indigo-800 text-white font-extrabold text-xs sm:text-sm">
-              Eksplorasi Kampus
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- ==========================================
-           TAB 4: RAPOR EVALUASI & SIMULASI ORANG TUA
-      =========================================== -->
-      <section id="tab-parent" class="hidden space-y-6">
-        <div class="duo-card p-6 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 space-y-5">
-          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
-            <div>
-              <span class="text-xs font-black uppercase px-2.5 py-1 rounded-lg bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">Parent-Convincer Report</span>
-              <h2 class="text-xl font-black mt-1">📊 Rapor Evaluasi Kelayakan Jurusan & Finansial</h2>
-              <p class="text-xs font-bold text-slate-500 dark:text-slate-400">Data objektif untuk bahan diskusi logis bersama Orang Tua dan Guru BK.</p>
-            </div>
-            <button onclick="window.print()" class="duo-btn px-4 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 border-purple-800 text-white font-extrabold text-xs sm:text-sm">
-              📥 Cetak / Unduh PDF
-            </button>
-          </div>
-
-          <!-- 3 Metrik Evaluasi Utama -->
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div class="p-4 rounded-2xl bg-purple-50 dark:bg-purple-950/50 border-2 border-purple-200 dark:border-purple-800">
-              <div class="text-xs font-extrabold text-purple-600 dark:text-purple-300">Kecocokan AI Pre-Test</div>
-              <div id="report-ai-score" class="text-2xl font-black mt-1">92% Cocok</div>
-              <div id="report-major-name" class="text-xs font-bold text-slate-500 mt-0.5">Rekomendasi: Teknik Informatika</div>
-            </div>
-
-            <div class="p-4 rounded-2xl bg-indigo-50 dark:bg-indigo-950/50 border-2 border-indigo-200 dark:border-indigo-800">
-              <div class="text-xs font-extrabold text-indigo-600 dark:text-indigo-300">Skor Simulasi Tugas Kuliah</div>
-              <div id="report-sim-score" class="text-2xl font-black mt-1">88 / 100</div>
-              <div class="text-xs font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">Tervalidasi Siap Akademik</div>
-            </div>
-
-            <div class="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/50 border-2 border-amber-200 dark:border-amber-800">
-              <div class="text-xs font-extrabold text-amber-700 dark:text-amber-300">Estimasi Balik Modal (ROI)</div>
-              <div class="text-2xl font-black mt-1">1,8 Tahun</div>
-              <div class="text-xs font-bold text-slate-500 mt-0.5">Rata-rata Gaji Awal: Rp7,5–11 Jt/bln</div>
-            </div>
-          </div>
-
-          <!-- Kalkulator Simulasi Biaya Pendidikan Lintas Semester (Real-Time) -->
-          <div class="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 border-2 border-slate-200 dark:border-slate-800 space-y-4">
-            <h3 class="font-black text-base">🧮 Kalkulator Simulasi Biaya Pendidikan Lintas Semester</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-xs font-extrabold mb-1">Estimasi UKT per Semester (Rp)</label>
-                <input type="number" id="ukt-input" value="7500000" oninput="calculateCost()" class="w-full px-3 py-2 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 font-extrabold text-sm" />
-              </div>
-              <div>
-                <label class="block text-xs font-extrabold mb-1">Durasi Studi (Jumlah Semester)</label>
-                <select id="sem-input" onchange="calculateCost()" class="w-full px-3 py-2 rounded-xl border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 font-extrabold text-sm">
-                  <option value="7">7 Semester (Lulus Cepat 3,5 Tahun)</option>
-                  <option value="8" selected>8 Semester (Normal 4 Tahun)</option>
-                </select>
+              <div class="p-4 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-slate-800">
+                <p class="text-xs text-slate-500">Skor Simulasi Tugas Kuliah:</p>
+                <p id="report-sim" class="font-extrabold text-sm sm:text-base text-emerald-700 dark:text-emerald-300 mt-1">88 / 100 (Siap Kuliah)</p>
               </div>
             </div>
 
-            <div class="p-4 rounded-xl bg-purple-600 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <div>
-                <div class="text-xs font-bold text-purple-200">Total Estimasi Biaya Kuliah Keseluruhan:</div>
-                <div id="total-cost-display" class="text-xl font-black">Rp 60.000.000</div>
+            <!-- Kalkulator Biaya Kuliah -->
+            <div class="p-4 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-3">
+              <h4 class="font-bold text-sm">🧮 Kalkulator Estimasi Biaya Kuliah & ROI</h4>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-semibold mb-1">Biaya UKT per Semester (Rp)</label>
+                  <input id="ukt-input" type="number" value="6500000" oninput="calcCost()" class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm font-bold" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold mb-1">Durasi Studi (Semester)</label>
+                  <select id="sem-input" onchange="calcCost()" class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm font-bold">
+                    <option value="8" selected>8 Semester (4 Tahun)</option>
+                    <option value="7">7 Semester (3,5 Tahun)</option>
+                  </select>
+                </div>
               </div>
-              <div class="text-xs font-extrabold bg-white/20 px-3 py-1.5 rounded-lg">
-                Prospek Serapan Industri: 91% Lulusan Kerja &lt; 6 Bulan
+              <div class="p-3 rounded-lg bg-purple-600 text-white flex items-center justify-between text-xs sm:text-sm font-bold">
+                <span>Total Estimasi Biaya Pendidikan:</span>
+                <span id="total-cost">Rp 52.000.000</span>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-    </main>
-
-    <!-- KOLOM KANAN: GAMIFIKASI, DAILY TRIVIA & BADGE (3 Kolom) -->
-    <aside class="lg:col-span-3 space-y-5">
-
-      <!-- Kartu Daily Trivia -->
-      <div class="duo-card p-5 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 space-y-3">
-        <div class="flex items-center justify-between">
-          <h3 class="font-black text-base text-purple-600 dark:text-purple-400">⚡ Daily Trivia Kampus</h3>
-          <span class="text-xs font-black px-2 py-0.5 rounded bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300">+20 XP</span>
-        </div>
-        <p class="text-xs font-bold text-slate-600 dark:text-slate-300">
-          Apa perbedaan utama fokus belajar antara Teknik Informatika (IF) dan Sistem Informasi (SI)?
-        </p>
-        <div class="space-y-2">
-          <button onclick="answerTrivia(this, true)" class="duo-btn w-full p-2.5 rounded-xl text-xs font-extrabold text-left bg-slate-50 hover:bg-purple-50 border-slate-200 dark:bg-slate-950 dark:border-slate-800">
-            A. IF fokus ke algoritma & rekayasa software, SI memadukan teknologi dengan proses bisnis.
-          </button>
-          <button onclick="answerTrivia(this, false)" class="duo-btn w-full p-2.5 rounded-xl text-xs font-extrabold text-left bg-slate-50 hover:bg-purple-50 border-slate-200 dark:bg-slate-950 dark:border-slate-800">
-            B. Keduanya 100% sama tanpa perbedaan mata kuliah.
-          </button>
-        </div>
-        <p id="trivia-feedback" class="hidden text-xs font-extrabold"></p>
       </div>
 
-      <!-- Koleksi Badge Minat Jurusan -->
-      <div class="duo-card p-5 bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 space-y-3">
-        <h3 class="font-black text-base">🏅 Koleksi Badge Evaluasi</h3>
-        <div id="badge-container" class="grid grid-cols-2 gap-2.5 text-center">
-          <div class="p-3 rounded-xl bg-purple-50 dark:bg-purple-950/50 border border-purple-200 dark:border-purple-800">
-            <div class="text-2xl">🧭</div>
-            <div class="text-xs font-black mt-1">Penjelajah Awal</div>
+      <!-- AREA KANAN (1 Kolom): PANEL RIWAYAT / HISTORY (Selalu Terlihat) -->
+      <aside class="space-y-4">
+        <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2.5">
+            <h3 class="font-bold text-sm">📜 History Aktivitas</h3>
+            <span id="history-sync-badge" class="text-[11px] font-semibold text-purple-600 dark:text-purple-400">Lokal / Cloud</span>
           </div>
-          <div id="badge-pretest" class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 opacity-50">
-            <div class="text-2xl">🧠</div>
-            <div class="text-xs font-black mt-1">Lulus Pre-Test AI</div>
-          </div>
-          <div id="badge-simulasi" class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 opacity-50">
-            <div class="text-2xl">💻</div>
-            <div class="text-xs font-black mt-1">Uji Tugas Maba</div>
-          </div>
-          <div id="badge-relasi" class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 opacity-50">
-            <div class="text-2xl">🤝</div>
-            <div class="text-xs font-black mt-1">Teman Seperjuangan</div>
-          </div>
+          <p class="text-xs text-slate-500">Semua aktivitas Pre-Test, simulasi, dan pendaftaran seminar tercatat di sini:</p>
+          <div id="history-list" class="space-y-2 max-h-96 overflow-y-auto pr-1"></div>
         </div>
-      </div>
+      </aside>
 
-    </aside>
-  </div>
-
-  <!-- ==========================================
-       MODAL INTERAKTIF PRE-TEST & SIMULASI TUGAS (GAYA KUIS DUOLINGO)
-  =========================================== -->
-  <div id="quiz-modal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="duo-card w-full max-w-xl bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 p-6 space-y-5">
-      <!-- Header Modal dengan Progress Bar Khas Duolingo -->
-      <div class="flex items-center gap-4">
-        <button onclick="closeQuizModal()" class="text-slate-400 hover:text-slate-600 font-black text-xl">✕</button>
-        <div class="w-full bg-slate-200 dark:bg-slate-800 h-4 rounded-full overflow-hidden">
-          <div id="quiz-progress-bar" class="bg-purple-600 h-full transition-all duration-300" style="width: 33%"></div>
-        </div>
-        <span id="quiz-step-indicator" class="text-xs font-black text-purple-600 dark:text-purple-400">1/3</span>
-      </div>
-
-      <!-- Konten Pertanyaan -->
-      <div class="space-y-2">
-        <span id="quiz-tag" class="text-xs font-black uppercase px-2.5 py-1 rounded-lg bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
-          Pre-Test AI Smart Matcher
-        </span>
-        <h3 id="quiz-question" class="text-lg sm:text-xl font-black pt-1">
-          Saat mengerjakan tugas kelompok di sekolah, peran apa yang paling membuatmu bersemangat?
-        </h3>
-      </div>
-
-      <!-- Pilihan Jawaban -->
-      <div id="quiz-options" class="space-y-3"></div>
-
-      <!-- Footer Auto-Save -->
-      <div class="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-400">
-        <span>⚡ Transisi Instan • Auto-Save Real-Time Aktif</span>
-        <span>ForCollege Evaluation Engine</span>
-      </div>
     </div>
   </div>
 
-  <!-- SCRIPT LOGIKA INTERAKTIF -->
-  <script>
-    let currentSegment = 'eksplorasi';
-    let xp = 340;
-    let seminarsJoined = 0;
-    let currentQuizType = 'pretest';
-    let currentQuestionIndex = 0;
+  <!-- =====================================================
+       MODAL LOGIN (Sangat Jelas: Login Google & Simulasi)
+  ====================================================== -->
+  <div id="login-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 w-full max-w-md rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-xl space-y-5">
+      
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+        <h3 class="font-extrabold text-lg">🔑 Masuk ke Akun ForCollege</h3>
+        <button onclick="closeLoginModal()" class="text-slate-400 hover:text-slate-600 font-bold">✕</button>
+      </div>
 
-    // Bank Soal Pre-Test & Simulasi
-    const quizData = {
-      eksplorasi: [
-        {
-          q: "Saat menghadapi masalah baru, pendekatan mana yang paling menggambarkan dirimu?",
-          options: [
-            { text: "Membedah logika masalah & menyusun solusi sistematis", major: "Teknik Informatika & Sistem Informasi" },
-            { text: "Membuat sketsa visual & memikirkan kenyamanan pengguna", major: "Desain Komunikasi Visual (DKV) & UI/UX" },
-            { text: "Mengatur strategi tim, komunikasi, & peluang bisnis", major: "Manajemen & Bisnis Digital" }
-          ]
-        },
-        {
-          q: "Lingkungan belajar kampus seperti apa yang paling bikin kamu berkembang?",
-          options: [
-            { text: "Praktikum proyek teknologi & pemecahan studi kasus algoritma", major: "Teknik Informatika & Sistem Informasi" },
-            { text: "Studio kreatif, pameran karya, & eksplorasi desain", major: "Desain Komunikasi Visual (DKV) & UI/UX" },
-            { text: "Diskusi kasus perusahaan, organisasi, & kompetisi bisnis", major: "Manajemen & Bisnis Digital" }
-          ]
-        },
-        {
-          q: "Apa kekhawatiran terbesarmu yang ingin kamu buktikan kepada orang tua?",
-          options: [
-            { text: "Menunjukkan prospek karier teknologi yang jelas & terukur", major: "Teknik Informatika & Sistem Informasi" },
-            { text: "Membuktikan industri kreatif memiliki peluang kerja luas", major: "Desain Komunikasi Visual (DKV) & UI/UX" },
-            { text: "Memastikan kesiapan kepemimpinan & daya saing industri", major: "Manajemen & Bisnis Digital" }
-          ]
-        }
-      ],
-      simulasi: [
-        {
-          q: "[Simulasi Tugas Semester 1] Sebuah aplikasi kantin kampus sering lambat saat jam istirahat. Langkah pertama apa yang paling tepat kamu lakukan?",
-          options: [
-            { text: "Menganalisis alur antrean data & membatasi beban request server", major: "Skor Analitis Tinggi" },
-            { text: "Mengubah warna tampilan aplikasi tanpa mengecek server", major: "Perlu Evaluasi" },
-            { text: "Menutup aplikasi saat jam istirahat berlangsung", major: "Perlu Evaluasi" }
-          ]
-        },
-        {
-          q: "[Simulasi Beban Akademik] Di minggu ke-4 kuliah, kamu mendapat tugas proyek tim dan kuis kalkulus bersamaan. Bagaimana strategimu?",
-          options: [
-            { text: "Membagi modul tugas di awal minggu & berdiskusi dengan kakak tingkat/alumni", major: "Siap Menghadapi Kuliah" },
-            { text: "Mengerjakan semuanya semalam sebelum tenggat waktu", major: "Risiko Keteteran" }
-          ]
-        }
-      ]
-    };
+      <!-- Opsi 1: Tombol Resmi Login dengan Google (Supabase OAuth) -->
+      <div class="space-y-2">
+        <p class="text-xs font-semibold text-slate-500">Gunakan akun Google Anda untuk menyinkronkan History ke Supabase:</p>
+        <button onclick="loginWithGoogle()" class="w-full py-3 px-4 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 font-bold text-sm flex items-center justify-center gap-3 shadow-xs">
+          <!-- Ikon Resmi Google -->
+          <svg class="w-5 h-5" viewBox="0 0 24 24">
+            <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.8C6.2 7.2 8.9 5 12 5z"/>
+            <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.6l3.7 2.9c2.2-2 3.7-5 3.7-8.7z"/>
+            <path fill="#FBBC05" d="M5.3 14.8c-.2-.8-.4-1.6-.4-2.5s.2-1.7.4-2.5L1.6 7C.6 9 0 11.2 0 13.5s.6 4.5 1.6 6.5l3.7-2.9z"/>
+            <path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.1-6.7-5l-3.7 2.8C3.5 21.4 7.4 24 12 24z"/>
+          </svg>
+          <span>Lanjutkan dengan Google</span>
+        </button>
+      </div>
 
-    // Toggle Tema Putih-Ungu vs Hitam-Ungu
-    function toggleTheme() {
-      const htmlEl = document.documentElement;
-      const isDark = htmlEl.classList.toggle('dark');
-      document.getElementById('theme-icon').textContent = isDark ? '☀️' : '🌙';
-      document.getElementById('theme-label').textContent = isDark ? 'Putih-Ungu' : 'Hitam-Ungu';
-      triggerAutoSave('Tema disimpan');
-    }
+      <div class="relative flex py-1 items-center">
+        <div class="grow border-t border-slate-200 dark:border-slate-800"></div>
+        <span class="shrink mx-3 text-xs text-slate-400 font-semibold">ATAU UJI COBA CEPAT</span>
+        <div class="grow border-t border-slate-200 dark:border-slate-800"></div>
+      </div>
 
-    // Berpindah Tab Menu
-    function switchTab(tabName) {
-      ['path', 'forum', 'seminar', 'parent'].forEach(t => {
-        document.getElementById('tab-' + t).classList.add('hidden');
-        const btn = document.getElementById('nav-' + t);
-        btn.className = "nav-btn duo-btn w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl font-extrabold text-left bg-white hover:bg-slate-50 text-slate-600 border-slate-200 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-slate-300 dark:border-slate-800";
-      });
-
-      document.getElementById('tab-' + tabName).classList.remove('hidden');
-      const activeBtn = document.getElementById('nav-' + tabName);
-      activeBtn.className = "nav-btn duo-btn w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl font-extrabold text-left bg-purple-100 text-purple-700 border-purple-300 dark:bg-purple-950 dark:text-purple-300 dark:border-purple-800";
-    }
-
-    // Pilih Segmen Pengguna (Belum Tentukan vs Sudah Punya Incaran)
-    function setSegment(seg) {
-      currentSegment = seg;
-      const btnEks = document.getElementById('btn-seg-eksplorasi');
-      const btnPen = document.getElementById('btn-seg-penentuan');
-
-      if (seg === 'eksplorasi') {
-        btnEks.className = "duo-btn p-3.5 rounded-xl bg-white text-purple-800 border-purple-300 font-extrabold text-left flex items-start gap-3";
-        btnPen.className = "duo-btn p-3.5 rounded-xl bg-purple-800/60 hover:bg-purple-800 text-white border-purple-950 font-extrabold text-left flex items-start gap-3";
-        document.getElementById('sidebar-segment-title').textContent = "Belum Menentukan Jurusan (Eksplorasi)";
-        document.getElementById('sidebar-segment-desc').textContent = "Fokus: Kuis AI Minat Bakat, Daily Trivia & Relasi Teman Awal.";
-        document.getElementById('path-header-title').textContent = "UNIT 1: Eksplorasi & Pencocokan AI";
-        document.getElementById('node1-label').textContent = "Pre-Test AI Smart Matcher";
-      } else {
-        btnPen.className = "duo-btn p-3.5 rounded-xl bg-white text-purple-800 border-purple-300 font-extrabold text-left flex items-start gap-3";
-        btnEks.className = "duo-btn p-3.5 rounded-xl bg-purple-800/60 hover:bg-purple-800 text-white border-purple-950 font-extrabold text-left flex items-start gap-3";
-        document.getElementById('sidebar-segment-title').textContent = "Sudah Punya Jurusan Incaran (Penentuan)";
-        document.getElementById('sidebar-segment-desc').textContent = "Fokus: Pre-Test Validasi Akademik, Simulasi Tugas & Rapor Orang Tua.";
-        document.getElementById('path-header-title').textContent = "UNIT 1: Validasi Jurusan & Uji Kesiapan Kuliah";
-        document.getElementById('node1-label').textContent = "Pre-Test Validasi Jurusan Incaran";
-      }
-      triggerAutoSave('Segmen diperbarui');
-    }
-
-    // Buka Modal Kuis / Simulasi
-    function openQuizModal(type) {
-      currentQuizType = type;
-      currentQuestionIndex = 0;
-      document.getElementById('quiz-modal').classList.remove('hidden');
-      renderQuizStep();
-    }
-
-    function closeQuizModal() {
-      document.getElementById('quiz-modal').classList.add('hidden');
-    }
-
-    function renderQuizStep() {
-      const list = currentQuizType === 'pretest' ? quizData.eksplorasi : quizData.simulasi;
-      const item = list[currentQuestionIndex];
-      const total = list.length;
-
-      document.getElementById('quiz-tag').textContent = currentQuizType === 'pretest'
-        ? (currentSegment === 'eksplorasi' ? 'Pre-Test AI Smart Matcher' : 'Pre-Test Validasi Jurusan')
-        : 'Simulasi Studi Kasus Tugas Kuliah';
-
-      document.getElementById('quiz-step-indicator').textContent = `${currentQuestionIndex + 1}/${total}`;
-      document.getElementById('quiz-progress-bar').style.width = `${((currentQuestionIndex + 1) / total) * 100}%`;
-      document.getElementById('quiz-question').textContent = item.q;
-
-      const optContainer = document.getElementById('quiz-options');
-      optContainer.innerHTML = '';
-
-      item.options.forEach(opt => {
-        const btn = document.createElement('button');
-        btn.className = "duo-btn w-full p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-700 bg-slate-50 hover:bg-purple-50 dark:bg-slate-950 dark:hover:bg-purple-950/40 font-extrabold text-left text-sm";
-        btn.textContent = opt.text;
-        btn.onclick = () => handleQuizAnswer(opt.major);
-        optContainer.appendChild(btn);
-      });
-    }
-
-    function handleQuizAnswer(selectedResult) {
-      triggerAutoSave('Jawaban tersimpan otomatis');
-      const list = currentQuizType === 'pretest' ? quizData.eksplorasi : quizData.simulasi;
-
-      if (currentQuestionIndex < list.length - 1) {
-        currentQuestionIndex++;
-        renderQuizStep();
-      } else {
-        closeQuizModal();
-        addXP(50);
-        if (currentQuizType === 'pretest') {
-          document.getElementById('report-major-name').textContent = `Rekomendasi: ${selectedResult}`;
-          document.getElementById('report-ai-score').textContent = "95% Cocok";
-          document.getElementById('badge-pretest').classList.remove('opacity-50');
-          document.getElementById('unit-progress-text').textContent = "2/4";
-        } else {
-          document.getElementById('report-sim-score').textContent = "94 / 100";
-          document.getElementById('badge-simulasi').classList.remove('opacity-50');
-          document.getElementById('unit-progress-text').textContent = "3/4";
-        }
-        switchTab('parent');
-      }
-    }
-
-    // Fungsi Tambah Relasi Teman
-    function connectFriend(btn, name) {
-      btn.textContent = "✓ Terhubung";
-      btn.className = "duo-btn px-3 py-2 rounded-xl bg-emerald-600 border-emerald-800 text-white font-extrabold text-xs";
-      document.getElementById('badge-relasi').classList.remove('opacity-50');
-      addXP(20);
-      triggerAutoSave(`Terhubung dengan ${name}`);
-    }
-
-    // Fungsi Tambah Diskusi Forum / Q&A Anonim
-    function addForumPost() {
-      const input = document.getElementById('forum-input');
-      const major = document.getElementById('forum-major').value;
-      const isAnon = document.getElementById('anon-toggle').checked;
-      const text = input.value.trim();
-      if (!text) return;
-
-      const post = document.createElement('div');
-      post.className = "p-4 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800";
-      post.innerHTML = `
-        <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-1">
-          <span>${isAnon ? '🕵️ Siswa Anonim' : '🧑‍🎓 Siswa ForCollege'} • <strong class="text-purple-600 dark:text-purple-400">${major}</strong></span>
-          <span>Baru saja</span>
+      <!-- Opsi 2: Login Cepat Tanpa Perlu Setup Server Dulu -->
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-bold mb-1">Nama Siswa / Email Google</label>
+          <input id="quick-name-input" type="text" placeholder="Contoh: Budi (budi@gmail.com)" class="w-full px-3 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm font-medium" />
         </div>
-        <p class="font-bold text-sm">${text}</p>
-      `;
+        <button onclick="quickDemoLogin()" class="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm">
+          Masuk & Aktifkan History Sekarang
+        </button>
+      </div>
 
-      const list = document.getElementById('forum-list');
-      list.prepend(post);
-      input.value = '';
-      addXP(15);
-      triggerAutoSave('Pertanyaan terkirim');
+    </div>
+  </div>
+
+  <!-- =====================================================
+       JAVASCRIPT & INTEGRASI SUPABASE
+  ====================================================== -->
+  <script>
+    // Masukkan Project URL dan Anon Key Supabase Anda di sini
+    const SUPABASE_URL = "";
+    const SUPABASE_ANON_KEY = "";
+    const supabaseClient = (SUPABASE_URL && SUPABASE_ANON_KEY)
+      ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+      : null;
+
+    let currentUser = null;
+    let historyData = JSON.parse(localStorage.getItem('fc_history') || '[]');
+    if (historyData.length === 0) {
+      historyData.push({ title: "Membuka Dashboard ForCollege", time: new Date().toLocaleTimeString('id-ID') });
     }
 
-    // Fungsi Daftar Seminar
-    function joinSeminar(btn) {
-      if (btn.dataset.joined) return;
-      btn.dataset.joined = "true";
-      btn.textContent = "✓ Terdaftar di Jadwalmu";
-      btn.className = "duo-btn shrink-0 px-4 py-2.5 rounded-xl bg-emerald-600 border-emerald-800 text-white font-extrabold text-xs sm:text-sm";
-      seminarsJoined++;
-      document.getElementById('seminar-joined-count').textContent = seminarsJoined;
-      addXP(30);
-      triggerAutoSave('Jadwal seminar disimpan');
+    // Render awal
+    renderHistory();
+
+    // 1. Pindah Tab Menu
+    function switchMenu(tab) {
+      ['pretest', 'forum', 'seminar', 'ortu'].forEach(item => {
+        document.getElementById('sec-' + item).classList.add('hidden');
+        document.getElementById('menu-' + item).className = "px-4 py-2.5 rounded-lg font-semibold text-xs sm:text-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap";
+      });
+      document.getElementById('sec-' + tab).classList.remove('hidden');
+      document.getElementById('menu-' + tab).className = "px-4 py-2.5 rounded-lg font-bold text-xs sm:text-sm bg-purple-600 text-white whitespace-nowrap";
     }
 
-    // Fungsi Kalkulator Biaya Kuliah Real-Time
-    function calculateCost() {
+    // 2. Pilih Segmen Siswa
+    function setSegment(seg) {
+      const eks = document.getElementById('seg-eksplorasi');
+      const pen = document.getElementById('seg-penentuan');
+      if (seg === 'eksplorasi') {
+        eks.className = "p-3.5 rounded-xl border-2 border-purple-600 bg-purple-50/60 dark:bg-purple-950/40 text-left";
+        pen.className = "p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-left";
+        document.getElementById('pretest-card-title').textContent = "Pre-Test Pencocokan Jurusan (AI Matcher)";
+        recordActivity("Memilih Segmen: Belum Menentukan Kuliah (Kelas 10-11)");
+      } else {
+        pen.className = "p-3.5 rounded-xl border-2 border-purple-600 bg-purple-50/60 dark:bg-purple-950/40 text-left";
+        eks.className = "p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-left";
+        document.getElementById('pretest-card-title').textContent = "Pre-Test Validasi Jurusan Incaran (Kelas 12)";
+        recordActivity("Memilih Segmen: Sudah Punya Jurusan Incaran (Kelas 12)");
+      }
+    }
+
+    // 3. Submit Pre-Test & Simulasi
+    function submitPretest(result) {
+      document.getElementById('report-major').textContent = result;
+      document.getElementById('pretest-status').textContent = "✓ Selesai";
+      document.getElementById('pretest-status').className = "text-xs font-bold px-2.5 py-1 rounded bg-emerald-100 text-emerald-700";
+      recordActivity("Selesai Pre-Test: " + result);
+      alert("Hasil Pre-Test tersimpan: " + result);
+    }
+
+    function submitSimulasi(score) {
+      document.getElementById('report-sim').textContent = score;
+      document.getElementById('sim-status').textContent = "✓ Selesai";
+      document.getElementById('sim-status').className = "text-xs font-bold px-2.5 py-1 rounded bg-emerald-100 text-emerald-700";
+      recordActivity("Selesai Simulasi Tugas: Skor " + score);
+      switchMenu('ortu');
+    }
+
+    // 4. Forum, Teman, Seminar, & Kalkulator UKT
+    function addRelation(btn, name) {
+      btn.textContent = "✓ Terhubung";
+      btn.className = "px-3 py-1.5 rounded-lg bg-emerald-600 text-white text-xs font-bold";
+      recordActivity("Terhubung dengan teman: " + name);
+    }
+
+    function postForum() {
+      const input = document.getElementById('forum-text');
+      if (!input.value.trim()) return;
+      const div = document.createElement('div');
+      div.className = "p-3.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs space-y-1";
+      div.innerHTML = `<p class="font-bold text-purple-600 dark:text-purple-400">🕵️ Siswa Anonim bertanya:</p><p>"${input.value}"</p>`;
+      document.getElementById('forum-feed').prepend(div);
+      recordActivity("Mengirim pertanyaan di Forum Anonim");
+      input.value = "";
+    }
+
+    function joinSeminar(btn, title) {
+      btn.textContent = "✓ Terdaftar";
+      btn.className = "shrink-0 px-4 py-2 rounded-lg bg-emerald-600 text-white text-xs font-bold";
+      recordActivity("Mendaftar " + title);
+    }
+
+    function calcCost() {
       const ukt = parseInt(document.getElementById('ukt-input').value) || 0;
       const sem = parseInt(document.getElementById('sem-input').value) || 8;
-      const total = ukt * sem;
-      document.getElementById('total-cost-display').textContent = 'Rp ' + total.toLocaleString('id-ID');
+      document.getElementById('total-cost').textContent = "Rp " + (ukt * sem).toLocaleString('id-ID');
     }
 
-    // Daily Trivia
-    function answerTrivia(btn, isCorrect) {
-      const fb = document.getElementById('trivia-feedback');
-      fb.classList.remove('hidden');
-      if (isCorrect) {
-        fb.textContent = "✅ Tepat sekali! Kamu mendapat +20 XP.";
-        fb.className = "text-xs font-extrabold text-emerald-600 dark:text-emerald-400";
-        addXP(20);
+    // 5. Tema Putih-Ungu / Hitam-Ungu
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      document.getElementById('theme-btn').textContent = isDark ? "☀️ Putih-Ungu" : "🌙 Hitam-Ungu";
+    }
+
+    // 6. Sistem Login (Modal, Google OAuth Supabase, & Quick Login)
+    function openLoginModal() {
+      document.getElementById('login-modal').classList.remove('hidden');
+    }
+
+    function closeLoginModal() {
+      document.getElementById('login-modal').classList.add('hidden');
+    }
+
+    async function loginWithGoogle() {
+      if (supabaseClient) {
+        const { error } = await supabaseClient.auth.signInWithOAuth({
+          provider: 'google',
+          options: { redirectTo: window.location.href }
+        });
+        if (error) alert("Gagal Login Google: " + error.message);
       } else {
-        fb.textContent = "💡 Kurang tepat, IF & SI memiliki penekanan kurikulum yang berbeda.";
-        fb.className = "text-xs font-extrabold text-amber-600 dark:text-amber-400";
+        // Jika URL Supabase belum diisi, jalankan simulasi Login Google otomatis
+        setLoggedInUser("Siswa Google (Akun Terhubung)");
+        closeLoginModal();
       }
     }
 
-    // Tambah XP & Indikator Auto-Save
-    function addXP(amount) {
-      xp += amount;
-      document.getElementById('xp-count').textContent = xp;
+    function quickDemoLogin() {
+      const name = document.getElementById('quick-name-input').value.trim() || "Siswa ForCollege";
+      setLoggedInUser(name);
+      closeLoginModal();
     }
 
-    function triggerAutoSave(msg) {
-      const label = document.getElementById('autosave-text');
-      if (label) {
-        label.textContent = msg + ' ✓';
-        setTimeout(() => {
-          label.textContent = 'Auto-Save Aktif';
-        }, 2500);
+    function setLoggedInUser(name) {
+      currentUser = name;
+      document.getElementById('nav-login-btn').classList.add('hidden');
+      const userBox = document.getElementById('nav-user-box');
+      userBox.classList.remove('hidden');
+      userBox.classList.add('flex');
+      document.getElementById('nav-user-name').textContent = "👤 " + name;
+      document.getElementById('login-banner').classList.add('hidden');
+      document.getElementById('history-sync-badge').textContent = "✅ Tersinkronisasi";
+      recordActivity("Login berhasil sebagai " + name);
+    }
+
+    async function logoutUser() {
+      if (supabaseClient) await supabaseClient.auth.signOut();
+      currentUser = null;
+      document.getElementById('nav-login-btn').classList.remove('hidden');
+      document.getElementById('nav-user-box').classList.add('hidden');
+      document.getElementById('login-banner').classList.remove('hidden');
+      recordActivity("Keluar (Logout) dari akun");
+    }
+
+    // 7. Pencatatan History Otomatis (Lokal + Tabel Supabase)
+    async function recordActivity(activityText) {
+      const item = {
+        title: activityText,
+        time: new Date().toLocaleTimeString('id-ID')
+      };
+      historyData.unshift(item);
+      localStorage.setItem('fc_history', JSON.stringify(historyData.slice(0, 25)));
+      renderHistory();
+
+      if (supabaseClient) {
+        const { data: { user } } = await supabaseClient.auth.getUser();
+        if (user) {
+          await supabaseClient.from('activity_history').insert({
+            user_id: user.id,
+            activity_type: 'Evaluasi',
+            activity_detail: activityText
+          });
+        }
       }
+    }
+
+    function renderHistory() {
+      const container = document.getElementById('history-list');
+      container.innerHTML = historyData.map(h => `
+        <div class="p-3 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2 text-xs">
+          <span class="font-medium">${h.title}</span>
+          <span class="text-[11px] text-slate-400 shrink-0">${h.time}</span>
+        </div>
+      `).join('');
     }
   </script>
 </body>
