@@ -21,478 +21,786 @@
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors">
 
   <!-- =====================================================
-       MENU BAR UTAMA (4 Menu Inti + Dark/White + Login)
+       LAYAR 1: GERBANG WAJIB LOGIN GOOGLE (AUTH GATE)
+       User tidak bisa mengakses apapun sebelum Login Google
   ====================================================== -->
-  <header class="sticky top-0 z-30 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-xs">
-    <div class="max-w-5xl mx-auto px-4">
-      <div class="h-16 flex items-center justify-between gap-4">
-        
-        <!-- Brand -->
-        <div class="flex items-center gap-2.5 shrink-0">
-          <div class="w-9 h-9 rounded-xl bg-purple-600 text-white font-extrabold flex items-center justify-center text-base shadow-xs">
-            FC
-          </div>
-          <span class="font-extrabold text-lg tracking-tight text-purple-600 dark:text-purple-400">ForCollege</span>
-        </div>
-
-        <!-- Menu Bar Tengah (Desktop) -->
-        <nav class="hidden md:flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
-          <button onclick="switchMenu('forum')" id="nav-forum" class="px-4 py-2 rounded-lg font-bold text-xs sm:text-sm bg-purple-600 text-white shadow-xs transition">
-            Feed Forum
-          </button>
-          <button onclick="switchMenu('pretest')" id="nav-pretest" class="px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-purple-600 transition">
-            Pre-Test & Simulasi
-          </button>
-          <button onclick="switchMenu('seminar')" id="nav-seminar" class="px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-purple-600 transition">
-            Seminar
-          </button>
-          <button onclick="switchMenu('history')" id="nav-history" class="px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-purple-600 transition">
-            History
-          </button>
-        </nav>
-
-        <!-- Kanan: Dark/White & Login -->
-        <div class="flex items-center gap-2 shrink-0">
-          <button onclick="toggleTheme()" id="theme-btn" class="px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition">
-            Dark
-          </button>
-
-          <button id="nav-login-btn" onclick="openLoginModal()" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs sm:text-sm font-bold shadow-xs transition">
-            Login
-          </button>
-
-          <div id="nav-user-box" class="hidden items-center gap-2">
-            <span id="nav-user-name" class="text-xs font-bold text-purple-600 dark:text-purple-400 max-w-[120px] truncate"></span>
-            <button onclick="logoutUser()" class="px-3 py-1.5 rounded-lg bg-rose-50 text-rose-600 dark:bg-rose-950 dark:text-rose-300 text-xs font-bold border border-rose-200 dark:border-rose-800">
-              Logout
-            </button>
-          </div>
-        </div>
-
+  <div id="auth-gate" class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-lg text-center space-y-6">
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-purple-600 text-white font-extrabold flex items-center justify-center text-2xl shadow-md">
+        FC
       </div>
-
-      <!-- Menu Bar Mobile -->
-      <nav class="flex md:hidden overflow-x-auto gap-1.5 py-2 border-t border-slate-100 dark:border-slate-800">
-        <button onclick="switchMenu('forum')" id="mnav-forum" class="px-3.5 py-1.5 rounded-lg font-bold text-xs bg-purple-600 text-white whitespace-nowrap">
-          Feed Forum
-        </button>
-        <button onclick="switchMenu('pretest')" id="mnav-pretest" class="px-3.5 py-1.5 rounded-lg font-semibold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">
-          Pre-Test & Simulasi
-        </button>
-        <button onclick="switchMenu('seminar')" id="mnav-seminar" class="px-3.5 py-1.5 rounded-lg font-semibold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">
-          Seminar
-        </button>
-        <button onclick="switchMenu('history')" id="mnav-history" class="px-3.5 py-1.5 rounded-lg font-semibold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">
-          History
-        </button>
-      </nav>
-    </div>
-  </header>
-
-  <!-- =====================================================
-       KONTEN UTAMA
-  ====================================================== -->
-  <main class="max-w-3xl mx-auto px-4 py-6">
-
-    <!-- ===================================================
-         1. FEED FORUM (POST, LIKE, COMMENT, & RELASI TEMAN)
-    ==================================================== -->
-    <section id="sec-forum" class="space-y-5">
-      
-      <!-- Kotak Buat Postingan -->
-      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
-        <textarea id="post-input" rows="2" placeholder="Bagikan obrolan seputar kampus, cari teman satu jurusan, atau tanya pengalaman alumni..." class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-sm focus:outline-none focus:border-purple-500"></textarea>
-        
-        <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
-          <div class="flex items-center gap-2">
-            <select id="post-tag" class="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-semibold">
-              <option value="Teknik Informatika">💻 Teknik Informatika</option>
-              <option value="DKV & UI/UX">🎨 DKV & UI/UX</option>
-              <option value="Manajemen Bisnis">📈 Manajemen Bisnis</option>
-              <option value="Kehidupan Kampus">🎓 Kehidupan Kampus</option>
-            </select>
-
-            <label class="flex items-center gap-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 cursor-pointer px-2 py-1">
-              <input type="checkbox" id="post-anon" class="accent-purple-600 rounded" />
-              <span>Anonim</span>
-            </label>
-          </div>
-
-          <button onclick="createNewPost()" class="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs sm:text-sm shadow-xs transition">
-            Posting
-          </button>
-        </div>
-      </div>
-
-      <!-- Daftar Feed -->
-      <div id="feed-container" class="space-y-4"></div>
-
-    </section>
-
-    <!-- ===================================================
-         2. PRE-TEST & SIMULASI (HASIL LANGSUNG MENYATU)
-    ==================================================== -->
-    <section id="sec-pretest" class="hidden space-y-5">
-      
-      <!-- Pilihan Kondisi Siswa -->
-      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
-        <h3 class="font-bold text-sm">Pilih Kondisimu Saat Ini</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <button onclick="setSegment('eksplorasi')" id="seg-eksplorasi" class="p-4 rounded-xl border-2 border-purple-600 bg-purple-50/60 dark:bg-purple-950/40 text-left transition">
-            <div class="font-bold text-sm text-purple-700 dark:text-purple-300">Belum Menentukan Kuliah</div>
-            <div class="text-xs text-slate-500 mt-0.5">Cari tahu jurusan yang cocok lewat kuis minat</div>
-          </button>
-          <button onclick="setSegment('penentuan')" id="seg-penentuan" class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-left transition">
-            <div class="font-bold text-sm">Sudah Punya Jurusan Incaran</div>
-            <div class="text-xs text-slate-500 mt-0.5">Uji kesiapan menghadapi tugas perkuliahan</div>
-          </button>
-        </div>
-      </div>
-
-      <!-- Kuis Pre-Test -->
-      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
-        <div class="flex items-center justify-between">
-          <h3 id="pretest-title" class="font-bold text-base">Pre-Test Kecocokan Jurusan</h3>
-          <span id="pretest-badge" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">Belum Dijawab</span>
-        </div>
-        <p class="text-xs text-slate-500">Pilih kegiatan yang paling sesuai dengan minat dan caramu berpikir:</p>
-        <div class="space-y-2">
-          <button onclick="savePretest('Teknik Informatika & Sistem Informasi', '95% Cocok', 'Software Engineer, Data Analyst, AI Developer')" class="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-purple-600 hover:bg-purple-50/40 dark:hover:bg-purple-950/30 text-left text-xs sm:text-sm font-medium transition">
-            💻 Membedah logika, membuat program aplikasi, dan mengulik teknologi
-          </button>
-          <button onclick="savePretest('Desain Komunikasi Visual (DKV) & UI/UX', '94% Cocok', 'Product Designer, UI/UX Specialist, Creative Director')" class="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-purple-600 hover:bg-purple-50/40 dark:hover:bg-purple-950/30 text-left text-xs sm:text-sm font-medium transition">
-            🎨 Merancang karya visual, ilustrasi digital, dan pengalaman pengguna
-          </button>
-          <button onclick="savePretest('Manajemen & Bisnis Digital', '93% Cocok', 'Business Development, Product Manager, Entrepreneur')" class="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-purple-600 hover:bg-purple-50/40 dark:hover:bg-purple-950/30 text-left text-xs sm:text-sm font-medium transition">
-            📈 Menyusun strategi bisnis, memimpin tim, dan menganalisis peluang pasar
-          </button>
-        </div>
-      </div>
-
-      <!-- Simulasi Studi Kasus Jurusan -->
-      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
-        <div class="flex items-center justify-between">
-          <h3 class="font-bold text-base">Simulasi Kasus Tugas Kuliah</h3>
-          <span id="sim-badge" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">Belum Dijawab</span>
-        </div>
-        <p class="text-xs text-slate-500">
-          Saat awal semester, dosen memberikan studi kasus proyek yang harus dipresentasikan minggu depan. Apa langkahmu?
+      <div class="space-y-2">
+        <h1 class="text-2xl font-extrabold tracking-tight">Selamat Datang di ForCollege</h1>
+        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+          Silakan masuk dengan akun Google Anda dan lengkapi data diri untuk mengakses Feed Forum, Pre-Test, dan Seminar.
         </p>
-        <div class="space-y-2">
-          <button onclick="saveSimulasi('Sangat Siap (Skor 94/100)')" class="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-purple-600 hover:bg-purple-50/40 dark:hover:bg-purple-950/30 text-left text-xs sm:text-sm font-medium transition">
-            ✅ Memecah bagian riset sejak hari pertama dan berdiskusi dengan teman/alumni
-          </button>
-          <button onclick="saveSimulasi('Cukup Siap (Skor 76/100)')" class="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-purple-600 hover:bg-purple-50/40 dark:hover:bg-purple-950/30 text-left text-xs sm:text-sm font-medium transition">
-            ⏳ Menunggu mendekati hari pengumpulan baru menyusun materi
-          </button>
-        </div>
       </div>
 
-      <!-- Kartu Ringkasan Hasil & Insight (Otomatis Terupdate di Halaman yang Sama) -->
-      <div id="insight-card" class="p-5 rounded-2xl bg-purple-600 text-white space-y-3 shadow-xs">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-bold uppercase tracking-wider text-purple-200">Ringkasan Evaluasi & Prospek Jurusanmu</span>
-          <span id="insight-match" class="text-xs font-extrabold px-2.5 py-1 rounded-lg bg-white/20">95% Cocok</span>
-        </div>
-        <h4 id="insight-major" class="text-lg font-extrabold">Teknik Informatika & Sistem Informasi</h4>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs">
-          <div class="p-3 rounded-xl bg-white/10">
-            <span class="text-purple-200 block">Kesiapan Tugas Kuliah:</span>
-            <strong id="insight-sim" class="text-sm">Sangat Siap (Skor 94/100)</strong>
-          </div>
-          <div class="p-3 rounded-xl bg-white/10">
-            <span class="text-purple-200 block">Prospek Karier Utama:</span>
-            <strong id="insight-career" class="text-sm">Software Engineer, Data Analyst, AI Developer</strong>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- ===================================================
-         3. SEMINAR & ALUMNI
-    ==================================================== -->
-    <section id="sec-seminar" class="hidden space-y-4">
-      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
-        <div>
-          <h3 class="font-bold text-base">Jadwal Seminar & Live Sharing Alumni</h3>
-          <p class="text-xs text-slate-500">Dengarkan langsung cerita pengalaman kuliah dan tips adaptasi dari para alumni.</p>
-        </div>
-
-        <div class="space-y-3">
-          <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div>
-              <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">Sabtu, 16.00 WIB</span>
-              <h4 class="font-bold text-sm mt-1">Sharing Alumni: Bedah Tugas Asli & Kultur Perkuliahan</h4>
-              <p class="text-xs text-slate-500">Sesi tanya-jawab santai bersama kakak tingkat dari berbagai kampus.</p>
-            </div>
-            <button onclick="joinSeminar(this, 'Sharing Alumni Kultur Perkuliahan')" class="shrink-0 px-4 py-2 rounded-xl bg-purple-600 text-white text-xs font-bold">
-              Ikut Seminar
-            </button>
-          </div>
-
-          <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div>
-              <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300">Minggu, 19.00 WIB</span>
-              <h4 class="font-bold text-sm mt-1">Persiapan Masuk Kampus & Pengenalan Prospek Industri</h4>
-              <p class="text-xs text-slate-500">Panduan menyusun langkah persiapan sejak bangku SMA agar bebas salah jurusan.</p>
-            </div>
-            <button onclick="joinSeminar(this, 'Seminar Persiapan Masuk Kampus')" class="shrink-0 px-4 py-2 rounded-xl bg-purple-600 text-white text-xs font-bold">
-              Ikut Seminar
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================================================
-         4. HISTORY (TERHUBUNG CLOUD SUPABASE)
-    ==================================================== -->
-    <section id="sec-history" class="hidden space-y-4">
-      <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
-        <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-          <div>
-            <h3 class="font-bold text-base">History Aktivitas</h3>
-            <p class="text-xs text-slate-500">Catatan aktivitas Pre-Test, interaksi Feed, dan Seminar yang tersimpan di akunmu.</p>
-          </div>
-          <button onclick="fetchSupabaseHistory()" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs font-bold text-purple-600 dark:text-purple-400">
-            Refresh
-          </button>
-        </div>
-        <div id="history-list" class="space-y-2 max-h-96 overflow-y-auto"></div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- =====================================================
-       MODAL LOGIN
-  ====================================================== -->
-  <div id="login-modal" class="fixed inset-0 z-50 hidden bg-black/60 flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-slate-900 w-full max-w-md rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-xl space-y-5">
-      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-        <h3 class="font-extrabold text-lg">Login ForCollege</h3>
-        <button onclick="closeLoginModal()" class="text-slate-400 hover:text-slate-600 font-bold">✕</button>
-      </div>
-
-      <div class="space-y-3">
-        <div>
-          <label class="block text-xs font-bold mb-1">Nama atau Email</label>
-          <input id="login-email-input" type="text" placeholder="Masukkan nama atau email kamu..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm font-medium" />
-        </div>
-        <button onclick="loginDirectSupabase()" class="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm">
-          Masuk Sekarang
-        </button>
-      </div>
-
-      <div class="relative flex py-1 items-center">
-        <div class="grow border-t border-slate-200 dark:border-slate-800"></div>
-        <span class="shrink mx-3 text-[11px] text-slate-400 font-semibold uppercase">Atau</span>
-        <div class="grow border-t border-slate-200 dark:border-slate-800"></div>
-      </div>
-
-      <button onclick="loginGoogleOAuth()" class="w-full py-2.5 px-4 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 font-bold text-xs sm:text-sm flex items-center justify-center gap-2.5">
-        <svg class="w-4 h-4" viewBox="0 0 24 24">
+      <button onclick="loginWithGoogle()" class="w-full py-3 px-4 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 font-bold text-sm flex items-center justify-center gap-3 shadow-xs transition">
+        <svg class="w-5 h-5" viewBox="0 0 24 24">
           <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.8C6.2 7.2 8.9 5 12 5z"/>
           <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.6l3.7 2.9c2.2-2 3.7-5 3.7-8.7z"/>
           <path fill="#FBBC05" d="M5.3 14.8c-.2-.8-.4-1.6-.4-2.5s.2-1.7.4-2.5L1.6 7C.6 9 0 11.2 0 13.5s.6 4.5 1.6 6.5l3.7-2.9z"/>
           <path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.1-6.7-5l-3.7 2.8C3.5 21.4 7.4 24 12 24z"/>
         </svg>
-        <span>Login dengan Google</span>
+        <span>Masuk dengan Akun Google</span>
       </button>
+
+      <div class="pt-2">
+        <button onclick="toggleTheme()" id="gate-theme-btn" class="text-xs font-bold text-slate-400 hover:text-purple-600">
+          Mode: Dark / White
+        </button>
+      </div>
     </div>
   </div>
 
   <!-- =====================================================
-       SCRIPT LOGIKA FEED, PRE-TEST, & SUPABASE
+       LAYAR 2: GERBANG WAJIB LENGKAPI DATA DIRI (PROFILE GATE)
+       Muncul setelah Login Google jika data di DB belum lengkap
+  ====================================================== -->
+  <div id="profile-gate" class="hidden min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-lg p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-lg space-y-5">
+      <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
+        <span class="text-xs font-bold uppercase px-2.5 py-1 rounded-md bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
+          Tahap Verifikasi Data
+        </span>
+        <h2 class="text-xl font-extrabold mt-2">Lengkapi Data Diri Anda</h2>
+        <p class="text-xs text-slate-500 mt-0.5">
+          Anda wajib melengkapi seluruh informasi berikut sebelum dapat mengakses fitur ForCollege.
+        </p>
+      </div>
+
+      <form id="profile-form" onsubmit="submitProfileData(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold mb-1 text-slate-500">Email Google Terhubung</label>
+          <input id="prof-email" type="email" disabled class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800 text-slate-500 text-sm font-semibold cursor-not-allowed" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold mb-1">Nama Lengkap *</label>
+          <input id="prof-name" type="text" required placeholder="Masukkan nama lengkap Anda" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm font-medium focus:outline-none focus:border-purple-600" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold mb-1">Asal Sekolah (SMA/SMK) *</label>
+            <input id="prof-school" type="text" required placeholder="Contoh: SMAN 1 Malang" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm font-medium focus:outline-none focus:border-purple-600" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold mb-1">Kelas Saat Ini *</label>
+            <select id="prof-grade" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm font-semibold focus:outline-none focus:border-purple-600">
+              <option value="">-- Pilih Kelas --</option>
+              <option value="Kelas 10 SMA">Kelas 10 SMA</option>
+              <option value="Kelas 11 SMA">Kelas 11 SMA</option>
+              <option value="Kelas 12 SMA">Kelas 12 SMA</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold mb-1">Status Rencana Kuliah *</label>
+          <select id="prof-segment" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm font-semibold focus:outline-none focus:border-purple-600">
+            <option value="">-- Pilih Status Persiapan --</option>
+            <option value="eksplorasi">Belum Menentukan Kuliah (Tahap Eksplorasi)</option>
+            <option value="penentuan">Sudah Punya Jurusan Incaran (Tahap Penentuan)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold mb-1">Bidang / Jurusan yang Diminati *</label>
+          <input id="prof-major" type="text" required placeholder="Contoh: Teknik Informatika / DKV / Manajemen" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm font-medium focus:outline-none focus:border-purple-600" />
+        </div>
+
+        <div class="pt-2 flex items-center justify-between gap-3">
+          <button type="button" onclick="logoutUser()" class="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-bold text-slate-500">
+            Batal / Keluar
+          </button>
+          <button type="submit" id="btn-save-profile" class="flex-1 py-2.5 px-5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm shadow-xs transition">
+            Simpan Data & Masuk ke Aplikasi
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       LAYAR 3: APLIKASI UTAMA (Hanya Terbuka Jika Profil Lengkap)
+  ====================================================== -->
+  <div id="app-shell" class="hidden">
+
+    <!-- MENU BAR UTAMA -->
+    <header class="sticky top-0 z-30 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-xs">
+      <div class="max-w-5xl mx-auto px-4">
+        <div class="h-16 flex items-center justify-between gap-4">
+          
+          <div class="flex items-center gap-2.5 shrink-0">
+            <div class="w-9 h-9 rounded-xl bg-purple-600 text-white font-extrabold flex items-center justify-center text-base">
+              FC
+            </div>
+            <span class="font-extrabold text-lg tracking-tight text-purple-600 dark:text-purple-400">ForCollege</span>
+          </div>
+
+          <nav class="hidden md:flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
+            <button onclick="switchMenu('forum')" id="nav-forum" class="px-4 py-2 rounded-lg font-bold text-xs sm:text-sm bg-purple-600 text-white shadow-xs transition">
+              Feed Forum
+            </button>
+            <button onclick="switchMenu('pretest')" id="nav-pretest" class="px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-purple-600 transition">
+              Pre-Test & Simulasi
+            </button>
+            <button onclick="switchMenu('seminar')" id="nav-seminar" class="px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-purple-600 transition">
+              Seminar
+            </button>
+            <button onclick="switchMenu('history')" id="nav-history" class="px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-purple-600 transition">
+              History
+            </button>
+          </nav>
+
+          <div class="flex items-center gap-2 shrink-0">
+            <button onclick="toggleTheme()" id="theme-btn" class="px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+              Dark
+            </button>
+
+            <div class="flex items-center gap-2 pl-2 border-l border-slate-200 dark:border-slate-800">
+              <div class="text-right hidden sm:block">
+                <p id="nav-user-name" class="text-xs font-bold text-purple-600 dark:text-purple-400 leading-none"></p>
+                <p id="nav-user-school" class="text-[10px] text-slate-400 mt-0.5"></p>
+              </div>
+              <button onclick="logoutUser()" class="px-3 py-1.5 rounded-lg bg-rose-50 text-rose-600 dark:bg-rose-950 dark:text-rose-300 text-xs font-bold border border-rose-200 dark:border-rose-800">
+                Logout
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Menu Bar Mobile -->
+        <nav class="flex md:hidden overflow-x-auto gap-1.5 py-2 border-t border-slate-100 dark:border-slate-800">
+          <button onclick="switchMenu('forum')" id="mnav-forum" class="px-3.5 py-1.5 rounded-lg font-bold text-xs bg-purple-600 text-white whitespace-nowrap">
+            Feed Forum
+          </button>
+          <button onclick="switchMenu('pretest')" id="mnav-pretest" class="px-3.5 py-1.5 rounded-lg font-semibold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">
+            Pre-Test & Simulasi
+          </button>
+          <button onclick="switchMenu('seminar')" id="mnav-seminar" class="px-3.5 py-1.5 rounded-lg font-semibold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">
+            Seminar
+          </button>
+          <button onclick="switchMenu('history')" id="mnav-history" class="px-3.5 py-1.5 rounded-lg font-semibold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">
+            History
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- KONTEN UTAMA -->
+    <main class="max-w-3xl mx-auto px-4 py-6">
+
+      <!-- ===================================================
+           1. FEED FORUM (MURNI DARI DATABASE SUPABASE)
+      ==================================================== -->
+      <section id="sec-forum" class="space-y-5">
+        
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
+          <textarea id="post-input" rows="2" placeholder="Bagikan diskusi jurusan, cari teman satu kampus, atau tanyakan ke alumni..." class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-sm focus:outline-none focus:border-purple-500"></textarea>
+          
+          <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+            <div class="flex items-center gap-2">
+              <select id="post-tag" class="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-semibold">
+                <option value="Teknik Informatika">💻 Teknik Informatika</option>
+                <option value="DKV & UI/UX">🎨 DKV & UI/UX</option>
+                <option value="Manajemen Bisnis">📈 Manajemen Bisnis</option>
+                <option value="Kehidupan Kampus">🎓 Kehidupan Kampus</option>
+              </select>
+
+              <label class="flex items-center gap-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 cursor-pointer px-2 py-1">
+                <input type="checkbox" id="post-anon" class="accent-purple-600 rounded" />
+                <span>Anonim</span>
+              </label>
+            </div>
+
+            <button onclick="createNewPost()" class="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs sm:text-sm shadow-xs transition">
+              Posting
+            </button>
+          </div>
+        </div>
+
+        <div id="feed-container" class="space-y-4"></div>
+      </section>
+
+      <!-- ===================================================
+           2. PRE-TEST & SIMULASI (TERSINKRONISASI DATABASE)
+      ==================================================== -->
+      <section id="sec-pretest" class="hidden space-y-5">
+        
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-base">Pre-Test Kecocokan Jurusan</h3>
+            <span id="pretest-badge" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">Belum Dijawab</span>
+          </div>
+          <p class="text-xs text-slate-500">Pilih aktivitas yang paling sesuai dengan minat dan caramu berpikir:</p>
+          <div class="space-y-2">
+            <button onclick="savePretest('Teknik Informatika & Sistem Informasi', '95% Cocok')" class="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-purple-600 hover:bg-purple-50/40 dark:hover:bg-purple-950/30 text-left text-xs sm:text-sm font-medium transition">
+              💻 Membedah logika, membuat program aplikasi, dan mengulik teknologi
+            </button>
+            <button onclick="savePretest('Desain Komunikasi Visual (DKV) & UI/UX', '94% Cocok')" class="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-purple-600 hover:bg-purple-50/40 dark:hover:bg-purple-950/30 text-left text-xs sm:text-sm font-medium transition">
+              🎨 Merancang karya visual, ilustrasi digital, dan pengalaman pengguna
+            </button>
+            <button onclick="savePretest('Manajemen & Bisnis Digital', '93% Cocok')" class="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-purple-600 hover:bg-purple-50/40 dark:hover:bg-purple-950/30 text-left text-xs sm:text-sm font-medium transition">
+              📈 Menyusun strategi bisnis, memimpin tim, dan menganalisis peluang pasar
+            </button>
+          </div>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-base">Simulasi Studi Kasus Tugas Kuliah</h3>
+            <span id="sim-badge" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">Belum Dijawab</span>
+          </div>
+          <p class="text-xs text-slate-500">
+            Saat awal semester, dosen memberikan studi kasus proyek yang harus dipresentasikan minggu depan. Apa langkahmu?
+          </p>
+          <div class="space-y-2">
+            <button onclick="saveSimulasi('Sangat Siap (Skor 94/100)')" class="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-purple-600 hover:bg-purple-50/40 dark:hover:bg-purple-950/30 text-left text-xs sm:text-sm font-medium transition">
+              ✅ Memecah bagian riset sejak hari pertama dan berdiskusi dengan teman/alumni
+            </button>
+            <button onclick="saveSimulasi('Cukup Siap (Skor 76/100)')" class="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-purple-600 hover:bg-purple-50/40 dark:hover:bg-purple-950/30 text-left text-xs sm:text-sm font-medium transition">
+              ⏳ Menunggu mendekati hari pengumpulan baru menyusun materi
+            </button>
+          </div>
+        </div>
+
+        <!-- Ringkasan Data Evaluasi dari Database -->
+        <div class="p-5 rounded-2xl bg-purple-600 text-white space-y-3 shadow-xs">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-purple-200">Data Evaluasi Tersimpan di Database</span>
+            <span id="db-match-badge" class="text-xs font-extrabold px-2.5 py-1 rounded-lg bg-white/20">-</span>
+          </div>
+          <h4 id="db-major-result" class="text-lg font-extrabold">Belum ada hasil Pre-Test</h4>
+          <p class="text-xs text-purple-100">
+            Status Simulasi Tugas: <strong id="db-sim-result">Belum dikerjakan</strong>
+          </p>
+        </div>
+
+      </section>
+
+      <!-- ===================================================
+           3. SEMINAR (MURNI DARI DATABASE SUPABASE)
+      ==================================================== -->
+      <section id="sec-seminar" class="hidden space-y-5">
+        
+        <!-- Form Tambah Jadwal Seminar ke Database -->
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
+          <h3 class="font-bold text-base">Buat Jadwal Seminar / Sharing Alumni Baru</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <input id="sem-title" type="text" placeholder="Judul Seminar / Sesi Alumni" class="px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-xs sm:text-sm" />
+            <input id="sem-schedule" type="text" placeholder="Jadwal (Contoh: Sabtu, 16.00 WIB)" class="px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-xs sm:text-sm" />
+          </div>
+          <input id="sem-desc" type="text" placeholder="Deskripsi singkat topik pembahasan..." class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-xs sm:text-sm" />
+          <div class="flex justify-end">
+            <button onclick="createSeminar()" class="px-4 py-2 rounded-xl bg-purple-600 text-white font-bold text-xs">
+              + Simpan Seminar ke Database
+            </button>
+          </div>
+        </div>
+
+        <!-- Daftar Seminar dari Tabel Database -->
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
+          <h3 class="font-bold text-base">Daftar Seminar Tersedia</h3>
+          <div id="seminar-container" class="space-y-3"></div>
+        </div>
+
+      </section>
+
+      <!-- ===================================================
+           4. HISTORY (MURNI DARI DATABASE SUPABASE)
+      ==================================================== -->
+      <section id="sec-history" class="hidden space-y-4">
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+            <div>
+              <h3 class="font-bold text-base">History Aktivitas Akun</h3>
+              <p class="text-xs text-slate-500">Data riwayat aktivitas Anda yang tercatat di Supabase.</p>
+            </div>
+            <button onclick="fetchSupabaseHistory()" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs font-bold text-purple-600 dark:text-purple-400">
+              Refresh
+            </button>
+          </div>
+          <div id="history-list" class="space-y-2 max-h-96 overflow-y-auto"></div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- =====================================================
+       SCRIPT UTAMA (100% DATABASE SUPABASE TANPA DUMMY)
   ====================================================== -->
   <script>
     const SUPABASE_URL = "https://yngoehczzkxtxxhsewdb.supabase.co";
     const SUPABASE_KEY = "sb_publishable_Px5W05MV8hPYDt-PkdfNVg_mIqeu21H";
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    let activeUser = localStorage.getItem('fc_active_user') || "";
-    let localFallbackHistory = JSON.parse(localStorage.getItem('fc_local_history') || '[]');
+    let currentAuthUser = null;
+    let currentUserProfile = null;
 
-    let feedPosts = [
-      {
-        id: 1,
-        author: "Raka Pratama",
-        role: "Siswa Kelas 12",
-        tag: "Teknik Informatika",
-        time: "15 menit lalu",
-        content: "Ada yang incar Teknik Informatika tahun ini? Barusan nyoba simulasi kasus di menu Pre-Test lumayan bikin kebayang tugas kuliahnya. Yuk kenalan biar punya relasi satu jurusan!",
-        likes: 14,
-        liked: false,
-        connected: false,
-        isAnon: false,
-        showComments: true,
-        comments: [
-          { user: "Kak Dimas (Alumni IT)", text: "Semangat Raka! Kalau dari sekarang sudah paham gambaran tugasnya, pas masuk semester 1 nggak bakal kaget." },
-          { user: "Nadia Putri", text: "Aku incar UI/UX & Sistem Informasi nih, salam kenal ya!" }
-        ]
-      },
-      {
-        id: 2,
-        author: "Siswa Anonim",
-        role: "Anonim",
-        tag: "Manajemen Bisnis",
-        time: "1 jam lalu",
-        content: "Kakak alumni, gimana cara ngasih alasan yang masuk akal ke orang tua kalau kita milih jurusan yang baru populer sekarang?",
-        likes: 9,
-        liked: false,
-        connected: false,
-        isAnon: true,
-        showComments: false,
-        comments: [
-          { user: "Alumni Manajemen", text: "Ceritain aja prospek karier dan hasil kecocokanmu dari Pre-Test serta sharing alumni di sini, orang tua pasti tenang kalau lihat kamu sudah riset mendalam." }
-        ]
-      }
-    ];
-
+    // Pantau Sesi Login Google Secara Real-Time
     window.addEventListener('DOMContentLoaded', async () => {
-      renderFeed();
       const { data: { session } } = await supabaseClient.auth.getSession();
-      if (session && session.user) {
-        activeUser = session.user.email || session.user.user_metadata?.full_name || "User";
-        localStorage.setItem('fc_active_user', activeUser);
-      }
-      if (activeUser) applyLoggedInUI(activeUser);
-      await fetchSupabaseHistory();
+      await handleSessionState(session);
+
+      supabaseClient.auth.onAuthStateChange(async (_event, session) => {
+        await handleSessionState(session);
+      });
     });
 
-    // 1. RENDER & INTERAKSI FEED FORUM (LIKE, COMMENT, KENALAN)
-    function renderFeed() {
+    // =====================================================
+    // 1. LOGIKA GERBANG AKSES (LOGIN GOOGLE -> CEK PROFIL DB)
+    // =====================================================
+    async function handleSessionState(session) {
+      if (!session || !session.user) {
+        // Belum login Google -> Tampilkan Gerbang 1
+        currentAuthUser = null;
+        currentUserProfile = null;
+        document.getElementById('auth-gate').classList.remove('hidden');
+        document.getElementById('profile-gate').classList.add('hidden');
+        document.getElementById('app-shell').classList.add('hidden');
+        return;
+      }
+
+      currentAuthUser = session.user;
+      document.getElementById('prof-email').value = currentAuthUser.email || "";
+
+      // Cek apakah profil sudah lengkap di tabel user_profiles
+      const { data: profile, error } = await supabaseClient
+        .from('user_profiles')
+        .select('*')
+        .eq('user_id', currentAuthUser.id)
+        .maybeSingle();
+
+      if (error) {
+        console.error("Gagal mengecek tabel user_profiles:", error.message);
+      }
+
+      if (!profile || !profile.is_complete || !profile.full_name || !profile.school_name) {
+        // Sudah login Google tapi belum melengkapi data -> Tahan di Gerbang 2
+        if (currentAuthUser.user_metadata?.full_name) {
+          document.getElementById('prof-name').value = currentAuthUser.user_metadata.full_name;
+        }
+        document.getElementById('auth-gate').classList.add('hidden');
+        document.getElementById('profile-gate').classList.remove('hidden');
+        document.getElementById('app-shell').classList.add('hidden');
+      } else {
+        // Profil sudah lengkap di Database -> Buka Akses Aplikasi Utama
+        currentUserProfile = profile;
+        enterMainApplication();
+      }
+    }
+
+    async function loginWithGoogle() {
+      const { error } = await supabaseClient.auth.signInWithOAuth({
+        provider: 'google',
+        options: { redirectTo: window.location.origin + window.location.pathname }
+      });
+      if (error) alert("Gagal Login Google: " + error.message);
+    }
+
+    async function submitProfileData(e) {
+      e.preventDefault();
+      if (!currentAuthUser) return;
+
+      const fullName = document.getElementById('prof-name').value.trim();
+      const schoolName = document.getElementById('prof-school').value.trim();
+      const gradeLevel = document.getElementById('prof-grade').value;
+      const segment = document.getElementById('prof-segment').value;
+      const targetMajor = document.getElementById('prof-major').value.trim();
+
+      if (!fullName || !schoolName || !gradeLevel || !segment || !targetMajor) {
+        alert("Harap lengkapi seluruh kolom data diri!");
+        return;
+      }
+
+      const payload = {
+        user_id: currentAuthUser.id,
+        email: currentAuthUser.email,
+        full_name: fullName,
+        school_name: schoolName,
+        grade_level: gradeLevel,
+        segment: segment,
+        target_major: targetMajor,
+        is_complete: true,
+        updated_at: new Date().toISOString()
+      };
+
+      const { data, error } = await supabaseClient
+        .from('user_profiles')
+        .upsert(payload)
+        .select()
+        .single();
+
+      if (error) {
+        alert("Gagal menyimpan profil ke database Supabase (Pastikan SQL tabel sudah dijalankan): " + error.message);
+        return;
+      }
+
+      currentUserProfile = data;
+      await logActivity("Registrasi Profil", `Melengkapi profil siswa (${gradeLevel} - ${schoolName})`);
+      enterMainApplication();
+    }
+
+    async function enterMainApplication() {
+      document.getElementById('auth-gate').classList.add('hidden');
+      document.getElementById('profile-gate').classList.add('hidden');
+      document.getElementById('app-shell').classList.remove('hidden');
+
+      document.getElementById('nav-user-name').textContent = currentUserProfile.full_name;
+      document.getElementById('nav-user-school').textContent = `${currentUserProfile.grade_level} • ${currentUserProfile.school_name}`;
+
+      // Tampilkan data Pre-Test & Simulasi yang tersimpan di DB
+      syncPretestUIFromProfile();
+
+      // Muat seluruh data murni dari Supabase
+      await Promise.all([
+        fetchFeedFromSupabase(),
+        fetchSeminarsFromSupabase(),
+        fetchSupabaseHistory()
+      ]);
+    }
+
+    async function logoutUser() {
+      await supabaseClient.auth.signOut();
+      window.location.reload();
+    }
+
+    // =====================================================
+    // 2. FEED FORUM (MURNI DARI TABEL forum_posts & forum_comments)
+    // =====================================================
+    async function fetchFeedFromSupabase() {
       const container = document.getElementById('feed-container');
-      container.innerHTML = feedPosts.map(post => `
-        <article class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
-          
-          <div class="flex items-center justify-between gap-2">
-            <div class="flex items-center gap-2.5">
-              <div class="w-9 h-9 rounded-full ${post.isAnon ? 'bg-slate-200 dark:bg-slate-800 text-slate-600' : 'bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-300'} font-bold flex items-center justify-center text-sm">
-                ${post.isAnon ? '🕵️' : post.author.charAt(0).toUpperCase()}
-              </div>
-              <div>
-                <div class="flex items-center gap-2">
-                  <span class="font-bold text-sm">${post.author}</span>
-                  <span class="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-purple-50 text-purple-700 dark:bg-purple-950/80 dark:text-purple-300">
-                    ${post.tag}
-                  </span>
+      container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Memuat postingan dari database...</p>`;
+
+      const { data: posts, error } = await supabaseClient
+        .from('forum_posts')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        container.innerHTML = `<p class="text-xs text-rose-500 text-center py-6">Gagal memuat feed: ${error.message}</p>`;
+        return;
+      }
+
+      if (!posts || posts.length === 0) {
+        container.innerHTML = `
+          <div class="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center space-y-1">
+            <p class="font-bold text-sm">Belum ada postingan di database</p>
+            <p class="text-xs text-slate-400">Jadilah yang pertama menulis diskusi di Feed Forum!</p>
+          </div>
+        `;
+        return;
+      }
+
+      // Ambil semua komentar untuk postingan yang ada
+      const postIds = posts.map(p => p.id);
+      const { data: comments } = await supabaseClient
+        .from('forum_comments')
+        .select('*')
+        .in('post_id', postIds)
+        .order('created_at', { ascending: true });
+
+      const commentsByPost = {};
+      (comments || []).forEach(c => {
+        if (!commentsByPost[c.post_id]) commentsByPost[c.post_id] = [];
+        commentsByPost[c.post_id].push(c);
+      });
+
+      container.innerHTML = posts.map(post => {
+        const postComments = commentsByPost[post.id] || [];
+        const timeStr = new Date(post.created_at).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' });
+        return `
+          <article class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-full bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-300 font-bold flex items-center justify-center text-sm">
+                  ${post.is_anon ? '🕵️' : post.author_name.charAt(0).toUpperCase()}
                 </div>
-                <p class="text-[11px] text-slate-400">${post.role} • ${post.time}</p>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold text-sm">${post.is_anon ? 'Siswa Anonim' : post.author_name}</span>
+                    <span class="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-purple-50 text-purple-700 dark:bg-purple-950/80 dark:text-purple-300">
+                      ${post.tag}
+                    </span>
+                  </div>
+                  <p class="text-[11px] text-slate-400">${post.author_role} • ${timeStr}</p>
+                </div>
               </div>
             </div>
 
-            ${!post.isAnon ? `
-              <button onclick="toggleConnect(${post.id})" class="px-3 py-1 rounded-lg text-xs font-bold transition ${post.connected ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-slate-100 hover:bg-purple-100 text-purple-600 dark:bg-slate-800 dark:text-purple-300'}">
-                ${post.connected ? '✓ Teman' : '+ Kenalan'}
+            <p class="text-sm leading-relaxed text-slate-700 dark:text-slate-200">${post.content}</p>
+
+            <div class="flex items-center gap-4 pt-2 border-t border-slate-100 dark:border-slate-800 text-xs font-bold">
+              <button onclick="likePostInDB(${post.id}, ${post.likes_count || 0})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/50 transition">
+                <span>❤️</span>
+                <span>${post.likes_count || 0} Like</span>
               </button>
-            ` : ''}
-          </div>
+              <span class="flex items-center gap-1.5 px-3 py-1.5 text-slate-500">
+                <span>💬</span>
+                <span>${postComments.length} Comment</span>
+              </span>
+            </div>
 
-          <p class="text-sm leading-relaxed text-slate-700 dark:text-slate-200">${post.content}</p>
-
-          <div class="flex items-center gap-4 pt-2 border-t border-slate-100 dark:border-slate-800 text-xs font-bold">
-            <button onclick="toggleLike(${post.id})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition ${post.liked ? 'bg-rose-50 text-rose-600 dark:bg-rose-950/60 dark:text-rose-400' : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800'}">
-              <span>${post.liked ? '❤️' : '🤍'}</span>
-              <span>${post.likes} Like</span>
-            </button>
-
-            <button onclick="toggleCommentBox(${post.id})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-              <span>💬</span>
-              <span>${post.comments.length} Comment</span>
-            </button>
-          </div>
-
-          ${post.showComments ? `
+            <!-- Daftar Komentar dari Database -->
             <div class="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-2.5">
               <div class="space-y-2">
-                ${post.comments.map(c => `
+                ${postComments.map(c => `
                   <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 text-xs space-y-0.5">
-                    <span class="font-bold text-purple-600 dark:text-purple-400">${c.user}</span>
-                    <p class="text-slate-700 dark:text-slate-300">${c.text}</p>
+                    <span class="font-bold text-purple-600 dark:text-purple-400">${c.author_name}</span>
+                    <p class="text-slate-700 dark:text-slate-300">${c.content}</p>
                   </div>
                 `).join('')}
               </div>
 
               <div class="flex gap-2 pt-1">
                 <input id="comment-input-${post.id}" type="text" placeholder="Tulis komentar..." class="flex-1 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-xs focus:outline-none focus:border-purple-500" />
-                <button onclick="addComment(${post.id})" class="px-4 py-2 rounded-xl bg-purple-600 text-white font-bold text-xs">
+                <button onclick="addCommentToDB(${post.id})" class="px-4 py-2 rounded-xl bg-purple-600 text-white font-bold text-xs">
                   Kirim
                 </button>
               </div>
             </div>
-          ` : ''}
-
-        </article>
-      `).join('');
+          </article>
+        `;
+      }).join('');
     }
 
-    function createNewPost() {
+    async function createNewPost() {
       const input = document.getElementById('post-input');
       const tag = document.getElementById('post-tag').value;
       const isAnon = document.getElementById('post-anon').checked;
-      const text = input.value.trim();
-      if (!text) return;
+      const content = input.value.trim();
+      if (!content || !currentAuthUser || !currentUserProfile) return;
 
-      const authorName = isAnon ? "Siswa Anonim" : (activeUser || "Siswa ForCollege");
-      feedPosts.unshift({
-        id: Date.now(),
-        author: authorName,
-        role: isAnon ? "Anonim" : "Member ForCollege",
+      const { error } = await supabaseClient.from('forum_posts').insert([{
+        user_id: currentAuthUser.id,
+        author_name: currentUserProfile.full_name,
+        author_role: `${currentUserProfile.grade_level} • ${currentUserProfile.school_name}`,
         tag: tag,
-        time: "Baru saja",
-        content: text,
-        likes: 0,
-        liked: false,
-        connected: false,
-        isAnon: isAnon,
-        showComments: true,
-        comments: []
-      });
+        content: content,
+        is_anon: isAnon,
+        likes_count: 0
+      }]);
+
+      if (error) {
+        alert("Gagal menyimpan postingan: " + error.message);
+        return;
+      }
 
       input.value = "";
-      renderFeed();
-      saveActivityToSupabase("Feed Forum", `Membuat postingan di topik ${tag}`);
+      await logActivity("Feed Forum", `Membuat postingan pada topik ${tag}`);
+      await fetchFeedFromSupabase();
     }
 
-    function toggleLike(postId) {
-      const post = feedPosts.find(p => p.id === postId);
-      if (!post) return;
-      post.liked = !post.liked;
-      post.likes += post.liked ? 1 : -1;
-      renderFeed();
-      if (post.liked) saveActivityToSupabase("Like Feed", `Menyukai postingan ${post.author}`);
+    async function likePostInDB(postId, currentLikes) {
+      const { error } = await supabaseClient
+        .from('forum_posts')
+        .update({ likes_count: currentLikes + 1 })
+        .eq('id', postId);
+
+      if (!error) {
+        await logActivity("Like Feed", `Menyukai diskusi #${postId}`);
+        await fetchFeedFromSupabase();
+      }
     }
 
-    function toggleCommentBox(postId) {
-      const post = feedPosts.find(p => p.id === postId);
-      if (!post) return;
-      post.showComments = !post.showComments;
-      renderFeed();
-    }
-
-    function addComment(postId) {
+    async function addCommentToDB(postId) {
       const input = document.getElementById(`comment-input-${postId}`);
-      const text = input.value.trim();
-      if (!text) return;
-      const post = feedPosts.find(p => p.id === postId);
-      if (!post) return;
+      const content = input.value.trim();
+      if (!content || !currentAuthUser || !currentUserProfile) return;
 
-      post.comments.push({ user: activeUser || "Kamu", text: text });
-      renderFeed();
-      saveActivityToSupabase("Comment Feed", `Mengomentari postingan ${post.author}: "${text}"`);
+      const { error } = await supabaseClient.from('forum_comments').insert([{
+        post_id: postId,
+        user_id: currentAuthUser.id,
+        author_name: currentUserProfile.full_name,
+        content: content
+      }]);
+
+      if (!error) {
+        input.value = "";
+        await logActivity("Comment Feed", `Mengomentari diskusi #${postId}`);
+        await fetchFeedFromSupabase();
+      }
     }
 
-    function toggleConnect(postId) {
-      const post = feedPosts.find(p => p.id === postId);
-      if (!post) return;
-      post.connected = !post.connected;
-      renderFeed();
-      if (post.connected) saveActivityToSupabase("Relasi Teman", `Terhubung dengan ${post.author}`);
+    // =====================================================
+    // 3. PRE-TEST & SIMULASI (UPDATE LANGSUNG KE user_profiles)
+    // =====================================================
+    function syncPretestUIFromProfile() {
+      if (!currentUserProfile) return;
+      if (currentUserProfile.pretest_major) {
+        document.getElementById('db-major-result').textContent = currentUserProfile.pretest_major;
+        document.getElementById('db-match-badge').textContent = currentUserProfile.pretest_match || "Tersimpan";
+        const b = document.getElementById('pretest-badge');
+        b.textContent = "✓ Tersimpan di DB";
+        b.className = "text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-700";
+      }
+      if (currentUserProfile.simulasi_score) {
+        document.getElementById('db-sim-result').textContent = currentUserProfile.simulasi_score;
+        const b = document.getElementById('sim-badge');
+        b.textContent = "✓ Tersimpan di DB";
+        b.className = "text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-700";
+      }
     }
 
-    // 2. NAVIGASI MENU BAR & DARK/WHITE MODE
+    async function savePretest(major, matchPct) {
+      if (!currentAuthUser) return;
+      const { data, error } = await supabaseClient
+        .from('user_profiles')
+        .update({ pretest_major: major, pretest_match: matchPct })
+        .eq('user_id', currentAuthUser.id)
+        .select()
+        .single();
+
+      if (!error && data) {
+        currentUserProfile = data;
+        syncPretestUIFromProfile();
+        await logActivity("Pre-Test", `Menyelesaikan Pre-Test: ${major} (${matchPct})`);
+      }
+    }
+
+    async function saveSimulasi(scoreText) {
+      if (!currentAuthUser) return;
+      const { data, error } = await supabaseClient
+        .from('user_profiles')
+        .update({ simulasi_score: scoreText })
+        .eq('user_id', currentAuthUser.id)
+        .select()
+        .single();
+
+      if (!error && data) {
+        currentUserProfile = data;
+        syncPretestUIFromProfile();
+        await logActivity("Simulasi Tugas", `Menyelesaikan simulasi studi kasus: ${scoreText}`);
+      }
+    }
+
+    // =====================================================
+    // 4. SEMINAR (MURNI DARI TABEL seminars & seminar_registrations)
+    // =====================================================
+    async function fetchSeminarsFromSupabase() {
+      const container = document.getElementById('seminar-container');
+      container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Memuat jadwal seminar dari database...</p>`;
+
+      const { data: seminars, error } = await supabaseClient
+        .from('seminars')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error || !seminars || seminars.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Belum ada jadwal seminar di database. Silakan tambahkan jadwal baru di atas.</p>`;
+        return;
+      }
+
+      const { data: myRegs } = await supabaseClient
+        .from('seminar_registrations')
+        .select('seminar_id')
+        .eq('user_id', currentAuthUser.id);
+
+      const registeredIds = new Set((myRegs || []).map(r => r.seminar_id));
+
+      container.innerHTML = seminars.map(sem => {
+        const isReg = registeredIds.has(sem.id);
+        return `
+          <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">${sem.schedule}</span>
+              <h4 class="font-bold text-sm mt-1">${sem.title}</h4>
+              <p class="text-xs text-slate-500">${sem.description}</p>
+            </div>
+            <button onclick="registerSeminarInDB(${sem.id}, '${sem.title.replace(/'/g, "")}')" ${isReg ? 'disabled' : ''} class="shrink-0 px-4 py-2 rounded-xl text-xs font-bold ${isReg ? 'bg-emerald-600 text-white' : 'bg-purple-600 hover:bg-purple-700 text-white'}">
+              ${isReg ? '✓ Terdaftar' : 'Ikut Seminar'}
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function createSeminar() {
+      const title = document.getElementById('sem-title').value.trim();
+      const schedule = document.getElementById('sem-schedule').value.trim();
+      const description = document.getElementById('sem-desc').value.trim();
+      if (!title || !schedule || !description) return;
+
+      const { error } = await supabaseClient.from('seminars').insert([{
+        title,
+        schedule,
+        description,
+        created_by: currentAuthUser.id
+      }]);
+
+      if (!error) {
+        document.getElementById('sem-title').value = "";
+        document.getElementById('sem-schedule').value = "";
+        document.getElementById('sem-desc').value = "";
+        await logActivity("Seminar", `Menambahkan jadwal seminar: ${title}`);
+        await fetchSeminarsFromSupabase();
+      }
+    }
+
+    async function registerSeminarInDB(seminarId, title) {
+      const { error } = await supabaseClient.from('seminar_registrations').insert([{
+        seminar_id: seminarId,
+        user_id: currentAuthUser.id
+      }]);
+
+      if (!error) {
+        await logActivity("Seminar", `Mendaftar seminar: ${title}`);
+        await fetchSeminarsFromSupabase();
+      }
+    }
+
+    // =====================================================
+    // 5. HISTORY AKTIVITAS (MURNI DARI TABEL activity_history)
+    // =====================================================
+    async function logActivity(type, detail) {
+      if (!currentAuthUser) return;
+      await supabaseClient.from('activity_history').insert([{
+        user_id: currentAuthUser.id,
+        user_name: currentUserProfile?.full_name || currentAuthUser.email,
+        activity_type: type,
+        activity_detail: detail
+      }]);
+      await fetchSupabaseHistory();
+    }
+
+    async function fetchSupabaseHistory() {
+      if (!currentAuthUser) return;
+      const container = document.getElementById('history-list');
+
+      const { data, error } = await supabaseClient
+        .from('activity_history')
+        .select('*')
+        .eq('user_id', currentAuthUser.id)
+        .order('created_at', { ascending: false })
+        .limit(30);
+
+      if (error || !data || data.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Belum ada riwayat aktivitas di database untuk akun ini.</p>`;
+        return;
+      }
+
+      container.innerHTML = data.map(item => {
+        const timeStr = new Date(item.created_at).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' });
+        return `
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2 text-xs">
+            <div>
+              <span class="font-bold text-purple-600 dark:text-purple-400">[${item.activity_type}]</span>
+              <span class="font-medium ml-1">${item.activity_detail}</span>
+            </div>
+            <span class="text-[11px] text-slate-400 shrink-0">${timeStr}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // =====================================================
+    // 6. NAVIGASI MENU BAR & DARK / WHITE MODE
+    // =====================================================
     function switchMenu(tab) {
       ['forum', 'pretest', 'seminar', 'history'].forEach(item => {
         document.getElementById('sec-' + item).classList.add('hidden');
@@ -511,156 +819,8 @@
 
     function toggleTheme() {
       const isDark = document.documentElement.classList.toggle('dark');
-      document.getElementById('theme-btn').textContent = isDark ? "White" : "Dark";
-    }
-
-    // 3. PRE-TEST, SIMULASI, & SEMINAR
-    function setSegment(seg) {
-      const eks = document.getElementById('seg-eksplorasi');
-      const pen = document.getElementById('seg-penentuan');
-      if (seg === 'eksplorasi') {
-        eks.className = "p-4 rounded-xl border-2 border-purple-600 bg-purple-50/60 dark:bg-purple-950/40 text-left transition";
-        pen.className = "p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-left transition";
-        document.getElementById('pretest-title').textContent = "Pre-Test Kecocokan Jurusan";
-        saveActivityToSupabase("Pre-Test", "Memilih kondisi: Belum Menentukan Kuliah");
-      } else {
-        pen.className = "p-4 rounded-xl border-2 border-purple-600 bg-purple-50/60 dark:bg-purple-950/40 text-left transition";
-        eks.className = "p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-left transition";
-        document.getElementById('pretest-title').textContent = "Pre-Test Validasi Jurusan Incaran";
-        saveActivityToSupabase("Pre-Test", "Memilih kondisi: Sudah Punya Jurusan Incaran");
-      }
-    }
-
-    function savePretest(major, matchPct, careers) {
-      document.getElementById('insight-major').textContent = major;
-      document.getElementById('insight-match').textContent = matchPct;
-      document.getElementById('insight-career').textContent = careers;
-      const badge = document.getElementById('pretest-badge');
-      badge.textContent = "✓ Selesai";
-      badge.className = "text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-700";
-      saveActivityToSupabase("Pre-Test", `Cocok dengan jurusan ${major} (${matchPct})`);
-    }
-
-    function saveSimulasi(scoreText) {
-      document.getElementById('insight-sim').textContent = scoreText;
-      const badge = document.getElementById('sim-badge');
-      badge.textContent = "✓ Selesai";
-      badge.className = "text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-700";
-      saveActivityToSupabase("Simulasi", `Menyelesaikan simulasi tugas: ${scoreText}`);
-    }
-
-    function joinSeminar(btn, title) {
-      btn.textContent = "✓ Terdaftar";
-      btn.className = "shrink-0 px-4 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold";
-      saveActivityToSupabase("Seminar", `Terdaftar pada ${title}`);
-    }
-
-    // 4. LOGIN & HISTORY SUPABASE
-    function openLoginModal() {
-      document.getElementById('login-modal').classList.remove('hidden');
-    }
-
-    function closeLoginModal() {
-      document.getElementById('login-modal').classList.add('hidden');
-    }
-
-    async function loginDirectSupabase() {
-      const val = document.getElementById('login-email-input').value.trim();
-      if (!val) return;
-      activeUser = val;
-      localStorage.setItem('fc_active_user', activeUser);
-      applyLoggedInUI(activeUser);
-      closeLoginModal();
-      await saveActivityToSupabase("Login", `Login sebagai ${activeUser}`);
-    }
-
-    async function loginGoogleOAuth() {
-      await supabaseClient.auth.signInWithOAuth({
-        provider: 'google',
-        options: { redirectTo: window.location.href }
-      });
-    }
-
-    function applyLoggedInUI(userName) {
-      document.getElementById('nav-login-btn').classList.add('hidden');
-      const box = document.getElementById('nav-user-box');
-      box.classList.remove('hidden');
-      box.classList.add('flex');
-      document.getElementById('nav-user-name').textContent = userName;
-    }
-
-    async function logoutUser() {
-      await supabaseClient.auth.signOut();
-      localStorage.removeItem('fc_active_user');
-      activeUser = "";
-      document.getElementById('nav-login-btn').classList.remove('hidden');
-      document.getElementById('nav-user-box').classList.add('hidden');
-      await fetchSupabaseHistory();
-    }
-
-    async function saveActivityToSupabase(type, detail) {
-      const userId = activeUser || "Guest";
-      localFallbackHistory.unshift({
-        user_name: userId,
-        activity_detail: detail,
-        created_at: new Date().toISOString()
-      });
-      localStorage.setItem('fc_local_history', JSON.stringify(localFallbackHistory.slice(0, 30)));
-
-      const { error } = await supabaseClient
-        .from('activity_history')
-        .insert([{
-          user_identifier: userId,
-          user_name: userId,
-          activity_type: type,
-          activity_detail: detail
-        }]);
-
-      if (!error) {
-        await fetchSupabaseHistory();
-      } else {
-        renderHistoryList(localFallbackHistory);
-      }
-    }
-
-    async function fetchSupabaseHistory() {
-      let query = supabaseClient
-        .from('activity_history')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .limit(25);
-
-      if (activeUser) {
-        query = query.eq('user_identifier', activeUser);
-      }
-
-      const { data, error } = await query;
-      if (error || !data || data.length === 0) {
-        renderHistoryList(localFallbackHistory);
-      } else {
-        renderHistoryList(data);
-      }
-    }
-
-    function renderHistoryList(items) {
-      const container = document.getElementById('history-list');
-      if (!items || items.length === 0) {
-        container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Belum ada riwayat aktivitas.</p>`;
-        return;
-      }
-
-      container.innerHTML = items.map(item => {
-        const timeStr = new Date(item.created_at).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-        return `
-          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2 text-xs">
-            <div>
-              <span class="font-bold text-purple-600 dark:text-purple-400">${item.user_name || 'Member'}:</span>
-              <span class="font-medium ml-1">${item.activity_detail}</span>
-            </div>
-            <span class="text-[11px] text-slate-400 shrink-0">${timeStr}</span>
-          </div>
-        `;
-      }).join('');
+      const btn = document.getElementById('theme-btn');
+      if (btn) btn.textContent = isDark ? "White" : "Dark";
     }
   </script>
 </body>
