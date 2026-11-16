@@ -6,90 +6,77 @@
   <title>ForCollege — Komunitas & Persiapan Kuliah</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif']
-          },
-          colors: {
-            brand: {
-              50: '#F5F3FF',
-              100: '#EDE9FE',
-              200: '#DDD6FE',
-              500: '#8B5CF6',
-              600: '#7C3AED',
-              700: '#6D28D9',
-              900: '#4C1D95'
-            }
+            sans: ['Inter', 'Plus Jakarta Sans', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
           }
         }
       }
     }
   </script>
   <style>
-    .bg-grid-pattern {
-      background-image: radial-gradient(rgba(124, 58, 237, 0.08) 1px, transparent 1px);
-      background-size: 20px 20px;
+    body {
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      -webkit-font-smoothing: antialiased;
     }
-    .dark .bg-grid-pattern {
-      background-image: radial-gradient(rgba(139, 92, 246, 0.12) 1px, transparent 1px);
-      background-size: 20px 20px;
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
   </style>
 </head>
-<body class="bg-slate-100/80 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors font-sans antialiased selection:bg-purple-600 selection:text-white bg-grid-pattern">
+<body class="bg-[#FAFAFA] text-zinc-900 dark:bg-[#09090B] dark:text-zinc-100 min-h-screen transition-colors duration-200 selection:bg-violet-600 selection:text-white">
 
   <!-- =====================================================
        LAYAR 1: GERBANG WAJIB LOGIN GOOGLE (AUTH GATE)
   ====================================================== -->
-  <div id="auth-gate" class="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
-    <!-- Dekorasi Cahaya Latar -->
-    <div class="absolute -top-24 -left-24 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
-
-    <div class="w-full max-w-md p-8 sm:p-10 rounded-3xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800 shadow-2xl shadow-purple-900/10 text-center space-y-6 relative z-10">
+  <div id="auth-gate" class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-[400px] p-8 sm:p-9 rounded-3xl bg-white dark:bg-[#111113] border border-zinc-200/80 dark:border-zinc-800/80 shadow-[0_8px_30px_rgb(0,0,0,0.04)] text-center space-y-6">
+      
       <div class="flex flex-col items-center">
-        <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 p-0.5 shadow-lg shadow-purple-500/30">
-          <div class="w-full h-full bg-white dark:bg-slate-900 rounded-[14px] flex items-center justify-center overflow-hidden">
-            <img src="https://lh3.googleusercontent.com/d/1XzGIwmQDiy5hPMxKRTCV3UXPHCuWmUXy" alt="ForCollege" class="w-11 h-11 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-            <span class="hidden text-purple-600 font-black text-xl">FC</span>
-          </div>
+        <div class="w-12 h-12 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 flex items-center justify-center overflow-hidden shadow-2xs">
+          <img src="https://lh3.googleusercontent.com/d/1XzGIwmQDiy5hPMxKRTCV3UXPHCuWmUXy" alt="ForCollege" class="w-8 h-8 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+          <span class="hidden text-zinc-900 dark:text-white font-bold text-base tracking-tight">FC</span>
         </div>
-        <span class="mt-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
-          <span class="w-1.5 h-1.5 rounded-full bg-purple-600 animate-pulse"></span>
-          Campus Readiness &amp; Community
+        <span class="mt-4 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-zinc-100 dark:bg-zinc-800/80 text-zinc-600 dark:text-zinc-300">
+          <span class="w-1.5 h-1.5 rounded-full bg-violet-600"></span>
+          Campus Readiness Hub
         </span>
       </div>
 
-      <div class="space-y-2">
-        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-slate-900 via-purple-800 to-indigo-800 dark:from-white dark:via-purple-300 dark:to-indigo-300 bg-clip-text text-transparent">
-          Selamat Datang di ForCollege
+      <div class="space-y-1.5">
+        <h1 class="text-xl sm:text-2xl font-semibold tracking-tight text-zinc-900 dark:text-white">
+          Masuk ke ForCollege
         </h1>
-        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
-          Eksplorasi jurusan impian, simulasi beban tugas kuliah, dan diskusi langsung bersama alumni sebelum melangkah ke kampus.
+        <p class="text-xs sm:text-[13px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
+          Eksplorasi jurusan, simulasi beban tugas kuliah, dan diskusi langsung bersama alumni.
         </p>
       </div>
 
       <div class="pt-1">
-        <button onclick="loginWithGoogle()" class="w-full py-3.5 px-5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/80 hover:border-purple-400 font-bold text-sm flex items-center justify-center gap-3 shadow-md shadow-slate-200/50 dark:shadow-none transition-all active:scale-[0.99]">
-          <svg class="w-5 h-5" viewBox="0 0 24 24">
+        <button onclick="loginWithGoogle()" class="w-full py-2.5 px-4 rounded-full bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-900 font-medium text-[13px] flex items-center justify-center gap-2.5 shadow-xs transition-all duration-150 active:scale-[0.98]">
+          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24">
             <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.8C6.2 7.2 8.9 5 12 5z"/>
             <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.6l3.7 2.9c2.2-2 3.7-5 3.7-8.7z"/>
             <path fill="#FBBC05" d="M5.3 14.8c-.2-.8-.4-1.6-.4-2.5s.2-1.7.4-2.5L1.6 7C.6 9 0 11.2 0 13.5s.6 4.5 1.6 6.5l3.7-2.9z"/>
             <path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.1-6.7-5l-3.7 2.8C3.5 21.4 7.4 24 12 24z"/>
           </svg>
-          <span>Masuk dengan Akun Google</span>
+          <span>Lanjutkan dengan Google</span>
         </button>
       </div>
 
-      <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
-        <span>Khusus Siswa SMA Kelas 10–12</span>
-        <button onclick="toggleTheme()" id="gate-theme-btn" class="font-bold text-slate-500 hover:text-purple-600 transition">
-          Mode: Dark / White
+      <div class="pt-3 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between text-[11px] text-zinc-400">
+        <span>Siswa SMA Kelas 10–12</span>
+        <button onclick="toggleTheme()" id="gate-theme-btn" class="font-medium text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition">
+          Ubah Tema
         </button>
       </div>
     </div>
@@ -98,43 +85,41 @@
   <!-- =====================================================
        LAYAR 2: GERBANG WAJIB LENGKAPI DATA DIRI (PROFILE GATE)
   ====================================================== -->
-  <div id="profile-gate" class="hidden min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
-    <div class="absolute -top-24 -right-24 w-96 h-96 bg-purple-500/15 rounded-full blur-3xl pointer-events-none"></div>
-
-    <div class="w-full max-w-lg p-6 sm:p-8 rounded-3xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-2xl space-y-6 relative z-10">
-      <div class="border-b border-slate-100 dark:border-slate-800 pb-5">
+  <div id="profile-gate" class="hidden min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md p-7 sm:p-8 rounded-3xl bg-white dark:bg-[#111113] border border-zinc-200/80 dark:border-zinc-800/80 shadow-[0_8px_30px_rgb(0,0,0,0.04)] space-y-6">
+      <div class="border-b border-zinc-100 dark:border-zinc-800/80 pb-4">
         <div class="flex items-center justify-between">
-          <span class="text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
-            Langkah Terakhir • Verifikasi Profil
+          <span class="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-violet-50 text-violet-700 dark:bg-violet-950/60 dark:text-violet-300">
+            Verifikasi Profil
           </span>
-          <span class="text-xs font-bold text-slate-400">1 / 1</span>
+          <span class="text-[11px] font-medium text-zinc-400">Langkah 1 dari 1</span>
         </div>
-        <h2 class="text-2xl font-extrabold mt-3 tracking-tight">Lengkapi Data Diri Kamu</h2>
-        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
-          Data ini membantu menyesuaikan rekomendasi jurusan dan identitas diskusimu di komunitas ForCollege.
+        <h2 class="text-xl font-semibold mt-2.5 tracking-tight text-zinc-900 dark:text-white">Lengkapi Data Diri</h2>
+        <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
+          Sesuaikan profil akademismu sebelum masuk ke ruang diskusi dan simulasi.
         </p>
       </div>
 
-      <form id="profile-form" onsubmit="submitProfileData(event)" class="space-y-4">
+      <form id="profile-form" onsubmit="submitProfileData(event)" class="space-y-3.5">
         <div>
-          <label class="block text-xs font-bold mb-1.5 text-slate-500">Email Google Terhubung</label>
-          <input id="prof-email" type="email" disabled class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-800/80 text-slate-500 text-xs sm:text-sm font-semibold cursor-not-allowed" />
+          <label class="block text-[11px] font-medium mb-1 text-zinc-500">Email Google</label>
+          <input id="prof-email" type="email" disabled class="w-full px-3.5 py-2 rounded-xl border border-zinc-200/70 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 text-zinc-400 text-xs font-medium cursor-not-allowed" />
         </div>
 
         <div>
-          <label class="block text-xs font-bold mb-1.5">Nama Lengkap *</label>
-          <input id="prof-name" type="text" required placeholder="Masukkan nama lengkap Anda" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-600 transition" />
+          <label class="block text-[11px] font-medium mb-1 text-zinc-700 dark:text-zinc-300">Nama Lengkap *</label>
+          <input id="prof-name" type="text" required placeholder="Nama lengkap kamu" class="w-full px-3.5 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-[13px] focus:outline-none focus:border-zinc-900 dark:focus:border-zinc-400 transition" />
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-bold mb-1.5">Asal Sekolah (SMA/SMK) *</label>
-            <input id="prof-school" type="text" required placeholder="Contoh: SMAN 1 Malang" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-600 transition" />
+            <label class="block text-[11px] font-medium mb-1 text-zinc-700 dark:text-zinc-300">Asal Sekolah *</label>
+            <input id="prof-school" type="text" required placeholder="Contoh: SMAN 1 Malang" class="w-full px-3.5 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-[13px] focus:outline-none focus:border-zinc-900 dark:focus:border-zinc-400 transition" />
           </div>
           <div>
-            <label class="block text-xs font-bold mb-1.5">Kelas Saat Ini *</label>
-            <select id="prof-grade" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-600 transition">
-              <option value="">-- Pilih Kelas --</option>
+            <label class="block text-[11px] font-medium mb-1 text-zinc-700 dark:text-zinc-300">Kelas *</label>
+            <select id="prof-grade" required class="w-full px-3.5 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-[13px] focus:outline-none focus:border-zinc-900 dark:focus:border-zinc-400 transition">
+              <option value="">Pilih Kelas</option>
               <option value="Kelas 10 SMA">Kelas 10 SMA</option>
               <option value="Kelas 11 SMA">Kelas 11 SMA</option>
               <option value="Kelas 12 SMA">Kelas 12 SMA</option>
@@ -143,25 +128,25 @@
         </div>
 
         <div>
-          <label class="block text-xs font-bold mb-1.5">Status Rencana Kuliah *</label>
-          <select id="prof-segment" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-600 transition">
-            <option value="">-- Pilih Status Persiapan --</option>
-            <option value="eksplorasi">Belum Menentukan Kuliah (Tahap Eksplorasi)</option>
-            <option value="penentuan">Sudah Punya Jurusan Incaran (Tahap Penentuan)</option>
+          <label class="block text-[11px] font-medium mb-1 text-zinc-700 dark:text-zinc-300">Status Rencana Kuliah *</label>
+          <select id="prof-segment" required class="w-full px-3.5 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-[13px] focus:outline-none focus:border-zinc-900 dark:focus:border-zinc-400 transition">
+            <option value="">Pilih Status Persiapan</option>
+            <option value="eksplorasi">Belum Menentukan Kuliah (Eksplorasi)</option>
+            <option value="penentuan">Sudah Punya Jurusan Incaran (Penentuan)</option>
           </select>
         </div>
 
         <div>
-          <label class="block text-xs font-bold mb-1.5">Bidang / Jurusan yang Diminati *</label>
-          <input id="prof-major" type="text" required placeholder="Contoh: Teknik Informatika / DKV / Manajemen" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-600 transition" />
+          <label class="block text-[11px] font-medium mb-1 text-zinc-700 dark:text-zinc-300">Bidang / Jurusan Diminati *</label>
+          <input id="prof-major" type="text" required placeholder="Contoh: Teknik Informatika / DKV / Bisnis" class="w-full px-3.5 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-[13px] focus:outline-none focus:border-zinc-900 dark:focus:border-zinc-400 transition" />
         </div>
 
-        <div class="pt-3 flex items-center justify-between gap-3">
-          <button type="button" onclick="logoutUser()" class="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-bold text-slate-500 transition">
-            Batal / Keluar
+        <div class="pt-3 flex items-center justify-between gap-2.5">
+          <button type="button" onclick="logoutUser()" class="px-4 py-2 rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-xs font-medium text-zinc-500 transition">
+            Keluar
           </button>
-          <button type="submit" id="btn-save-profile" class="flex-1 py-3 px-5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold text-sm shadow-lg shadow-purple-600/25 transition active:scale-[0.99]">
-            Simpan Data &amp; Masuk ke Aplikasi →
+          <button type="submit" id="btn-save-profile" class="flex-1 py-2.5 px-5 rounded-full bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-900 font-medium text-[13px] transition-all active:scale-[0.98]">
+            Simpan &amp; Lanjutkan
           </button>
         </div>
       </form>
@@ -169,320 +154,258 @@
   </div>
 
   <!-- =====================================================
-       LAYAR 3: APLIKASI UTAMA (GEN-Z SOCIAL HUB 3-KOLOM)
+       LAYAR 3: APLIKASI UTAMA (ULTRA-MINIMALIST MODERN APP)
   ====================================================== -->
   <div id="app-shell" class="hidden">
 
-    <!-- STICKY FROSTED NAVBAR -->
-    <header class="sticky top-0 z-30 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800">
-      <div class="max-w-7xl mx-auto px-4">
-        <div class="h-16 flex items-center justify-between gap-4">
+    <!-- MINIMALIST TRANSLUCENT TOP BAR -->
+    <header class="sticky top-0 z-30 bg-white/80 dark:bg-[#09090B]/80 backdrop-blur-xl border-b border-zinc-200/70 dark:border-zinc-800/80">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="h-14 flex items-center justify-between gap-4">
           
           <!-- Brand Logo -->
-          <div onclick="switchMenu('forum')" class="flex items-center gap-3 shrink-0 cursor-pointer group">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-600 p-0.5 shadow-md shadow-purple-500/20 group-hover:scale-105 transition-transform">
-              <div class="w-full h-full bg-white dark:bg-slate-900 rounded-[10px] flex items-center justify-center overflow-hidden">
-                <img src="https://lh3.googleusercontent.com/d/1XzGIwmQDiy5hPMxKRTCV3UXPHCuWmUXy" alt="ForCollege" class="w-7 h-7 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-                <span class="hidden text-purple-600 font-black text-sm">FC</span>
-              </div>
+          <div onclick="switchMenu('forum')" class="flex items-center gap-2.5 shrink-0 cursor-pointer group">
+            <div class="w-8 h-8 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 flex items-center justify-center overflow-hidden">
+              <img src="https://lh3.googleusercontent.com/d/1XzGIwmQDiy5hPMxKRTCV3UXPHCuWmUXy" alt="ForCollege" class="w-5 h-5 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+              <span class="hidden text-zinc-900 dark:text-white font-bold text-xs">FC</span>
             </div>
-            <div>
-              <div class="flex items-center gap-1.5">
-                <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-indigo-400 bg-clip-text text-transparent">
-                  ForCollege
-                </span>
-                <span class="hidden sm:inline-block text-[10px] font-extrabold uppercase tracking-wider px-1.5 py-0.5 rounded bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
-                  Hub
-                </span>
-              </div>
-              <p class="text-[10px] text-slate-400 font-semibold leading-none hidden sm:block">Campus Readiness Platform</p>
-            </div>
+            <span class="font-semibold text-[15px] tracking-tight text-zinc-900 dark:text-white">
+              ForCollege
+            </span>
           </div>
 
-          <!-- Desktop Navigation Pills -->
-          <nav class="hidden md:flex items-center gap-1.5 bg-slate-100/90 dark:bg-slate-800/90 p-1.5 rounded-2xl border border-slate-200/70 dark:border-slate-700/70">
-            <button onclick="switchMenu('forum')" id="nav-forum" class="px-4 py-2 rounded-xl font-bold text-xs sm:text-sm bg-purple-600 text-white shadow-sm transition">
-              💬 Feed Forum
+          <!-- Sleek Segmented Pill Navigation (Desktop) -->
+          <nav class="hidden md:flex items-center gap-1 bg-zinc-100/90 dark:bg-zinc-900 p-1 rounded-full border border-zinc-200/60 dark:border-zinc-800">
+            <button onclick="switchMenu('forum')" id="nav-forum" class="px-4 py-1.5 rounded-full font-semibold text-xs bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-2xs ring-1 ring-zinc-200/70 dark:ring-zinc-700 transition-all flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+              <span>Feed Forum</span>
             </button>
-            <button onclick="switchMenu('pretest')" id="nav-pretest" class="px-4 py-2 rounded-xl font-semibold text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-purple-600 transition">
-              🎯 Pre-Test &amp; Simulasi
+            <button onclick="switchMenu('pretest')" id="nav-pretest" class="px-4 py-1.5 rounded-full font-medium text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-all flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span>Pre-Test &amp; Simulasi</span>
             </button>
-            <button onclick="switchMenu('seminar')" id="nav-seminar" class="px-4 py-2 rounded-xl font-semibold text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-purple-600 transition">
-              🎙️ Seminar
+            <button onclick="switchMenu('seminar')" id="nav-seminar" class="px-4 py-1.5 rounded-full font-medium text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-all flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+              <span>Seminar</span>
             </button>
-            <button onclick="switchMenu('history')" id="nav-history" class="px-4 py-2 rounded-xl font-semibold text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-purple-600 transition">
-              ⚡ History
+            <button onclick="switchMenu('history')" id="nav-history" class="px-4 py-1.5 rounded-full font-medium text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-all flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span>History</span>
             </button>
           </nav>
 
-          <!-- User Info & Controls -->
-          <div class="flex items-center gap-2.5 shrink-0">
-            <button onclick="toggleTheme()" id="theme-btn" class="px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold hover:border-purple-500 transition shadow-2xs">
+          <!-- User Controls -->
+          <div class="flex items-center gap-2 shrink-0">
+            <button onclick="toggleTheme()" id="theme-btn" class="px-3 py-1.5 rounded-full border border-zinc-200/80 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-[11px] font-medium text-zinc-600 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition">
               Dark
             </button>
 
-            <div class="flex items-center gap-2.5 pl-2.5 border-l border-slate-200 dark:border-slate-800">
-              <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-purple-600 to-pink-500 text-white font-extrabold text-xs flex items-center justify-center shadow-xs" id="nav-user-avatar">
+            <div class="flex items-center gap-2 pl-2 border-l border-zinc-200/70 dark:border-zinc-800">
+              <div class="w-7 h-7 rounded-full bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-semibold text-[11px] flex items-center justify-center" id="nav-user-avatar">
                 FC
               </div>
               <div class="text-left hidden sm:block">
-                <p id="nav-user-name" class="text-xs font-extrabold text-slate-800 dark:text-slate-100 leading-none"></p>
-                <p id="nav-user-school" class="text-[10px] font-medium text-slate-400 mt-1"></p>
+                <p id="nav-user-name" class="text-xs font-medium text-zinc-900 dark:text-white leading-none"></p>
+                <p id="nav-user-school" class="text-[10px] text-zinc-400 mt-0.5"></p>
               </div>
-              <button onclick="logoutUser()" class="ml-1 px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 dark:bg-rose-950/70 dark:hover:bg-rose-900/70 dark:text-rose-300 text-xs font-bold border border-rose-200/80 dark:border-rose-800/80 transition">
-                Logout
+              <button onclick="logoutUser()" class="ml-1 px-3 py-1.5 rounded-full text-[11px] font-medium text-zinc-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition">
+                Keluar
               </button>
             </div>
           </div>
 
         </div>
 
-        <!-- Mobile Menu Bar -->
-        <nav class="flex md:hidden overflow-x-auto gap-1.5 py-2.5 border-t border-slate-100 dark:border-slate-800">
-          <button onclick="switchMenu('forum')" id="mnav-forum" class="px-3.5 py-1.5 rounded-xl font-bold text-xs bg-purple-600 text-white whitespace-nowrap">
-            💬 Feed Forum
+        <!-- Mobile Pill Navigation -->
+        <nav class="flex md:hidden overflow-x-auto no-scrollbar gap-1.5 py-2 border-t border-zinc-100 dark:border-zinc-800/80">
+          <button onclick="switchMenu('forum')" id="mnav-forum" class="px-3.5 py-1.5 rounded-full font-semibold text-xs bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 whitespace-nowrap">
+            Feed Forum
           </button>
-          <button onclick="switchMenu('pretest')" id="mnav-pretest" class="px-3.5 py-1.5 rounded-xl font-semibold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">
-            🎯 Pre-Test &amp; Simulasi
+          <button onclick="switchMenu('pretest')" id="mnav-pretest" class="px-3.5 py-1.5 rounded-full font-medium text-xs bg-zinc-100 dark:bg-zinc-900 text-zinc-500 whitespace-nowrap">
+            Pre-Test &amp; Simulasi
           </button>
-          <button onclick="switchMenu('seminar')" id="mnav-seminar" class="px-3.5 py-1.5 rounded-xl font-semibold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">
-            🎙️ Seminar
+          <button onclick="switchMenu('seminar')" id="mnav-seminar" class="px-3.5 py-1.5 rounded-full font-medium text-xs bg-zinc-100 dark:bg-zinc-900 text-zinc-500 whitespace-nowrap">
+            Seminar
           </button>
-          <button onclick="switchMenu('history')" id="mnav-history" class="px-3.5 py-1.5 rounded-xl font-semibold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">
-            ⚡ History
+          <button onclick="switchMenu('history')" id="mnav-history" class="px-3.5 py-1.5 rounded-full font-medium text-xs bg-zinc-100 dark:bg-zinc-900 text-zinc-500 whitespace-nowrap">
+            History
           </button>
         </nav>
       </div>
     </header>
 
-    <!-- KONTEN UTAMA 3 KOLOM -->
-    <div class="max-w-7xl mx-auto px-4 py-6">
+    <!-- KONTEN UTAMA 3 KOLOM BERSIH -->
+    <div class="max-w-6xl mx-auto px-4 py-6">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
         <!-- =================================================
-             SIDEBAR KIRI: KARTU PROFIL & STATUS EVALUASI (3 COL)
+             SIDEBAR KIRI: PROFIL & RINGKASAN EVALUASI (3 COL)
         ================================================== -->
-        <aside class="lg:col-span-3 space-y-5 lg:sticky lg:top-22">
+        <aside class="lg:col-span-3 space-y-4 lg:sticky lg:top-20">
           
-          <!-- Student Profile Bento -->
-          <div class="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm overflow-hidden">
-            <div class="h-16 bg-gradient-to-r from-purple-600 via-indigo-600 to-fuchsia-600 relative">
-              <span class="absolute top-2.5 right-3 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-black/25 text-white backdrop-blur-xs">
-                Siswa Aktif
-              </span>
-            </div>
-            <div class="px-5 pb-5 -mt-7 relative">
-              <div id="side-user-avatar" class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-500 text-white font-black text-xl flex items-center justify-center border-4 border-white dark:border-slate-900 shadow-md">
+          <!-- Minimalist Profile Card -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-[#111113] border border-zinc-200/80 dark:border-zinc-800/80 space-y-4">
+            <div class="flex items-center gap-3">
+              <div id="side-user-avatar" class="w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-200/80 dark:border-zinc-700 text-zinc-900 dark:text-white font-semibold text-sm flex items-center justify-center shrink-0">
                 FC
               </div>
-              <div class="mt-2.5">
-                <h2 id="side-user-name" class="font-extrabold text-base text-slate-900 dark:text-white leading-tight">Pelajar ForCollege</h2>
-                <p id="side-user-school" class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">SMA • Indonesia</p>
+              <div class="min-w-0">
+                <h2 id="side-user-name" class="font-semibold text-sm text-zinc-900 dark:text-white truncate">Pelajar ForCollege</h2>
+                <p id="side-user-school" class="text-[11px] text-zinc-400 truncate mt-0.5">SMA • Indonesia</p>
               </div>
+            </div>
 
-              <div class="mt-4 pt-3.5 border-t border-slate-100 dark:border-slate-800 space-y-2">
-                <div class="flex items-center justify-between text-xs">
-                  <span class="text-slate-400 font-medium">Minat Awal</span>
-                  <span id="side-user-major" class="font-bold text-purple-600 dark:text-purple-400 truncate max-w-[140px]">-</span>
-                </div>
-                <div class="flex items-center justify-between text-xs">
-                  <span class="text-slate-400 font-medium">Fase Persiapan</span>
-                  <span id="side-user-segment" class="px-2 py-0.5 rounded-md bg-purple-50 dark:bg-purple-950 text-purple-700 dark:text-purple-300 font-bold text-[10px] uppercase">Eksplorasi</span>
-                </div>
+            <div class="pt-3.5 border-t border-zinc-100 dark:border-zinc-800/80 space-y-2.5 text-xs">
+              <div class="flex items-center justify-between">
+                <span class="text-zinc-400">Minat Awal</span>
+                <span id="side-user-major" class="font-medium text-zinc-800 dark:text-zinc-200 truncate max-w-[130px]">-</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-zinc-400">Fase</span>
+                <span id="side-user-segment" class="px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 font-medium text-[11px]">Eksplorasi</span>
               </div>
             </div>
           </div>
 
-          <!-- Ringkasan Evaluasi Mini Card -->
-          <div class="rounded-3xl bg-gradient-to-br from-purple-700 via-purple-800 to-indigo-900 text-white p-5 shadow-lg shadow-purple-900/15 space-y-3 relative overflow-hidden">
-            <div class="absolute -right-6 -bottom-6 w-28 h-28 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+          <!-- Minimalist Readiness Card -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-[#111113] border border-zinc-200/80 dark:border-zinc-800/80 space-y-3.5">
             <div class="flex items-center justify-between">
-              <span class="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-white/15">
-                Status Kesiapan
-              </span>
-              <span id="side-match-badge" class="text-xs font-black text-emerald-300">-</span>
+              <span class="text-[11px] font-medium text-zinc-400">Hasil Evaluasi</span>
+              <span id="side-match-badge" class="text-[11px] font-semibold text-violet-600 dark:text-violet-400">-</span>
             </div>
             <div>
-              <p class="text-[11px] text-purple-200">Rekomendasi Jurusan</p>
-              <h3 id="side-major-result" class="font-extrabold text-sm leading-snug mt-0.5">Belum ada hasil Pre-Test</h3>
+              <h3 id="side-major-result" class="font-semibold text-[13px] text-zinc-900 dark:text-white leading-snug">Belum ada hasil Pre-Test</h3>
+              <p class="text-[11px] text-zinc-400 mt-1">
+                Simulasi: <span id="side-sim-result" class="text-zinc-700 dark:text-zinc-300 font-medium">Belum dikerjakan</span>
+              </p>
             </div>
-            <div class="pt-2 border-t border-white/15 flex items-center justify-between text-[11px]">
-              <span class="text-purple-200">Simulasi Tugas:</span>
-              <span id="side-sim-result" class="font-bold text-white">Belum dikerjakan</span>
-            </div>
-            <button onclick="switchMenu('pretest')" class="w-full py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white font-bold text-xs transition">
-              Buka Pre-Test &amp; Simulasi →
+            <button onclick="switchMenu('pretest')" class="w-full py-2 px-3 rounded-full border border-zinc-200/90 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/60 text-zinc-700 dark:text-zinc-200 font-medium text-xs transition flex items-center justify-center gap-1.5">
+              <span>Uji Minat &amp; Simulasi</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </button>
-          </div>
-
-          <!-- Navigasi Cepat Kanal -->
-          <div class="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-5 shadow-sm space-y-3 hidden lg:block">
-            <h4 class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Eksplorasi Fitur</h4>
-            <div class="space-y-1.5 text-xs font-bold">
-              <button onclick="switchMenu('forum')" class="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-purple-50 dark:hover:bg-purple-950/40 text-slate-700 dark:text-slate-200 hover:text-purple-600 transition text-left">
-                <span>💬 Diskusi Komunitas</span>
-                <span class="text-[10px] text-slate-400">Live</span>
-              </button>
-              <button onclick="switchMenu('pretest')" class="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-purple-50 dark:hover:bg-purple-950/40 text-slate-700 dark:text-slate-200 hover:text-purple-600 transition text-left">
-                <span>🎯 Tes Minat &amp; Kasus</span>
-                <span class="text-[10px] text-purple-600">Cek Skor</span>
-              </button>
-              <button onclick="switchMenu('seminar')" class="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-purple-50 dark:hover:bg-purple-950/40 text-slate-700 dark:text-slate-200 hover:text-purple-600 transition text-left">
-                <span>🎙️ Jadwal Sharing Alumni</span>
-                <span class="text-[10px] text-emerald-600">Daftar</span>
-              </button>
-            </div>
           </div>
 
         </aside>
 
         <!-- =================================================
-             KOLOM TENGAH: KONTEN INTERAKTIF UTAMA (6 COL)
+             KOLOM TENGAH: KONTEN UTAMA (6 COL)
         ================================================== -->
-        <main class="lg:col-span-6 space-y-5">
+        <main class="lg:col-span-6 space-y-4">
 
           <!-- ===================================================
                1. FEED FORUM (MURNI DARI DATABASE SUPABASE)
           ==================================================== -->
-          <section id="sec-forum" class="space-y-5">
+          <section id="sec-forum" class="space-y-4">
             
-            <!-- Banner Komunitas -->
-            <div class="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 text-white shadow-md flex items-center justify-between gap-4 relative overflow-hidden">
-              <div class="absolute right-0 top-0 w-40 h-40 bg-white/10 rounded-full -mr-12 -mt-12 blur-2xl pointer-events-none"></div>
-              <div class="space-y-1 relative z-10">
-                <span class="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-white/20 inline-block">
-                  Ruang Diskusi Terbuka
-                </span>
-                <h2 class="text-lg sm:text-xl font-extrabold tracking-tight">Tanya Jurusan &amp; Kultur Kampus</h2>
-                <p class="text-xs text-purple-100 leading-relaxed">
-                  Ceritakan kegalauan memilih jurusan atau diskusikan pengalaman tugas kuliah bersama sesama siswa dan alumni.
-                </p>
-              </div>
-              <div class="hidden sm:flex w-14 h-14 rounded-2xl bg-white/15 backdrop-blur-xs items-center justify-center text-2xl shrink-0">
-                🎓
-              </div>
-            </div>
-
-            <!-- Composer Buat Postingan -->
-            <div class="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm space-y-3.5">
-              <div class="flex items-center gap-2.5">
-                <span class="w-8 h-8 rounded-xl bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-300 flex items-center justify-center text-sm font-bold">
-                  ✍️
-                </span>
-                <div>
-                  <h3 class="font-extrabold text-xs sm:text-sm">Mulai Diskusi Baru</h3>
-                  <p class="text-[11px] text-slate-400">Bagikan pertanyaan atau pengalaman belajarmu</p>
-                </div>
-              </div>
-
-              <textarea id="post-input" rows="3" placeholder="Bagikan diskusi jurusan, cari teman satu kampus, atau tanyakan ke alumni..." class="w-full p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-500 resize-none transition"></textarea>
+            <!-- Minimalist Composer -->
+            <div class="p-5 rounded-2xl bg-white dark:bg-[#111113] border border-zinc-200/80 dark:border-zinc-800/80 space-y-3">
+              <textarea id="post-input" rows="3" placeholder="Tulis pertanyaan seputar jurusan atau pengalaman belajar..." class="w-full p-0 border-0 bg-transparent text-[13px] sm:text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-0 resize-none"></textarea>
               
-              <div class="flex flex-wrap items-center justify-between gap-2.5 pt-1">
+              <div class="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-zinc-100 dark:border-zinc-800/80">
                 <div class="flex flex-wrap items-center gap-2">
-                  <select id="post-tag" class="px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-purple-500">
-                    <option value="Teknik Informatika">💻 Teknik Informatika</option>
-                    <option value="DKV & UI/UX">🎨 DKV &amp; UI/UX</option>
-                    <option value="Manajemen Bisnis">📈 Manajemen Bisnis</option>
-                    <option value="Kehidupan Kampus">🎓 Kehidupan Kampus</option>
+                  <select id="post-tag" class="px-3 py-1.5 rounded-full border border-zinc-200/80 dark:border-zinc-800 bg-zinc-50/70 dark:bg-zinc-900 text-xs font-medium text-zinc-700 dark:text-zinc-300 focus:outline-none focus:border-zinc-400 transition">
+                    <option value="Teknik Informatika">Teknik Informatika</option>
+                    <option value="DKV & UI/UX">DKV &amp; UI/UX</option>
+                    <option value="Manajemen Bisnis">Manajemen Bisnis</option>
+                    <option value="Kehidupan Kampus">Kehidupan Kampus</option>
                   </select>
 
-                  <label class="flex items-center gap-1.5 text-xs font-bold text-slate-600 dark:text-slate-300 cursor-pointer px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/70 hover:border-purple-400 transition">
-                    <input type="checkbox" id="post-anon" class="accent-purple-600 rounded" />
-                    <span>🕵️ Mode Anonim</span>
+                  <label class="flex items-center gap-1.5 text-xs font-medium text-zinc-500 dark:text-zinc-400 cursor-pointer px-3 py-1.5 rounded-full hover:bg-zinc-100/80 dark:hover:bg-zinc-800/60 transition">
+                    <input type="checkbox" id="post-anon" class="accent-zinc-900 dark:accent-white rounded" />
+                    <span>Anonim</span>
                   </label>
                 </div>
 
-                <button onclick="createNewPost()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-extrabold text-xs sm:text-sm shadow-md shadow-purple-600/20 transition active:scale-[0.98]">
-                  Posting 🚀
+                <button onclick="createNewPost()" class="px-4 py-1.5 rounded-full bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-900 font-medium text-xs transition-all active:scale-[0.97]">
+                  Posting
                 </button>
               </div>
             </div>
 
             <!-- Feed Stream -->
-            <div id="feed-container" class="space-y-4"></div>
+            <div id="feed-container" class="space-y-3.5"></div>
           </section>
 
           <!-- ===================================================
                2. PRE-TEST & SIMULASI (TERSINKRONISASI DATABASE)
           ==================================================== -->
-          <section id="sec-pretest" class="hidden space-y-5">
+          <section id="sec-pretest" class="hidden space-y-4">
             
             <!-- Card Pre-Test -->
-            <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm space-y-4">
+            <div class="p-6 rounded-2xl bg-white dark:bg-[#111113] border border-zinc-200/80 dark:border-zinc-800/80 space-y-4">
               <div class="flex items-start justify-between gap-3">
                 <div>
-                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-purple-600 dark:text-purple-400">Tahap 1 • Eksplorasi Minat</span>
-                  <h3 class="font-extrabold text-base sm:text-lg mt-0.5">Pre-Test Kecocokan Jurusan</h3>
+                  <span class="text-[11px] font-medium text-zinc-400">Tahap 01</span>
+                  <h3 class="font-semibold text-base text-zinc-900 dark:text-white mt-0.5">Pre-Test Kecocokan Jurusan</h3>
                 </div>
-                <span id="pretest-badge" class="text-[11px] font-bold px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 shrink-0">Belum Dijawab</span>
+                <span id="pretest-badge" class="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-500">Belum Dijawab</span>
               </div>
-              <p class="text-xs text-slate-500 dark:text-slate-400">Pilih aktivitas yang paling sesuai dengan minat dan cara berpikirmu sehari-hari:</p>
+              <p class="text-xs text-zinc-500 dark:text-zinc-400">Pilih aktivitas yang paling selaras dengan cara berpikirmu:</p>
               
-              <div class="space-y-2.5">
-                <button onclick="savePretest('Teknik Informatika & Sistem Informasi', '95% Cocok')" class="w-full p-4 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-purple-600 hover:bg-purple-50/60 dark:hover:bg-purple-950/30 text-left transition group flex items-center gap-3.5">
-                  <span class="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950 text-purple-600 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform">💻</span>
+              <div class="space-y-2">
+                <button onclick="savePretest('Teknik Informatika & Sistem Informasi', '95% Cocok')" class="w-full p-3.5 rounded-xl border border-zinc-200/80 dark:border-zinc-800 hover:border-zinc-900 dark:hover:border-zinc-400 hover:bg-zinc-50/70 dark:hover:bg-zinc-900/60 text-left transition-all group flex items-center justify-between gap-3">
                   <div>
-                    <span class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100">Membedah logika, membuat program aplikasi, dan mengulik teknologi</span>
-                    <span class="text-[11px] text-slate-400">Rumpun Teknologi Informasi &amp; Rekayasa Sistem</span>
+                    <span class="block text-[13px] font-medium text-zinc-900 dark:text-zinc-100">Membedah logika, membuat program aplikasi, dan mengulik teknologi</span>
+                    <span class="text-[11px] text-zinc-400 mt-0.5 block">Rumpun Teknologi Informasi &amp; Rekayasa Sistem</span>
                   </div>
+                  <span class="w-4 h-4 rounded-full border border-zinc-300 dark:border-zinc-700 group-hover:border-zinc-900 dark:group-hover:border-white shrink-0 transition"></span>
                 </button>
 
-                <button onclick="savePretest('Desain Komunikasi Visual (DKV) & UI/UX', '94% Cocok')" class="w-full p-4 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-purple-600 hover:bg-purple-50/60 dark:hover:bg-purple-950/30 text-left transition group flex items-center gap-3.5">
-                  <span class="w-10 h-10 rounded-xl bg-pink-100 dark:bg-pink-950 text-pink-600 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform">🎨</span>
+                <button onclick="savePretest('Desain Komunikasi Visual (DKV) & UI/UX', '94% Cocok')" class="w-full p-3.5 rounded-xl border border-zinc-200/80 dark:border-zinc-800 hover:border-zinc-900 dark:hover:border-zinc-400 hover:bg-zinc-50/70 dark:hover:bg-zinc-900/60 text-left transition-all group flex items-center justify-between gap-3">
                   <div>
-                    <span class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100">Merancang karya visual, ilustrasi digital, dan pengalaman pengguna</span>
-                    <span class="text-[11px] text-slate-400">Rumpun Seni Rupa, Desain &amp; Media Kreatif</span>
+                    <span class="block text-[13px] font-medium text-zinc-900 dark:text-zinc-100">Merancang karya visual, ilustrasi digital, dan pengalaman pengguna</span>
+                    <span class="text-[11px] text-zinc-400 mt-0.5 block">Rumpun Seni Rupa, Desain &amp; Media Kreatif</span>
                   </div>
+                  <span class="w-4 h-4 rounded-full border border-zinc-300 dark:border-zinc-700 group-hover:border-zinc-900 dark:group-hover:border-white shrink-0 transition"></span>
                 </button>
 
-                <button onclick="savePretest('Manajemen & Bisnis Digital', '93% Cocok')" class="w-full p-4 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-purple-600 hover:bg-purple-50/60 dark:hover:bg-purple-950/30 text-left transition group flex items-center gap-3.5">
-                  <span class="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950 text-amber-600 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform">📈</span>
+                <button onclick="savePretest('Manajemen & Bisnis Digital', '93% Cocok')" class="w-full p-3.5 rounded-xl border border-zinc-200/80 dark:border-zinc-800 hover:border-zinc-900 dark:hover:border-zinc-400 hover:bg-zinc-50/70 dark:hover:bg-zinc-900/60 text-left transition-all group flex items-center justify-between gap-3">
                   <div>
-                    <span class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100">Menyusun strategi bisnis, memimpin tim, dan menganalisis peluang pasar</span>
-                    <span class="text-[11px] text-slate-400">Rumpun Ekonomi, Manajemen &amp; Kewirausahaan</span>
+                    <span class="block text-[13px] font-medium text-zinc-900 dark:text-zinc-100">Menyusun strategi bisnis, memimpin tim, dan menganalisis peluang pasar</span>
+                    <span class="text-[11px] text-zinc-400 mt-0.5 block">Rumpun Ekonomi, Manajemen &amp; Kewirausahaan</span>
                   </div>
+                  <span class="w-4 h-4 rounded-full border border-zinc-300 dark:border-zinc-700 group-hover:border-zinc-900 dark:group-hover:border-white shrink-0 transition"></span>
                 </button>
               </div>
             </div>
 
             <!-- Card Simulasi Studi Kasus -->
-            <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm space-y-4">
+            <div class="p-6 rounded-2xl bg-white dark:bg-[#111113] border border-zinc-200/80 dark:border-zinc-800/80 space-y-4">
               <div class="flex items-start justify-between gap-3">
                 <div>
-                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-amber-600 dark:text-amber-400">Tahap 2 • Uji Adaptasi</span>
-                  <h3 class="font-extrabold text-base sm:text-lg mt-0.5">Simulasi Studi Kasus Tugas Kuliah</h3>
+                  <span class="text-[11px] font-medium text-zinc-400">Tahap 02</span>
+                  <h3 class="font-semibold text-base text-zinc-900 dark:text-white mt-0.5">Simulasi Studi Kasus Tugas Kuliah</h3>
                 </div>
-                <span id="sim-badge" class="text-[11px] font-bold px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 shrink-0">Belum Dijawab</span>
+                <span id="sim-badge" class="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-500">Belum Dijawab</span>
               </div>
 
-              <div class="p-4 rounded-2xl bg-amber-50/80 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/60 text-xs text-amber-900 dark:text-amber-200 leading-relaxed">
-                <strong>Skenario Semester Awal:</strong> Dosen memberikan studi kasus proyek kelompok yang harus dipresentasikan minggu depan dengan referensi jurnal akademik. Apa langkah pertamamu?
+              <div class="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-900/70 border border-zinc-200/60 dark:border-zinc-800 text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                <span class="font-semibold text-zinc-900 dark:text-white">Studi Kasus:</span> Dosen memberikan proyek kelompok yang harus dipresentasikan minggu depan dengan referensi jurnal akademik. Apa langkah pertamamu?
               </div>
 
-              <div class="space-y-2.5">
-                <button onclick="saveSimulasi('Sangat Siap (Skor 94/100)')" class="w-full p-4 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 text-left text-xs sm:text-sm font-semibold transition flex items-center gap-3">
-                  <span class="text-lg">✅</span>
-                  <span>Memecah bagian riset sejak hari pertama dan berdiskusi dengan teman/alumni</span>
+              <div class="space-y-2">
+                <button onclick="saveSimulasi('Sangat Siap (Skor 94/100)')" class="w-full p-3.5 rounded-xl border border-zinc-200/80 dark:border-zinc-800 hover:border-zinc-900 dark:hover:border-zinc-400 hover:bg-zinc-50/70 dark:hover:bg-zinc-900/60 text-left text-[13px] font-medium transition-all flex items-center justify-between gap-3 group">
+                  <span>Memecah bagian riset sejak hari pertama dan berdiskusi dengan teman atau alumni</span>
+                  <span class="w-4 h-4 rounded-full border border-zinc-300 dark:border-zinc-700 group-hover:border-zinc-900 dark:group-hover:border-white shrink-0 transition"></span>
                 </button>
-                <button onclick="saveSimulasi('Cukup Siap (Skor 76/100)')" class="w-full p-4 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-amber-500 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 text-left text-xs sm:text-sm font-semibold transition flex items-center gap-3">
-                  <span class="text-lg">⏳</span>
+                <button onclick="saveSimulasi('Cukup Siap (Skor 76/100)')" class="w-full p-3.5 rounded-xl border border-zinc-200/80 dark:border-zinc-800 hover:border-zinc-900 dark:hover:border-zinc-400 hover:bg-zinc-50/70 dark:hover:bg-zinc-900/60 text-left text-[13px] font-medium transition-all flex items-center justify-between gap-3 group">
                   <span>Menunggu mendekati hari pengumpulan baru menyusun materi presentasi</span>
+                  <span class="w-4 h-4 rounded-full border border-zinc-300 dark:border-zinc-700 group-hover:border-zinc-900 dark:group-hover:border-white shrink-0 transition"></span>
                 </button>
               </div>
             </div>
 
-            <!-- Ringkasan Data Evaluasi Terintegrasi -->
-            <div class="p-6 rounded-3xl bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-700 text-white space-y-3 shadow-xl shadow-purple-700/20 relative overflow-hidden">
-              <div class="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+            <!-- Ringkasan Data Evaluasi Minimalis -->
+            <div class="p-6 rounded-2xl bg-zinc-900 dark:bg-zinc-900 text-white border border-zinc-800 space-y-3">
               <div class="flex items-center justify-between gap-2">
-                <span class="text-[11px] font-extrabold uppercase tracking-wider text-purple-200">Ringkasan Evaluasi Tersimpan</span>
-                <span id="db-match-badge" class="text-xs font-extrabold px-3 py-1 rounded-full bg-white/20 backdrop-blur-xs">-</span>
+                <span class="text-[11px] font-medium text-zinc-400">Ringkasan Evaluasi Tersimpan</span>
+                <span id="db-match-badge" class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-violet-600/25 text-violet-300 border border-violet-500/30">-</span>
               </div>
-              <h4 id="db-major-result" class="text-lg sm:text-xl font-black tracking-tight">Belum ada hasil Pre-Test</h4>
-              <div class="pt-2 border-t border-white/15 flex flex-wrap items-center justify-between gap-2 text-xs text-purple-100">
-                <span>Status Simulasi Tugas: <strong id="db-sim-result" class="text-white">Belum dikerjakan</strong></span>
-                <button onclick="switchMenu('seminar')" class="px-3.5 py-1.5 rounded-xl bg-white text-purple-700 font-extrabold text-xs hover:bg-purple-50 transition">
-                  Cek Seminar Jurusan →
+              <h4 id="db-major-result" class="text-base sm:text-lg font-semibold tracking-tight">Belum ada hasil Pre-Test</h4>
+              <div class="pt-3 border-t border-zinc-800 flex flex-wrap items-center justify-between gap-2 text-xs text-zinc-400">
+                <span>Simulasi Tugas: <strong id="db-sim-result" class="text-zinc-100 font-medium">Belum dikerjakan</strong></span>
+                <button onclick="switchMenu('seminar')" class="px-3.5 py-1.5 rounded-full bg-white text-zinc-900 font-medium text-xs hover:bg-zinc-200 transition">
+                  Lihat Jadwal Seminar
                 </button>
               </div>
             </div>
@@ -492,36 +415,33 @@
           <!-- ===================================================
                3. SEMINAR (MURNI DARI DATABASE SUPABASE)
           ==================================================== -->
-          <section id="sec-seminar" class="hidden space-y-5">
+          <section id="sec-seminar" class="hidden space-y-4">
             
             <!-- Form Tambah Jadwal Seminar -->
-            <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm space-y-4">
+            <div class="p-6 rounded-2xl bg-white dark:bg-[#111113] border border-zinc-200/80 dark:border-zinc-800/80 space-y-3.5">
               <div>
-                <span class="text-[10px] font-extrabold uppercase tracking-wider text-purple-600 dark:text-purple-400">Kontribusi Komunitas</span>
-                <h3 class="font-extrabold text-base mt-0.5">Buat Jadwal Seminar / Sharing Alumni Baru</h3>
+                <span class="text-[11px] font-medium text-zinc-400">Kontribusi Sesi</span>
+                <h3 class="font-semibold text-base text-zinc-900 dark:text-white mt-0.5">Buat Jadwal Seminar Alumni</h3>
               </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <input id="sem-title" type="text" placeholder="Judul Seminar / Sesi Alumni" class="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-xs sm:text-sm focus:outline-none focus:border-purple-500" />
-                <input id="sem-schedule" type="text" placeholder="Jadwal (Contoh: Sabtu, 16.00 WIB)" class="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-xs sm:text-sm focus:outline-none focus:border-purple-500" />
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <input id="sem-title" type="text" placeholder="Judul seminar atau topik" class="px-3.5 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950 text-xs sm:text-[13px] focus:outline-none focus:border-zinc-900 dark:focus:border-zinc-400 transition" />
+                <input id="sem-schedule" type="text" placeholder="Jadwal (Contoh: Sabtu, 16.00 WIB)" class="px-3.5 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950 text-xs sm:text-[13px] focus:outline-none focus:border-zinc-900 dark:focus:border-zinc-400 transition" />
               </div>
-              <input id="sem-desc" type="text" placeholder="Deskripsi singkat topik pembahasan..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-xs sm:text-sm focus:outline-none focus:border-purple-500" />
-              <div class="flex justify-end">
-                <button onclick="createSeminar()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-extrabold text-xs shadow-md shadow-purple-600/20 transition">
-                  + Simpan Seminar ke Database
+              <input id="sem-desc" type="text" placeholder="Deskripsi singkat pembahasan..." class="w-full px-3.5 py-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950 text-xs sm:text-[13px] focus:outline-none focus:border-zinc-900 dark:focus:border-zinc-400 transition" />
+              <div class="flex justify-end pt-1">
+                <button onclick="createSeminar()" class="px-4 py-2 rounded-full bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-900 font-medium text-xs transition active:scale-[0.98]">
+                  Simpan Jadwal
                 </button>
               </div>
             </div>
 
             <!-- Daftar Seminar -->
-            <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm space-y-4">
-              <div class="flex items-center justify-between">
-                <div>
-                  <h3 class="font-extrabold text-base">Jadwal Live Sharing &amp; Seminar</h3>
-                  <p class="text-xs text-slate-400">Daftar dengan satu klik untuk mengikuti sesi mentoring alumni</p>
-                </div>
-                <span class="text-xl">🎙️</span>
+            <div class="p-6 rounded-2xl bg-white dark:bg-[#111113] border border-zinc-200/80 dark:border-zinc-800/80 space-y-4">
+              <div>
+                <h3 class="font-semibold text-base text-zinc-900 dark:text-white">Sesi Live Sharing Tersedia</h3>
+                <p class="text-xs text-zinc-400 mt-0.5">Daftar dengan satu klik untuk mengikuti sesi bersama alumni</p>
               </div>
-              <div id="seminar-container" class="space-y-3"></div>
+              <div id="seminar-container" class="space-y-2.5"></div>
             </div>
 
           </section>
@@ -530,70 +450,69 @@
                4. HISTORY (MURNI DARI DATABASE SUPABASE)
           ==================================================== -->
           <section id="sec-history" class="hidden space-y-4">
-            <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm space-y-4">
-              <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+            <div class="p-6 rounded-2xl bg-white dark:bg-[#111113] border border-zinc-200/80 dark:border-zinc-800/80 space-y-4">
+              <div class="flex items-center justify-between border-b border-zinc-100 dark:border-zinc-800/80 pb-4">
                 <div>
-                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-purple-600 dark:text-purple-400">Log Eksplorasi</span>
-                  <h3 class="font-extrabold text-base mt-0.5">History Aktivitas Akun</h3>
-                  <p class="text-xs text-slate-500">Rekam jejak tes, diskusi, dan seminar yang tercatat di akunmu.</p>
+                  <h3 class="font-semibold text-base text-zinc-900 dark:text-white">Riwayat Aktivitas</h3>
+                  <p class="text-xs text-zinc-400 mt-0.5">Catatan eksplorasi tes, diskusi, dan seminar akunmu.</p>
                 </div>
-                <button onclick="fetchSupabaseHistory()" class="px-3.5 py-2 rounded-xl bg-purple-50 hover:bg-purple-100 dark:bg-purple-950/60 dark:hover:bg-purple-900/60 text-xs font-extrabold text-purple-600 dark:text-purple-300 transition">
-                  🔄 Refresh
+                <button onclick="fetchSupabaseHistory()" class="px-3.5 py-1.5 rounded-full border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-xs font-medium text-zinc-600 dark:text-zinc-300 transition">
+                  Refresh
                 </button>
               </div>
-              <div id="history-list" class="space-y-2.5 max-h-[520px] overflow-y-auto pr-1"></div>
+              <div id="history-list" class="space-y-2 max-h-[520px] overflow-y-auto"></div>
             </div>
           </section>
 
         </main>
 
         <!-- =================================================
-             SIDEBAR KANAN: RADAR KAMPUS & PANDUAN (3 COL)
+             SIDEBAR KANAN: TOPIK & PANDUAN MINIMALIS (3 COL)
         ================================================== -->
-        <aside class="lg:col-span-3 space-y-5 lg:sticky lg:top-22">
+        <aside class="lg:col-span-3 space-y-4 lg:sticky lg:top-20">
           
-          <!-- Campus Insights Widget -->
-          <div class="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-5 shadow-sm space-y-3.5">
+          <!-- Trending Topics -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-[#111113] border border-zinc-200/80 dark:border-zinc-800/80 space-y-3">
             <div class="flex items-center justify-between">
-              <h4 class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Topik Hangat Siswa</h4>
-              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <h4 class="text-xs font-semibold text-zinc-900 dark:text-white">Topik Hangat</h4>
+              <span class="w-1.5 h-1.5 rounded-full bg-violet-600"></span>
             </div>
 
-            <div class="space-y-2.5 text-xs">
-              <div onclick="switchMenu('forum')" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 hover:bg-purple-50/70 dark:hover:bg-purple-950/30 border border-transparent hover:border-purple-200 dark:hover:border-purple-800 transition cursor-pointer">
-                <span class="text-[10px] font-extrabold text-purple-600 dark:text-purple-400 block">#AntiSalahJurusan</span>
-                <p class="font-bold text-slate-800 dark:text-slate-200 mt-0.5">Bedanya Teknik Informatika vs Sistem Informasi di dunia kerja</p>
+            <div class="space-y-2 text-xs">
+              <div onclick="switchMenu('forum')" class="p-3 rounded-xl bg-zinc-50/80 dark:bg-zinc-900/60 hover:bg-zinc-100/80 dark:hover:bg-zinc-800/60 transition cursor-pointer">
+                <span class="text-[10px] font-medium text-violet-600 dark:text-violet-400 block">#AntiSalahJurusan</span>
+                <p class="font-medium text-zinc-800 dark:text-zinc-200 mt-0.5 leading-snug">Perbedaan Teknik Informatika vs Sistem Informasi</p>
               </div>
-              <div onclick="switchMenu('forum')" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 hover:bg-purple-50/70 dark:hover:bg-purple-950/30 border border-transparent hover:border-purple-200 dark:hover:border-purple-800 transition cursor-pointer">
-                <span class="text-[10px] font-extrabold text-indigo-600 dark:text-indigo-400 block">#SemesterAwal</span>
-                <p class="font-bold text-slate-800 dark:text-slate-200 mt-0.5">Cara menghadapi tugas presentasi kelompok &amp; manajemen waktu</p>
+              <div onclick="switchMenu('forum')" class="p-3 rounded-xl bg-zinc-50/80 dark:bg-zinc-900/60 hover:bg-zinc-100/80 dark:hover:bg-zinc-800/60 transition cursor-pointer">
+                <span class="text-[10px] font-medium text-zinc-500 block">#SemesterAwal</span>
+                <p class="font-medium text-zinc-800 dark:text-zinc-200 mt-0.5 leading-snug">Manajemen waktu tugas presentasi kelompok</p>
               </div>
             </div>
           </div>
 
-          <!-- Alur Persiapan Card -->
-          <div class="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-5 shadow-sm space-y-3.5">
-            <h4 class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Alur Persiapan Kuliah</h4>
+          <!-- Alur Persiapan -->
+          <div class="p-5 rounded-2xl bg-white dark:bg-[#111113] border border-zinc-200/80 dark:border-zinc-800/80 space-y-3.5">
+            <h4 class="text-xs font-semibold text-zinc-900 dark:text-white">Alur Persiapan</h4>
             <ol class="space-y-3 text-xs">
               <li class="flex items-start gap-2.5">
-                <span class="w-5 h-5 rounded-lg bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 font-extrabold text-[11px] flex items-center justify-center shrink-0 mt-0.5">1</span>
+                <span class="w-5 h-5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 font-medium text-[10px] flex items-center justify-center shrink-0 mt-0.5">1</span>
                 <div>
-                  <span class="font-bold block text-slate-800 dark:text-slate-200">Tanya di Feed Forum</span>
-                  <span class="text-[11px] text-slate-400">Gali insight langsung dari pengalaman alumni.</span>
+                  <span class="font-medium block text-zinc-800 dark:text-zinc-200">Tanya di Feed Forum</span>
+                  <span class="text-[11px] text-zinc-400">Gali pengalaman langsung alumni.</span>
                 </div>
               </li>
               <li class="flex items-start gap-2.5">
-                <span class="w-5 h-5 rounded-lg bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 font-extrabold text-[11px] flex items-center justify-center shrink-0 mt-0.5">2</span>
+                <span class="w-5 h-5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 font-medium text-[10px] flex items-center justify-center shrink-0 mt-0.5">2</span>
                 <div>
-                  <span class="font-bold block text-slate-800 dark:text-slate-200">Uji Minat &amp; Simulasi</span>
-                  <span class="text-[11px] text-slate-400">Ukur kecocokan jurusan &amp; kesiapan tugas.</span>
+                  <span class="font-medium block text-zinc-800 dark:text-zinc-200">Uji Minat &amp; Simulasi</span>
+                  <span class="text-[11px] text-zinc-400">Cek kecocokan pola pikir &amp; tugas.</span>
                 </div>
               </li>
               <li class="flex items-start gap-2.5">
-                <span class="w-5 h-5 rounded-lg bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 font-extrabold text-[11px] flex items-center justify-center shrink-0 mt-0.5">3</span>
+                <span class="w-5 h-5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 font-medium text-[10px] flex items-center justify-center shrink-0 mt-0.5">3</span>
                 <div>
-                  <span class="font-bold block text-slate-800 dark:text-slate-200">Ikuti Live Seminar</span>
-                  <span class="text-[11px] text-slate-400">Mantapkan pilihan sebelum daftar kampus.</span>
+                  <span class="font-medium block text-zinc-800 dark:text-zinc-200">Ikuti Live Seminar</span>
+                  <span class="text-[11px] text-zinc-400">Mantapkan pilihan sebelum daftar.</span>
                 </div>
               </li>
             </ol>
@@ -726,7 +645,6 @@
       document.getElementById('nav-user-school').textContent = `${currentUserProfile.grade_level} • ${currentUserProfile.school_name}`;
       if (document.getElementById('nav-user-avatar')) document.getElementById('nav-user-avatar').textContent = initials;
 
-      // Sinkronisasi Sidebar Profil Kiri
       if (document.getElementById('side-user-avatar')) document.getElementById('side-user-avatar').textContent = initials;
       if (document.getElementById('side-user-name')) document.getElementById('side-user-name').textContent = currentUserProfile.full_name;
       if (document.getElementById('side-user-school')) document.getElementById('side-user-school').textContent = `${currentUserProfile.grade_level} • ${currentUserProfile.school_name}`;
@@ -735,10 +653,8 @@
         document.getElementById('side-user-segment').textContent = currentUserProfile.segment === 'penentuan' ? 'Penentuan' : 'Eksplorasi';
       }
 
-      // Tampilkan data Pre-Test & Simulasi yang tersimpan di DB
       syncPretestUIFromProfile();
 
-      // Muat seluruh data murni dari Supabase
       await Promise.all([
         fetchFeedFromSupabase(),
         fetchSeminarsFromSupabase(),
@@ -756,7 +672,7 @@
     // =====================================================
     async function fetchFeedFromSupabase() {
       const container = document.getElementById('feed-container');
-      container.innerHTML = `<p class="text-xs text-slate-400 text-center py-8">Memuat postingan dari database...</p>`;
+      container.innerHTML = `<p class="text-xs text-zinc-400 text-center py-8">Memuat diskusi...</p>`;
 
       const { data: posts, error } = await supabaseClient
         .from('forum_posts')
@@ -770,10 +686,9 @@
 
       if (!posts || posts.length === 0) {
         container.innerHTML = `
-          <div class="p-10 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center space-y-2 shadow-sm">
-            <div class="text-3xl">💬</div>
-            <p class="font-extrabold text-sm">Belum ada postingan di database</p>
-            <p class="text-xs text-slate-400">Jadilah yang pertama menulis diskusi di Feed Forum!</p>
+          <div class="p-10 rounded-2xl bg-white dark:bg-[#111113] border border-zinc-200/80 dark:border-zinc-800/80 text-center space-y-1">
+            <p class="font-medium text-sm text-zinc-900 dark:text-white">Belum ada diskusi</p>
+            <p class="text-xs text-zinc-400">Mulai percakapan pertama kamu di atas.</p>
           </div>
         `;
         return;
@@ -796,53 +711,53 @@
         const postComments = commentsByPost[post.id] || [];
         const timeStr = new Date(post.created_at).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' });
         return `
-          <article class="p-5 sm:p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow space-y-3.5">
+          <article class="p-5 rounded-2xl bg-white dark:bg-[#111113] border border-zinc-200/80 dark:border-zinc-800/80 space-y-3.5 transition-colors">
             <div class="flex items-center justify-between gap-2">
-              <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-500 text-white font-extrabold flex items-center justify-center text-sm shadow-xs">
-                  ${post.is_anon ? '🕵️' : post.author_name.charAt(0).toUpperCase()}
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-200 font-semibold flex items-center justify-center text-xs">
+                  ${post.is_anon ? '?' : post.author_name.charAt(0).toUpperCase()}
                 </div>
                 <div>
                   <div class="flex flex-wrap items-center gap-2">
-                    <span class="font-extrabold text-sm text-slate-900 dark:text-white">${post.is_anon ? 'Siswa Anonim' : post.author_name}</span>
-                    <span class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300 border border-purple-200/60 dark:border-purple-800/60">
+                    <span class="font-semibold text-[13px] text-zinc-900 dark:text-white">${post.is_anon ? 'Siswa Anonim' : post.author_name}</span>
+                    <span class="text-[11px] font-medium px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300">
                       ${post.tag}
                     </span>
                   </div>
-                  <p class="text-[11px] text-slate-400 mt-0.5">${post.author_role} • ${timeStr}</p>
+                  <p class="text-[11px] text-zinc-400 mt-0.5">${post.author_role} • ${timeStr}</p>
                 </div>
               </div>
             </div>
 
-            <p class="text-xs sm:text-sm leading-relaxed text-slate-700 dark:text-slate-200">${post.content}</p>
+            <p class="text-[13px] sm:text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">${post.content}</p>
 
-            <div class="flex items-center gap-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 text-xs font-bold">
-              <button onclick="likePostInDB(${post.id}, ${post.likes_count || 0})" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 text-slate-600 dark:text-slate-300 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/50 transition">
-                <span>❤️</span>
-                <span>${post.likes_count || 0} Like</span>
+            <div class="flex items-center gap-2 pt-2 border-t border-zinc-100 dark:border-zinc-800/80 text-xs font-medium">
+              <button onclick="likePostInDB(${post.id}, ${post.likes_count || 0})" class="flex items-center gap-1.5 px-3 py-1 rounded-full border border-zinc-200/80 dark:border-zinc-800 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800/60 hover:text-rose-600 transition active:scale-[0.97]">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                <span>${post.likes_count || 0}</span>
               </button>
-              <span class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 text-slate-500 dark:text-slate-400">
-                <span>💬</span>
-                <span>${postComments.length} Diskusi</span>
+              <span class="flex items-center gap-1.5 px-3 py-1 rounded-full text-zinc-400">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                <span>${postComments.length}</span>
               </span>
             </div>
 
-            <!-- Daftar Komentar dari Database -->
-            <div class="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-2.5">
+            <!-- Daftar Komentar -->
+            <div class="pt-2.5 border-t border-zinc-100 dark:border-zinc-800/80 space-y-2.5">
               ${postComments.length > 0 ? `
-                <div class="space-y-2 pl-3 border-l-2 border-purple-200 dark:border-purple-900">
+                <div class="space-y-2 pl-3 border-l border-zinc-200 dark:border-zinc-800">
                   ${postComments.map(c => `
-                    <div class="p-3 rounded-2xl bg-slate-50/90 dark:bg-slate-950/90 text-xs space-y-0.5">
-                      <span class="font-extrabold text-purple-600 dark:text-purple-400">${c.author_name}</span>
-                      <p class="text-slate-700 dark:text-slate-300 leading-relaxed">${c.content}</p>
+                    <div class="p-2.5 rounded-xl bg-zinc-50/80 dark:bg-zinc-900/60 text-xs space-y-0.5">
+                      <span class="font-semibold text-zinc-900 dark:text-white">${c.author_name}</span>
+                      <p class="text-zinc-600 dark:text-zinc-300 leading-relaxed">${c.content}</p>
                     </div>
                   `).join('')}
                 </div>
               ` : ''}
 
-              <div class="flex gap-2 pt-1">
-                <input id="comment-input-${post.id}" type="text" placeholder="Tulis balasan komentar..." class="flex-1 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-xs focus:outline-none focus:border-purple-500 transition" />
-                <button onclick="addCommentToDB(${post.id})" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs transition">
+              <div class="flex items-center gap-2 pt-0.5">
+                <input id="comment-input-${post.id}" type="text" placeholder="Tulis balasan..." class="flex-1 px-3.5 py-1.5 rounded-full border border-zinc-200/80 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-950 text-xs focus:outline-none focus:border-zinc-900 dark:focus:border-zinc-400 transition" />
+                <button onclick="addCommentToDB(${post.id})" class="px-3.5 py-1.5 rounded-full bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-900 font-medium text-xs transition active:scale-[0.97]">
                   Kirim
                 </button>
               </div>
@@ -922,16 +837,16 @@
         if (document.getElementById('side-match-badge')) document.getElementById('side-match-badge').textContent = currentUserProfile.pretest_match || "Tersimpan";
 
         const b = document.getElementById('pretest-badge');
-        b.textContent = "✓ Tersimpan di DB";
-        b.className = "text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300";
+        b.textContent = "Tersimpan";
+        b.className = "text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300";
       }
       if (currentUserProfile.simulasi_score) {
         document.getElementById('db-sim-result').textContent = currentUserProfile.simulasi_score;
         if (document.getElementById('side-sim-result')) document.getElementById('side-sim-result').textContent = currentUserProfile.simulasi_score;
 
         const b = document.getElementById('sim-badge');
-        b.textContent = "✓ Tersimpan di DB";
-        b.className = "text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300";
+        b.textContent = "Tersimpan";
+        b.className = "text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300";
       }
     }
 
@@ -972,7 +887,7 @@
     // =====================================================
     async function fetchSeminarsFromSupabase() {
       const container = document.getElementById('seminar-container');
-      container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Memuat jadwal seminar dari database...</p>`;
+      container.innerHTML = `<p class="text-xs text-zinc-400 text-center py-6">Memuat jadwal...</p>`;
 
       const { data: seminars, error } = await supabaseClient
         .from('seminars')
@@ -980,7 +895,7 @@
         .order('created_at', { ascending: false });
 
       if (error || !seminars || seminars.length === 0) {
-        container.innerHTML = `<p class="text-xs text-slate-400 text-center py-8 bg-slate-50 dark:bg-slate-950 rounded-2xl">Belum ada jadwal seminar di database. Silakan tambahkan jadwal baru di atas.</p>`;
+        container.innerHTML = `<p class="text-xs text-zinc-400 text-center py-8 bg-zinc-50 dark:bg-zinc-900/50 rounded-xl">Belum ada jadwal seminar tersedia.</p>`;
         return;
       }
 
@@ -994,16 +909,16 @@
       container.innerHTML = seminars.map(sem => {
         const isReg = registeredIds.has(sem.id);
         return `
-          <div class="p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950/60 hover:border-purple-300 dark:hover:border-purple-800 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="p-4 rounded-xl border border-zinc-200/80 dark:border-zinc-800 bg-zinc-50/40 dark:bg-zinc-900/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div class="space-y-1">
-              <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
-                🗓️ ${sem.schedule}
+              <span class="inline-block text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300">
+                ${sem.schedule}
               </span>
-              <h4 class="font-extrabold text-sm text-slate-900 dark:text-white">${sem.title}</h4>
-              <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">${sem.description}</p>
+              <h4 class="font-semibold text-[13px] sm:text-sm text-zinc-900 dark:text-white">${sem.title}</h4>
+              <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">${sem.description}</p>
             </div>
-            <button onclick="registerSeminarInDB(${sem.id}, '${sem.title.replace(/'/g, "")}')" ${isReg ? 'disabled' : ''} class="shrink-0 px-4 py-2.5 rounded-xl text-xs font-extrabold transition shadow-xs ${isReg ? 'bg-emerald-600 text-white cursor-default' : 'bg-purple-600 hover:bg-purple-700 text-white'}">
-              ${isReg ? '✓ Terdaftar' : 'Ikut Seminar'}
+            <button onclick="registerSeminarInDB(${sem.id}, '${sem.title.replace(/'/g, "")}')" ${isReg ? 'disabled' : ''} class="shrink-0 px-4 py-1.5 rounded-full text-xs font-medium transition active:scale-[0.97] ${isReg ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200/70 dark:border-emerald-800/60 cursor-default' : 'bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-900'}">
+              ${isReg ? 'Terdaftar' : 'Ikut Sesi'}
             </button>
           </div>
         `;
@@ -1070,21 +985,21 @@
         .limit(30);
 
       if (error || !data || data.length === 0) {
-        container.innerHTML = `<p class="text-xs text-slate-400 text-center py-8 bg-slate-50 dark:bg-slate-950 rounded-2xl">Belum ada riwayat aktivitas di database untuk akun ini.</p>`;
+        container.innerHTML = `<p class="text-xs text-zinc-400 text-center py-8 bg-zinc-50 dark:bg-zinc-900/50 rounded-xl">Belum ada riwayat aktivitas.</p>`;
         return;
       }
 
       container.innerHTML = data.map(item => {
         const timeStr = new Date(item.created_at).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' });
         return `
-          <div class="p-3.5 rounded-2xl bg-slate-50/90 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800 flex items-center justify-between gap-3 text-xs">
+          <div class="p-3 rounded-xl bg-zinc-50/70 dark:bg-zinc-900/50 border border-zinc-200/60 dark:border-zinc-800/80 flex items-center justify-between gap-3 text-xs">
             <div class="flex items-center gap-2.5 min-w-0">
-              <span class="px-2.5 py-1 rounded-lg bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 font-extrabold text-[10px] shrink-0">
+              <span class="px-2 py-0.5 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200/70 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 font-medium text-[10px] shrink-0">
                 ${item.activity_type}
               </span>
-              <span class="font-semibold text-slate-700 dark:text-slate-200 truncate">${item.activity_detail}</span>
+              <span class="text-zinc-700 dark:text-zinc-200 truncate">${item.activity_detail}</span>
             </div>
-            <span class="text-[11px] text-slate-400 shrink-0">${timeStr}</span>
+            <span class="text-[11px] text-zinc-400 shrink-0">${timeStr}</span>
           </div>
         `;
       }).join('');
@@ -1097,22 +1012,22 @@
       ['forum', 'pretest', 'seminar', 'history'].forEach(item => {
         document.getElementById('sec-' + item).classList.add('hidden');
         const dBtn = document.getElementById('nav-' + item);
-        if (dBtn) dBtn.className = "px-4 py-2 rounded-xl font-semibold text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-purple-600 transition";
+        if (dBtn) dBtn.className = "px-4 py-1.5 rounded-full font-medium text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-all flex items-center gap-1.5";
         const mBtn = document.getElementById('mnav-' + item);
-        if (mBtn) mBtn.className = "px-3.5 py-1.5 rounded-xl font-semibold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap";
+        if (mBtn) mBtn.className = "px-3.5 py-1.5 rounded-full font-medium text-xs bg-zinc-100 dark:bg-zinc-900 text-zinc-500 whitespace-nowrap";
       });
 
       document.getElementById('sec-' + tab).classList.remove('hidden');
       const activeDBtn = document.getElementById('nav-' + tab);
-      if (activeDBtn) activeDBtn.className = "px-4 py-2 rounded-xl font-bold text-xs sm:text-sm bg-purple-600 text-white shadow-sm transition";
+      if (activeDBtn) activeDBtn.className = "px-4 py-1.5 rounded-full font-semibold text-xs bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-2xs ring-1 ring-zinc-200/70 dark:ring-zinc-700 transition-all flex items-center gap-1.5";
       const activeMBtn = document.getElementById('mnav-' + tab);
-      if (activeMBtn) activeMBtn.className = "px-3.5 py-1.5 rounded-xl font-bold text-xs bg-purple-600 text-white whitespace-nowrap";
+      if (activeMBtn) activeMBtn.className = "px-3.5 py-1.5 rounded-full font-semibold text-xs bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 whitespace-nowrap";
     }
 
     function toggleTheme() {
       const isDark = document.documentElement.classList.toggle('dark');
       const btn = document.getElementById('theme-btn');
-      if (btn) btn.textContent = isDark ? "White" : "Dark";
+      if (btn) btn.textContent = isDark ? "Light" : "Dark";
     }
   </script>
 </body>
