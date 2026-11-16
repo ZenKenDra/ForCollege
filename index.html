@@ -6,48 +6,89 @@
   <title>ForCollege — Komunitas & Persiapan Kuliah</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: { sans: ['Inter', 'sans-serif'] }
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif']
+          },
+          colors: {
+            brand: {
+              50: '#F5F3FF',
+              100: '#EDE9FE',
+              200: '#DDD6FE',
+              500: '#8B5CF6',
+              600: '#7C3AED',
+              700: '#6D28D9',
+              900: '#4C1D95'
+            }
+          }
         }
       }
     }
   </script>
+  <style>
+    .bg-grid-pattern {
+      background-image: radial-gradient(rgba(124, 58, 237, 0.08) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .dark .bg-grid-pattern {
+      background-image: radial-gradient(rgba(139, 92, 246, 0.12) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+  </style>
 </head>
-<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors">
+<body class="bg-slate-100/80 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors font-sans antialiased selection:bg-purple-600 selection:text-white bg-grid-pattern">
 
   <!-- =====================================================
        LAYAR 1: GERBANG WAJIB LOGIN GOOGLE (AUTH GATE)
-       User tidak bisa mengakses apapun sebelum Login Google
   ====================================================== -->
-  <div id="auth-gate" class="min-h-screen flex items-center justify-center p-4">
-    <div class="w-full max-w-md p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-lg text-center space-y-6">
-      <div class="w-14 h-14 mx-auto rounded-2xl bg-purple-600 text-white font-extrabold flex items-center justify-center text-2xl shadow-md">
-        FC
+  <div id="auth-gate" class="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+    <!-- Dekorasi Cahaya Latar -->
+    <div class="absolute -top-24 -left-24 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="w-full max-w-md p-8 sm:p-10 rounded-3xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200/80 dark:border-slate-800 shadow-2xl shadow-purple-900/10 text-center space-y-6 relative z-10">
+      <div class="flex flex-col items-center">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 p-0.5 shadow-lg shadow-purple-500/30">
+          <div class="w-full h-full bg-white dark:bg-slate-900 rounded-[14px] flex items-center justify-center overflow-hidden">
+            <img src="https://lh3.googleusercontent.com/d/1XzGIwmQDiy5hPMxKRTCV3UXPHCuWmUXy" alt="ForCollege" class="w-11 h-11 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+            <span class="hidden text-purple-600 font-black text-xl">FC</span>
+          </div>
+        </div>
+        <span class="mt-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
+          <span class="w-1.5 h-1.5 rounded-full bg-purple-600 animate-pulse"></span>
+          Campus Readiness &amp; Community
+        </span>
       </div>
+
       <div class="space-y-2">
-        <h1 class="text-2xl font-extrabold tracking-tight">Selamat Datang di ForCollege</h1>
-        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
-          Silakan masuk dengan akun Google Anda dan lengkapi data diri untuk mengakses Feed Forum, Pre-Test, dan Seminar.
+        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-slate-900 via-purple-800 to-indigo-800 dark:from-white dark:via-purple-300 dark:to-indigo-300 bg-clip-text text-transparent">
+          Selamat Datang di ForCollege
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+          Eksplorasi jurusan impian, simulasi beban tugas kuliah, dan diskusi langsung bersama alumni sebelum melangkah ke kampus.
         </p>
       </div>
 
-      <button onclick="loginWithGoogle()" class="w-full py-3 px-4 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 font-bold text-sm flex items-center justify-center gap-3 shadow-xs transition">
-        <svg class="w-5 h-5" viewBox="0 0 24 24">
-          <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.8C6.2 7.2 8.9 5 12 5z"/>
-          <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.6l3.7 2.9c2.2-2 3.7-5 3.7-8.7z"/>
-          <path fill="#FBBC05" d="M5.3 14.8c-.2-.8-.4-1.6-.4-2.5s.2-1.7.4-2.5L1.6 7C.6 9 0 11.2 0 13.5s.6 4.5 1.6 6.5l3.7-2.9z"/>
-          <path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.1-6.7-5l-3.7 2.8C3.5 21.4 7.4 24 12 24z"/>
-        </svg>
-        <span>Masuk dengan Akun Google</span>
-      </button>
+      <div class="pt-1">
+        <button onclick="loginWithGoogle()" class="w-full py-3.5 px-5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/80 hover:border-purple-400 font-bold text-sm flex items-center justify-center gap-3 shadow-md shadow-slate-200/50 dark:shadow-none transition-all active:scale-[0.99]">
+          <svg class="w-5 h-5" viewBox="0 0 24 24">
+            <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.8C6.2 7.2 8.9 5 12 5z"/>
+            <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.6l3.7 2.9c2.2-2 3.7-5 3.7-8.7z"/>
+            <path fill="#FBBC05" d="M5.3 14.8c-.2-.8-.4-1.6-.4-2.5s.2-1.7.4-2.5L1.6 7C.6 9 0 11.2 0 13.5s.6 4.5 1.6 6.5l3.7-2.9z"/>
+            <path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.1-6.7-5l-3.7 2.8C3.5 21.4 7.4 24 12 24z"/>
+          </svg>
+          <span>Masuk dengan Akun Google</span>
+        </button>
+      </div>
 
-      <div class="pt-2">
-        <button onclick="toggleTheme()" id="gate-theme-btn" class="text-xs font-bold text-slate-400 hover:text-purple-600">
+      <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+        <span>Khusus Siswa SMA Kelas 10–12</span>
+        <button onclick="toggleTheme()" id="gate-theme-btn" class="font-bold text-slate-500 hover:text-purple-600 transition">
           Mode: Dark / White
         </button>
       </div>
@@ -56,39 +97,43 @@
 
   <!-- =====================================================
        LAYAR 2: GERBANG WAJIB LENGKAPI DATA DIRI (PROFILE GATE)
-       Muncul setelah Login Google jika data di DB belum lengkap
   ====================================================== -->
-  <div id="profile-gate" class="hidden min-h-screen flex items-center justify-center p-4">
-    <div class="w-full max-w-lg p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-lg space-y-5">
-      <div class="border-b border-slate-200 dark:border-slate-800 pb-4">
-        <span class="text-xs font-bold uppercase px-2.5 py-1 rounded-md bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
-          Tahap Verifikasi Data
-        </span>
-        <h2 class="text-xl font-extrabold mt-2">Lengkapi Data Diri Anda</h2>
-        <p class="text-xs text-slate-500 mt-0.5">
-          Anda wajib melengkapi seluruh informasi berikut sebelum dapat mengakses fitur ForCollege.
+  <div id="profile-gate" class="hidden min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+    <div class="absolute -top-24 -right-24 w-96 h-96 bg-purple-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="w-full max-w-lg p-6 sm:p-8 rounded-3xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-slate-200 dark:border-slate-800 shadow-2xl space-y-6 relative z-10">
+      <div class="border-b border-slate-100 dark:border-slate-800 pb-5">
+        <div class="flex items-center justify-between">
+          <span class="text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
+            Langkah Terakhir • Verifikasi Profil
+          </span>
+          <span class="text-xs font-bold text-slate-400">1 / 1</span>
+        </div>
+        <h2 class="text-2xl font-extrabold mt-3 tracking-tight">Lengkapi Data Diri Kamu</h2>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+          Data ini membantu menyesuaikan rekomendasi jurusan dan identitas diskusimu di komunitas ForCollege.
         </p>
       </div>
 
       <form id="profile-form" onsubmit="submitProfileData(event)" class="space-y-4">
         <div>
-          <label class="block text-xs font-bold mb-1 text-slate-500">Email Google Terhubung</label>
-          <input id="prof-email" type="email" disabled class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800 text-slate-500 text-sm font-semibold cursor-not-allowed" />
+          <label class="block text-xs font-bold mb-1.5 text-slate-500">Email Google Terhubung</label>
+          <input id="prof-email" type="email" disabled class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100/80 dark:bg-slate-800/80 text-slate-500 text-xs sm:text-sm font-semibold cursor-not-allowed" />
         </div>
 
         <div>
-          <label class="block text-xs font-bold mb-1">Nama Lengkap *</label>
-          <input id="prof-name" type="text" required placeholder="Masukkan nama lengkap Anda" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm font-medium focus:outline-none focus:border-purple-600" />
+          <label class="block text-xs font-bold mb-1.5">Nama Lengkap *</label>
+          <input id="prof-name" type="text" required placeholder="Masukkan nama lengkap Anda" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-600 transition" />
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
           <div>
-            <label class="block text-xs font-bold mb-1">Asal Sekolah (SMA/SMK) *</label>
-            <input id="prof-school" type="text" required placeholder="Contoh: SMAN 1 Malang" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm font-medium focus:outline-none focus:border-purple-600" />
+            <label class="block text-xs font-bold mb-1.5">Asal Sekolah (SMA/SMK) *</label>
+            <input id="prof-school" type="text" required placeholder="Contoh: SMAN 1 Malang" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-600 transition" />
           </div>
           <div>
-            <label class="block text-xs font-bold mb-1">Kelas Saat Ini *</label>
-            <select id="prof-grade" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm font-semibold focus:outline-none focus:border-purple-600">
+            <label class="block text-xs font-bold mb-1.5">Kelas Saat Ini *</label>
+            <select id="prof-grade" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-600 transition">
               <option value="">-- Pilih Kelas --</option>
               <option value="Kelas 10 SMA">Kelas 10 SMA</option>
               <option value="Kelas 11 SMA">Kelas 11 SMA</option>
@@ -98,8 +143,8 @@
         </div>
 
         <div>
-          <label class="block text-xs font-bold mb-1">Status Rencana Kuliah *</label>
-          <select id="prof-segment" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm font-semibold focus:outline-none focus:border-purple-600">
+          <label class="block text-xs font-bold mb-1.5">Status Rencana Kuliah *</label>
+          <select id="prof-segment" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-600 transition">
             <option value="">-- Pilih Status Persiapan --</option>
             <option value="eksplorasi">Belum Menentukan Kuliah (Tahap Eksplorasi)</option>
             <option value="penentuan">Sudah Punya Jurusan Incaran (Tahap Penentuan)</option>
@@ -107,16 +152,16 @@
         </div>
 
         <div>
-          <label class="block text-xs font-bold mb-1">Bidang / Jurusan yang Diminati *</label>
-          <input id="prof-major" type="text" required placeholder="Contoh: Teknik Informatika / DKV / Manajemen" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm font-medium focus:outline-none focus:border-purple-600" />
+          <label class="block text-xs font-bold mb-1.5">Bidang / Jurusan yang Diminati *</label>
+          <input id="prof-major" type="text" required placeholder="Contoh: Teknik Informatika / DKV / Manajemen" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-600 transition" />
         </div>
 
-        <div class="pt-2 flex items-center justify-between gap-3">
-          <button type="button" onclick="logoutUser()" class="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-bold text-slate-500">
+        <div class="pt-3 flex items-center justify-between gap-3">
+          <button type="button" onclick="logoutUser()" class="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-bold text-slate-500 transition">
             Batal / Keluar
           </button>
-          <button type="submit" id="btn-save-profile" class="flex-1 py-2.5 px-5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm shadow-xs transition">
-            Simpan Data & Masuk ke Aplikasi
+          <button type="submit" id="btn-save-profile" class="flex-1 py-3 px-5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold text-sm shadow-lg shadow-purple-600/25 transition active:scale-[0.99]">
+            Simpan Data &amp; Masuk ke Aplikasi →
           </button>
         </div>
       </form>
@@ -124,48 +169,67 @@
   </div>
 
   <!-- =====================================================
-       LAYAR 3: APLIKASI UTAMA (Hanya Terbuka Jika Profil Lengkap)
+       LAYAR 3: APLIKASI UTAMA (GEN-Z SOCIAL HUB 3-KOLOM)
   ====================================================== -->
   <div id="app-shell" class="hidden">
 
-    <!-- MENU BAR UTAMA -->
-    <header class="sticky top-0 z-30 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-xs">
-      <div class="max-w-5xl mx-auto px-4">
+    <!-- STICKY FROSTED NAVBAR -->
+    <header class="sticky top-0 z-30 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800">
+      <div class="max-w-7xl mx-auto px-4">
         <div class="h-16 flex items-center justify-between gap-4">
           
-          <div class="flex items-center gap-2.5 shrink-0">
-            <div class="w-9 h-9 rounded-xl bg-purple-600 text-white font-extrabold flex items-center justify-center text-base">
-              FC
+          <!-- Brand Logo -->
+          <div onclick="switchMenu('forum')" class="flex items-center gap-3 shrink-0 cursor-pointer group">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-600 p-0.5 shadow-md shadow-purple-500/20 group-hover:scale-105 transition-transform">
+              <div class="w-full h-full bg-white dark:bg-slate-900 rounded-[10px] flex items-center justify-center overflow-hidden">
+                <img src="https://lh3.googleusercontent.com/d/1XzGIwmQDiy5hPMxKRTCV3UXPHCuWmUXy" alt="ForCollege" class="w-7 h-7 object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <span class="hidden text-purple-600 font-black text-sm">FC</span>
+              </div>
             </div>
-            <span class="font-extrabold text-lg tracking-tight text-purple-600 dark:text-purple-400">ForCollege</span>
+            <div>
+              <div class="flex items-center gap-1.5">
+                <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-indigo-400 bg-clip-text text-transparent">
+                  ForCollege
+                </span>
+                <span class="hidden sm:inline-block text-[10px] font-extrabold uppercase tracking-wider px-1.5 py-0.5 rounded bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
+                  Hub
+                </span>
+              </div>
+              <p class="text-[10px] text-slate-400 font-semibold leading-none hidden sm:block">Campus Readiness Platform</p>
+            </div>
           </div>
 
-          <nav class="hidden md:flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
-            <button onclick="switchMenu('forum')" id="nav-forum" class="px-4 py-2 rounded-lg font-bold text-xs sm:text-sm bg-purple-600 text-white shadow-xs transition">
-              Feed Forum
+          <!-- Desktop Navigation Pills -->
+          <nav class="hidden md:flex items-center gap-1.5 bg-slate-100/90 dark:bg-slate-800/90 p-1.5 rounded-2xl border border-slate-200/70 dark:border-slate-700/70">
+            <button onclick="switchMenu('forum')" id="nav-forum" class="px-4 py-2 rounded-xl font-bold text-xs sm:text-sm bg-purple-600 text-white shadow-sm transition">
+              💬 Feed Forum
             </button>
-            <button onclick="switchMenu('pretest')" id="nav-pretest" class="px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-purple-600 transition">
-              Pre-Test & Simulasi
+            <button onclick="switchMenu('pretest')" id="nav-pretest" class="px-4 py-2 rounded-xl font-semibold text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-purple-600 transition">
+              🎯 Pre-Test &amp; Simulasi
             </button>
-            <button onclick="switchMenu('seminar')" id="nav-seminar" class="px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-purple-600 transition">
-              Seminar
+            <button onclick="switchMenu('seminar')" id="nav-seminar" class="px-4 py-2 rounded-xl font-semibold text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-purple-600 transition">
+              🎙️ Seminar
             </button>
-            <button onclick="switchMenu('history')" id="nav-history" class="px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-purple-600 transition">
-              History
+            <button onclick="switchMenu('history')" id="nav-history" class="px-4 py-2 rounded-xl font-semibold text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-purple-600 transition">
+              ⚡ History
             </button>
           </nav>
 
-          <div class="flex items-center gap-2 shrink-0">
-            <button onclick="toggleTheme()" id="theme-btn" class="px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-xs font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+          <!-- User Info & Controls -->
+          <div class="flex items-center gap-2.5 shrink-0">
+            <button onclick="toggleTheme()" id="theme-btn" class="px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold hover:border-purple-500 transition shadow-2xs">
               Dark
             </button>
 
-            <div class="flex items-center gap-2 pl-2 border-l border-slate-200 dark:border-slate-800">
-              <div class="text-right hidden sm:block">
-                <p id="nav-user-name" class="text-xs font-bold text-purple-600 dark:text-purple-400 leading-none"></p>
-                <p id="nav-user-school" class="text-[10px] text-slate-400 mt-0.5"></p>
+            <div class="flex items-center gap-2.5 pl-2.5 border-l border-slate-200 dark:border-slate-800">
+              <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-purple-600 to-pink-500 text-white font-extrabold text-xs flex items-center justify-center shadow-xs" id="nav-user-avatar">
+                FC
               </div>
-              <button onclick="logoutUser()" class="px-3 py-1.5 rounded-lg bg-rose-50 text-rose-600 dark:bg-rose-950 dark:text-rose-300 text-xs font-bold border border-rose-200 dark:border-rose-800">
+              <div class="text-left hidden sm:block">
+                <p id="nav-user-name" class="text-xs font-extrabold text-slate-800 dark:text-slate-100 leading-none"></p>
+                <p id="nav-user-school" class="text-[10px] font-medium text-slate-400 mt-1"></p>
+              </div>
+              <button onclick="logoutUser()" class="ml-1 px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 dark:bg-rose-950/70 dark:hover:bg-rose-900/70 dark:text-rose-300 text-xs font-bold border border-rose-200/80 dark:border-rose-800/80 transition">
                 Logout
               </button>
             </div>
@@ -173,162 +237,372 @@
 
         </div>
 
-        <!-- Menu Bar Mobile -->
-        <nav class="flex md:hidden overflow-x-auto gap-1.5 py-2 border-t border-slate-100 dark:border-slate-800">
-          <button onclick="switchMenu('forum')" id="mnav-forum" class="px-3.5 py-1.5 rounded-lg font-bold text-xs bg-purple-600 text-white whitespace-nowrap">
-            Feed Forum
+        <!-- Mobile Menu Bar -->
+        <nav class="flex md:hidden overflow-x-auto gap-1.5 py-2.5 border-t border-slate-100 dark:border-slate-800">
+          <button onclick="switchMenu('forum')" id="mnav-forum" class="px-3.5 py-1.5 rounded-xl font-bold text-xs bg-purple-600 text-white whitespace-nowrap">
+            💬 Feed Forum
           </button>
-          <button onclick="switchMenu('pretest')" id="mnav-pretest" class="px-3.5 py-1.5 rounded-lg font-semibold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">
-            Pre-Test & Simulasi
+          <button onclick="switchMenu('pretest')" id="mnav-pretest" class="px-3.5 py-1.5 rounded-xl font-semibold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">
+            🎯 Pre-Test &amp; Simulasi
           </button>
-          <button onclick="switchMenu('seminar')" id="mnav-seminar" class="px-3.5 py-1.5 rounded-lg font-semibold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">
-            Seminar
+          <button onclick="switchMenu('seminar')" id="mnav-seminar" class="px-3.5 py-1.5 rounded-xl font-semibold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">
+            🎙️ Seminar
           </button>
-          <button onclick="switchMenu('history')" id="mnav-history" class="px-3.5 py-1.5 rounded-lg font-semibold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">
-            History
+          <button onclick="switchMenu('history')" id="mnav-history" class="px-3.5 py-1.5 rounded-xl font-semibold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">
+            ⚡ History
           </button>
         </nav>
       </div>
     </header>
 
-    <!-- KONTEN UTAMA -->
-    <main class="max-w-3xl mx-auto px-4 py-6">
+    <!-- KONTEN UTAMA 3 KOLOM -->
+    <div class="max-w-7xl mx-auto px-4 py-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
-      <!-- ===================================================
-           1. FEED FORUM (MURNI DARI DATABASE SUPABASE)
-      ==================================================== -->
-      <section id="sec-forum" class="space-y-5">
-        
-        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
-          <textarea id="post-input" rows="2" placeholder="Bagikan diskusi jurusan, cari teman satu kampus, atau tanyakan ke alumni..." class="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-sm focus:outline-none focus:border-purple-500"></textarea>
+        <!-- =================================================
+             SIDEBAR KIRI: KARTU PROFIL & STATUS EVALUASI (3 COL)
+        ================================================== -->
+        <aside class="lg:col-span-3 space-y-5 lg:sticky lg:top-22">
           
-          <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
-            <div class="flex items-center gap-2">
-              <select id="post-tag" class="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-semibold">
-                <option value="Teknik Informatika">💻 Teknik Informatika</option>
-                <option value="DKV & UI/UX">🎨 DKV & UI/UX</option>
-                <option value="Manajemen Bisnis">📈 Manajemen Bisnis</option>
-                <option value="Kehidupan Kampus">🎓 Kehidupan Kampus</option>
-              </select>
-
-              <label class="flex items-center gap-1.5 text-xs font-semibold text-slate-600 dark:text-slate-300 cursor-pointer px-2 py-1">
-                <input type="checkbox" id="post-anon" class="accent-purple-600 rounded" />
-                <span>Anonim</span>
-              </label>
+          <!-- Student Profile Bento -->
+          <div class="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm overflow-hidden">
+            <div class="h-16 bg-gradient-to-r from-purple-600 via-indigo-600 to-fuchsia-600 relative">
+              <span class="absolute top-2.5 right-3 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-black/25 text-white backdrop-blur-xs">
+                Siswa Aktif
+              </span>
             </div>
+            <div class="px-5 pb-5 -mt-7 relative">
+              <div id="side-user-avatar" class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-500 text-white font-black text-xl flex items-center justify-center border-4 border-white dark:border-slate-900 shadow-md">
+                FC
+              </div>
+              <div class="mt-2.5">
+                <h2 id="side-user-name" class="font-extrabold text-base text-slate-900 dark:text-white leading-tight">Pelajar ForCollege</h2>
+                <p id="side-user-school" class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">SMA • Indonesia</p>
+              </div>
 
-            <button onclick="createNewPost()" class="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs sm:text-sm shadow-xs transition">
-              Posting
-            </button>
+              <div class="mt-4 pt-3.5 border-t border-slate-100 dark:border-slate-800 space-y-2">
+                <div class="flex items-center justify-between text-xs">
+                  <span class="text-slate-400 font-medium">Minat Awal</span>
+                  <span id="side-user-major" class="font-bold text-purple-600 dark:text-purple-400 truncate max-w-[140px]">-</span>
+                </div>
+                <div class="flex items-center justify-between text-xs">
+                  <span class="text-slate-400 font-medium">Fase Persiapan</span>
+                  <span id="side-user-segment" class="px-2 py-0.5 rounded-md bg-purple-50 dark:bg-purple-950 text-purple-700 dark:text-purple-300 font-bold text-[10px] uppercase">Eksplorasi</span>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div id="feed-container" class="space-y-4"></div>
-      </section>
-
-      <!-- ===================================================
-           2. PRE-TEST & SIMULASI (TERSINKRONISASI DATABASE)
-      ==================================================== -->
-      <section id="sec-pretest" class="hidden space-y-5">
-        
-        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
-          <div class="flex items-center justify-between">
-            <h3 class="font-bold text-base">Pre-Test Kecocokan Jurusan</h3>
-            <span id="pretest-badge" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">Belum Dijawab</span>
-          </div>
-          <p class="text-xs text-slate-500">Pilih aktivitas yang paling sesuai dengan minat dan caramu berpikir:</p>
-          <div class="space-y-2">
-            <button onclick="savePretest('Teknik Informatika & Sistem Informasi', '95% Cocok')" class="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-purple-600 hover:bg-purple-50/40 dark:hover:bg-purple-950/30 text-left text-xs sm:text-sm font-medium transition">
-              💻 Membedah logika, membuat program aplikasi, dan mengulik teknologi
-            </button>
-            <button onclick="savePretest('Desain Komunikasi Visual (DKV) & UI/UX', '94% Cocok')" class="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-purple-600 hover:bg-purple-50/40 dark:hover:bg-purple-950/30 text-left text-xs sm:text-sm font-medium transition">
-              🎨 Merancang karya visual, ilustrasi digital, dan pengalaman pengguna
-            </button>
-            <button onclick="savePretest('Manajemen & Bisnis Digital', '93% Cocok')" class="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-purple-600 hover:bg-purple-50/40 dark:hover:bg-purple-950/30 text-left text-xs sm:text-sm font-medium transition">
-              📈 Menyusun strategi bisnis, memimpin tim, dan menganalisis peluang pasar
-            </button>
-          </div>
-        </div>
-
-        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
-          <div class="flex items-center justify-between">
-            <h3 class="font-bold text-base">Simulasi Studi Kasus Tugas Kuliah</h3>
-            <span id="sim-badge" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800">Belum Dijawab</span>
-          </div>
-          <p class="text-xs text-slate-500">
-            Saat awal semester, dosen memberikan studi kasus proyek yang harus dipresentasikan minggu depan. Apa langkahmu?
-          </p>
-          <div class="space-y-2">
-            <button onclick="saveSimulasi('Sangat Siap (Skor 94/100)')" class="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-purple-600 hover:bg-purple-50/40 dark:hover:bg-purple-950/30 text-left text-xs sm:text-sm font-medium transition">
-              ✅ Memecah bagian riset sejak hari pertama dan berdiskusi dengan teman/alumni
-            </button>
-            <button onclick="saveSimulasi('Cukup Siap (Skor 76/100)')" class="w-full p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-purple-600 hover:bg-purple-50/40 dark:hover:bg-purple-950/30 text-left text-xs sm:text-sm font-medium transition">
-              ⏳ Menunggu mendekati hari pengumpulan baru menyusun materi
-            </button>
-          </div>
-        </div>
-
-        <!-- Ringkasan Data Evaluasi dari Database -->
-        <div class="p-5 rounded-2xl bg-purple-600 text-white space-y-3 shadow-xs">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-bold uppercase tracking-wider text-purple-200">Data Evaluasi Tersimpan di Database</span>
-            <span id="db-match-badge" class="text-xs font-extrabold px-2.5 py-1 rounded-lg bg-white/20">-</span>
-          </div>
-          <h4 id="db-major-result" class="text-lg font-extrabold">Belum ada hasil Pre-Test</h4>
-          <p class="text-xs text-purple-100">
-            Status Simulasi Tugas: <strong id="db-sim-result">Belum dikerjakan</strong>
-          </p>
-        </div>
-
-      </section>
-
-      <!-- ===================================================
-           3. SEMINAR (MURNI DARI DATABASE SUPABASE)
-      ==================================================== -->
-      <section id="sec-seminar" class="hidden space-y-5">
-        
-        <!-- Form Tambah Jadwal Seminar ke Database -->
-        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
-          <h3 class="font-bold text-base">Buat Jadwal Seminar / Sharing Alumni Baru</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            <input id="sem-title" type="text" placeholder="Judul Seminar / Sesi Alumni" class="px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-xs sm:text-sm" />
-            <input id="sem-schedule" type="text" placeholder="Jadwal (Contoh: Sabtu, 16.00 WIB)" class="px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-xs sm:text-sm" />
-          </div>
-          <input id="sem-desc" type="text" placeholder="Deskripsi singkat topik pembahasan..." class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-xs sm:text-sm" />
-          <div class="flex justify-end">
-            <button onclick="createSeminar()" class="px-4 py-2 rounded-xl bg-purple-600 text-white font-bold text-xs">
-              + Simpan Seminar ke Database
-            </button>
-          </div>
-        </div>
-
-        <!-- Daftar Seminar dari Tabel Database -->
-        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
-          <h3 class="font-bold text-base">Daftar Seminar Tersedia</h3>
-          <div id="seminar-container" class="space-y-3"></div>
-        </div>
-
-      </section>
-
-      <!-- ===================================================
-           4. HISTORY (MURNI DARI DATABASE SUPABASE)
-      ==================================================== -->
-      <section id="sec-history" class="hidden space-y-4">
-        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
-          <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+          <!-- Ringkasan Evaluasi Mini Card -->
+          <div class="rounded-3xl bg-gradient-to-br from-purple-700 via-purple-800 to-indigo-900 text-white p-5 shadow-lg shadow-purple-900/15 space-y-3 relative overflow-hidden">
+            <div class="absolute -right-6 -bottom-6 w-28 h-28 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-white/15">
+                Status Kesiapan
+              </span>
+              <span id="side-match-badge" class="text-xs font-black text-emerald-300">-</span>
+            </div>
             <div>
-              <h3 class="font-bold text-base">History Aktivitas Akun</h3>
-              <p class="text-xs text-slate-500">Data riwayat aktivitas Anda yang tercatat di Supabase.</p>
+              <p class="text-[11px] text-purple-200">Rekomendasi Jurusan</p>
+              <h3 id="side-major-result" class="font-extrabold text-sm leading-snug mt-0.5">Belum ada hasil Pre-Test</h3>
             </div>
-            <button onclick="fetchSupabaseHistory()" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs font-bold text-purple-600 dark:text-purple-400">
-              Refresh
+            <div class="pt-2 border-t border-white/15 flex items-center justify-between text-[11px]">
+              <span class="text-purple-200">Simulasi Tugas:</span>
+              <span id="side-sim-result" class="font-bold text-white">Belum dikerjakan</span>
+            </div>
+            <button onclick="switchMenu('pretest')" class="w-full py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white font-bold text-xs transition">
+              Buka Pre-Test &amp; Simulasi →
             </button>
           </div>
-          <div id="history-list" class="space-y-2 max-h-96 overflow-y-auto"></div>
-        </div>
-      </section>
 
-    </main>
+          <!-- Navigasi Cepat Kanal -->
+          <div class="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-5 shadow-sm space-y-3 hidden lg:block">
+            <h4 class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Eksplorasi Fitur</h4>
+            <div class="space-y-1.5 text-xs font-bold">
+              <button onclick="switchMenu('forum')" class="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-purple-50 dark:hover:bg-purple-950/40 text-slate-700 dark:text-slate-200 hover:text-purple-600 transition text-left">
+                <span>💬 Diskusi Komunitas</span>
+                <span class="text-[10px] text-slate-400">Live</span>
+              </button>
+              <button onclick="switchMenu('pretest')" class="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-purple-50 dark:hover:bg-purple-950/40 text-slate-700 dark:text-slate-200 hover:text-purple-600 transition text-left">
+                <span>🎯 Tes Minat &amp; Kasus</span>
+                <span class="text-[10px] text-purple-600">Cek Skor</span>
+              </button>
+              <button onclick="switchMenu('seminar')" class="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-purple-50 dark:hover:bg-purple-950/40 text-slate-700 dark:text-slate-200 hover:text-purple-600 transition text-left">
+                <span>🎙️ Jadwal Sharing Alumni</span>
+                <span class="text-[10px] text-emerald-600">Daftar</span>
+              </button>
+            </div>
+          </div>
+
+        </aside>
+
+        <!-- =================================================
+             KOLOM TENGAH: KONTEN INTERAKTIF UTAMA (6 COL)
+        ================================================== -->
+        <main class="lg:col-span-6 space-y-5">
+
+          <!-- ===================================================
+               1. FEED FORUM (MURNI DARI DATABASE SUPABASE)
+          ==================================================== -->
+          <section id="sec-forum" class="space-y-5">
+            
+            <!-- Banner Komunitas -->
+            <div class="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 text-white shadow-md flex items-center justify-between gap-4 relative overflow-hidden">
+              <div class="absolute right-0 top-0 w-40 h-40 bg-white/10 rounded-full -mr-12 -mt-12 blur-2xl pointer-events-none"></div>
+              <div class="space-y-1 relative z-10">
+                <span class="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-white/20 inline-block">
+                  Ruang Diskusi Terbuka
+                </span>
+                <h2 class="text-lg sm:text-xl font-extrabold tracking-tight">Tanya Jurusan &amp; Kultur Kampus</h2>
+                <p class="text-xs text-purple-100 leading-relaxed">
+                  Ceritakan kegalauan memilih jurusan atau diskusikan pengalaman tugas kuliah bersama sesama siswa dan alumni.
+                </p>
+              </div>
+              <div class="hidden sm:flex w-14 h-14 rounded-2xl bg-white/15 backdrop-blur-xs items-center justify-center text-2xl shrink-0">
+                🎓
+              </div>
+            </div>
+
+            <!-- Composer Buat Postingan -->
+            <div class="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm space-y-3.5">
+              <div class="flex items-center gap-2.5">
+                <span class="w-8 h-8 rounded-xl bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-300 flex items-center justify-center text-sm font-bold">
+                  ✍️
+                </span>
+                <div>
+                  <h3 class="font-extrabold text-xs sm:text-sm">Mulai Diskusi Baru</h3>
+                  <p class="text-[11px] text-slate-400">Bagikan pertanyaan atau pengalaman belajarmu</p>
+                </div>
+              </div>
+
+              <textarea id="post-input" rows="3" placeholder="Bagikan diskusi jurusan, cari teman satu kampus, atau tanyakan ke alumni..." class="w-full p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/25 focus:border-purple-500 resize-none transition"></textarea>
+              
+              <div class="flex flex-wrap items-center justify-between gap-2.5 pt-1">
+                <div class="flex flex-wrap items-center gap-2">
+                  <select id="post-tag" class="px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-purple-500">
+                    <option value="Teknik Informatika">💻 Teknik Informatika</option>
+                    <option value="DKV & UI/UX">🎨 DKV &amp; UI/UX</option>
+                    <option value="Manajemen Bisnis">📈 Manajemen Bisnis</option>
+                    <option value="Kehidupan Kampus">🎓 Kehidupan Kampus</option>
+                  </select>
+
+                  <label class="flex items-center gap-1.5 text-xs font-bold text-slate-600 dark:text-slate-300 cursor-pointer px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/70 hover:border-purple-400 transition">
+                    <input type="checkbox" id="post-anon" class="accent-purple-600 rounded" />
+                    <span>🕵️ Mode Anonim</span>
+                  </label>
+                </div>
+
+                <button onclick="createNewPost()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-extrabold text-xs sm:text-sm shadow-md shadow-purple-600/20 transition active:scale-[0.98]">
+                  Posting 🚀
+                </button>
+              </div>
+            </div>
+
+            <!-- Feed Stream -->
+            <div id="feed-container" class="space-y-4"></div>
+          </section>
+
+          <!-- ===================================================
+               2. PRE-TEST & SIMULASI (TERSINKRONISASI DATABASE)
+          ==================================================== -->
+          <section id="sec-pretest" class="hidden space-y-5">
+            
+            <!-- Card Pre-Test -->
+            <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm space-y-4">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-purple-600 dark:text-purple-400">Tahap 1 • Eksplorasi Minat</span>
+                  <h3 class="font-extrabold text-base sm:text-lg mt-0.5">Pre-Test Kecocokan Jurusan</h3>
+                </div>
+                <span id="pretest-badge" class="text-[11px] font-bold px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 shrink-0">Belum Dijawab</span>
+              </div>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Pilih aktivitas yang paling sesuai dengan minat dan cara berpikirmu sehari-hari:</p>
+              
+              <div class="space-y-2.5">
+                <button onclick="savePretest('Teknik Informatika & Sistem Informasi', '95% Cocok')" class="w-full p-4 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-purple-600 hover:bg-purple-50/60 dark:hover:bg-purple-950/30 text-left transition group flex items-center gap-3.5">
+                  <span class="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950 text-purple-600 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform">💻</span>
+                  <div>
+                    <span class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100">Membedah logika, membuat program aplikasi, dan mengulik teknologi</span>
+                    <span class="text-[11px] text-slate-400">Rumpun Teknologi Informasi &amp; Rekayasa Sistem</span>
+                  </div>
+                </button>
+
+                <button onclick="savePretest('Desain Komunikasi Visual (DKV) & UI/UX', '94% Cocok')" class="w-full p-4 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-purple-600 hover:bg-purple-50/60 dark:hover:bg-purple-950/30 text-left transition group flex items-center gap-3.5">
+                  <span class="w-10 h-10 rounded-xl bg-pink-100 dark:bg-pink-950 text-pink-600 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform">🎨</span>
+                  <div>
+                    <span class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100">Merancang karya visual, ilustrasi digital, dan pengalaman pengguna</span>
+                    <span class="text-[11px] text-slate-400">Rumpun Seni Rupa, Desain &amp; Media Kreatif</span>
+                  </div>
+                </button>
+
+                <button onclick="savePretest('Manajemen & Bisnis Digital', '93% Cocok')" class="w-full p-4 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-purple-600 hover:bg-purple-50/60 dark:hover:bg-purple-950/30 text-left transition group flex items-center gap-3.5">
+                  <span class="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950 text-amber-600 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform">📈</span>
+                  <div>
+                    <span class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100">Menyusun strategi bisnis, memimpin tim, dan menganalisis peluang pasar</span>
+                    <span class="text-[11px] text-slate-400">Rumpun Ekonomi, Manajemen &amp; Kewirausahaan</span>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <!-- Card Simulasi Studi Kasus -->
+            <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm space-y-4">
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-amber-600 dark:text-amber-400">Tahap 2 • Uji Adaptasi</span>
+                  <h3 class="font-extrabold text-base sm:text-lg mt-0.5">Simulasi Studi Kasus Tugas Kuliah</h3>
+                </div>
+                <span id="sim-badge" class="text-[11px] font-bold px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 shrink-0">Belum Dijawab</span>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-amber-50/80 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/60 text-xs text-amber-900 dark:text-amber-200 leading-relaxed">
+                <strong>Skenario Semester Awal:</strong> Dosen memberikan studi kasus proyek kelompok yang harus dipresentasikan minggu depan dengan referensi jurnal akademik. Apa langkah pertamamu?
+              </div>
+
+              <div class="space-y-2.5">
+                <button onclick="saveSimulasi('Sangat Siap (Skor 94/100)')" class="w-full p-4 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-emerald-500 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 text-left text-xs sm:text-sm font-semibold transition flex items-center gap-3">
+                  <span class="text-lg">✅</span>
+                  <span>Memecah bagian riset sejak hari pertama dan berdiskusi dengan teman/alumni</span>
+                </button>
+                <button onclick="saveSimulasi('Cukup Siap (Skor 76/100)')" class="w-full p-4 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-amber-500 hover:bg-amber-50/50 dark:hover:bg-amber-950/30 text-left text-xs sm:text-sm font-semibold transition flex items-center gap-3">
+                  <span class="text-lg">⏳</span>
+                  <span>Menunggu mendekati hari pengumpulan baru menyusun materi presentasi</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Ringkasan Data Evaluasi Terintegrasi -->
+            <div class="p-6 rounded-3xl bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-700 text-white space-y-3 shadow-xl shadow-purple-700/20 relative overflow-hidden">
+              <div class="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-[11px] font-extrabold uppercase tracking-wider text-purple-200">Ringkasan Evaluasi Tersimpan</span>
+                <span id="db-match-badge" class="text-xs font-extrabold px-3 py-1 rounded-full bg-white/20 backdrop-blur-xs">-</span>
+              </div>
+              <h4 id="db-major-result" class="text-lg sm:text-xl font-black tracking-tight">Belum ada hasil Pre-Test</h4>
+              <div class="pt-2 border-t border-white/15 flex flex-wrap items-center justify-between gap-2 text-xs text-purple-100">
+                <span>Status Simulasi Tugas: <strong id="db-sim-result" class="text-white">Belum dikerjakan</strong></span>
+                <button onclick="switchMenu('seminar')" class="px-3.5 py-1.5 rounded-xl bg-white text-purple-700 font-extrabold text-xs hover:bg-purple-50 transition">
+                  Cek Seminar Jurusan →
+                </button>
+              </div>
+            </div>
+
+          </section>
+
+          <!-- ===================================================
+               3. SEMINAR (MURNI DARI DATABASE SUPABASE)
+          ==================================================== -->
+          <section id="sec-seminar" class="hidden space-y-5">
+            
+            <!-- Form Tambah Jadwal Seminar -->
+            <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm space-y-4">
+              <div>
+                <span class="text-[10px] font-extrabold uppercase tracking-wider text-purple-600 dark:text-purple-400">Kontribusi Komunitas</span>
+                <h3 class="font-extrabold text-base mt-0.5">Buat Jadwal Seminar / Sharing Alumni Baru</h3>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <input id="sem-title" type="text" placeholder="Judul Seminar / Sesi Alumni" class="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-xs sm:text-sm focus:outline-none focus:border-purple-500" />
+                <input id="sem-schedule" type="text" placeholder="Jadwal (Contoh: Sabtu, 16.00 WIB)" class="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-xs sm:text-sm focus:outline-none focus:border-purple-500" />
+              </div>
+              <input id="sem-desc" type="text" placeholder="Deskripsi singkat topik pembahasan..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-xs sm:text-sm focus:outline-none focus:border-purple-500" />
+              <div class="flex justify-end">
+                <button onclick="createSeminar()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-extrabold text-xs shadow-md shadow-purple-600/20 transition">
+                  + Simpan Seminar ke Database
+                </button>
+              </div>
+            </div>
+
+            <!-- Daftar Seminar -->
+            <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm space-y-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="font-extrabold text-base">Jadwal Live Sharing &amp; Seminar</h3>
+                  <p class="text-xs text-slate-400">Daftar dengan satu klik untuk mengikuti sesi mentoring alumni</p>
+                </div>
+                <span class="text-xl">🎙️</span>
+              </div>
+              <div id="seminar-container" class="space-y-3"></div>
+            </div>
+
+          </section>
+
+          <!-- ===================================================
+               4. HISTORY (MURNI DARI DATABASE SUPABASE)
+          ==================================================== -->
+          <section id="sec-history" class="hidden space-y-4">
+            <div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm space-y-4">
+              <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+                <div>
+                  <span class="text-[10px] font-extrabold uppercase tracking-wider text-purple-600 dark:text-purple-400">Log Eksplorasi</span>
+                  <h3 class="font-extrabold text-base mt-0.5">History Aktivitas Akun</h3>
+                  <p class="text-xs text-slate-500">Rekam jejak tes, diskusi, dan seminar yang tercatat di akunmu.</p>
+                </div>
+                <button onclick="fetchSupabaseHistory()" class="px-3.5 py-2 rounded-xl bg-purple-50 hover:bg-purple-100 dark:bg-purple-950/60 dark:hover:bg-purple-900/60 text-xs font-extrabold text-purple-600 dark:text-purple-300 transition">
+                  🔄 Refresh
+                </button>
+              </div>
+              <div id="history-list" class="space-y-2.5 max-h-[520px] overflow-y-auto pr-1"></div>
+            </div>
+          </section>
+
+        </main>
+
+        <!-- =================================================
+             SIDEBAR KANAN: RADAR KAMPUS & PANDUAN (3 COL)
+        ================================================== -->
+        <aside class="lg:col-span-3 space-y-5 lg:sticky lg:top-22">
+          
+          <!-- Campus Insights Widget -->
+          <div class="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-5 shadow-sm space-y-3.5">
+            <div class="flex items-center justify-between">
+              <h4 class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Topik Hangat Siswa</h4>
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            </div>
+
+            <div class="space-y-2.5 text-xs">
+              <div onclick="switchMenu('forum')" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 hover:bg-purple-50/70 dark:hover:bg-purple-950/30 border border-transparent hover:border-purple-200 dark:hover:border-purple-800 transition cursor-pointer">
+                <span class="text-[10px] font-extrabold text-purple-600 dark:text-purple-400 block">#AntiSalahJurusan</span>
+                <p class="font-bold text-slate-800 dark:text-slate-200 mt-0.5">Bedanya Teknik Informatika vs Sistem Informasi di dunia kerja</p>
+              </div>
+              <div onclick="switchMenu('forum')" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 hover:bg-purple-50/70 dark:hover:bg-purple-950/30 border border-transparent hover:border-purple-200 dark:hover:border-purple-800 transition cursor-pointer">
+                <span class="text-[10px] font-extrabold text-indigo-600 dark:text-indigo-400 block">#SemesterAwal</span>
+                <p class="font-bold text-slate-800 dark:text-slate-200 mt-0.5">Cara menghadapi tugas presentasi kelompok &amp; manajemen waktu</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Alur Persiapan Card -->
+          <div class="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 p-5 shadow-sm space-y-3.5">
+            <h4 class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Alur Persiapan Kuliah</h4>
+            <ol class="space-y-3 text-xs">
+              <li class="flex items-start gap-2.5">
+                <span class="w-5 h-5 rounded-lg bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 font-extrabold text-[11px] flex items-center justify-center shrink-0 mt-0.5">1</span>
+                <div>
+                  <span class="font-bold block text-slate-800 dark:text-slate-200">Tanya di Feed Forum</span>
+                  <span class="text-[11px] text-slate-400">Gali insight langsung dari pengalaman alumni.</span>
+                </div>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="w-5 h-5 rounded-lg bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 font-extrabold text-[11px] flex items-center justify-center shrink-0 mt-0.5">2</span>
+                <div>
+                  <span class="font-bold block text-slate-800 dark:text-slate-200">Uji Minat &amp; Simulasi</span>
+                  <span class="text-[11px] text-slate-400">Ukur kecocokan jurusan &amp; kesiapan tugas.</span>
+                </div>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="w-5 h-5 rounded-lg bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 font-extrabold text-[11px] flex items-center justify-center shrink-0 mt-0.5">3</span>
+                <div>
+                  <span class="font-bold block text-slate-800 dark:text-slate-200">Ikuti Live Seminar</span>
+                  <span class="text-[11px] text-slate-400">Mantapkan pilihan sebelum daftar kampus.</span>
+                </div>
+              </li>
+            </ol>
+          </div>
+
+        </aside>
+
+      </div>
+    </div>
   </div>
 
   <!-- =====================================================
@@ -357,7 +631,6 @@
     // =====================================================
     async function handleSessionState(session) {
       if (!session || !session.user) {
-        // Belum login Google -> Tampilkan Gerbang 1
         currentAuthUser = null;
         currentUserProfile = null;
         document.getElementById('auth-gate').classList.remove('hidden');
@@ -369,7 +642,6 @@
       currentAuthUser = session.user;
       document.getElementById('prof-email').value = currentAuthUser.email || "";
 
-      // Cek apakah profil sudah lengkap di tabel user_profiles
       const { data: profile, error } = await supabaseClient
         .from('user_profiles')
         .select('*')
@@ -381,7 +653,6 @@
       }
 
       if (!profile || !profile.is_complete || !profile.full_name || !profile.school_name) {
-        // Sudah login Google tapi belum melengkapi data -> Tahan di Gerbang 2
         if (currentAuthUser.user_metadata?.full_name) {
           document.getElementById('prof-name').value = currentAuthUser.user_metadata.full_name;
         }
@@ -389,7 +660,6 @@
         document.getElementById('profile-gate').classList.remove('hidden');
         document.getElementById('app-shell').classList.add('hidden');
       } else {
-        // Profil sudah lengkap di Database -> Buka Akses Aplikasi Utama
         currentUserProfile = profile;
         enterMainApplication();
       }
@@ -451,8 +721,19 @@
       document.getElementById('profile-gate').classList.add('hidden');
       document.getElementById('app-shell').classList.remove('hidden');
 
+      const initials = (currentUserProfile.full_name || "FC").substring(0, 2).toUpperCase();
       document.getElementById('nav-user-name').textContent = currentUserProfile.full_name;
       document.getElementById('nav-user-school').textContent = `${currentUserProfile.grade_level} • ${currentUserProfile.school_name}`;
+      if (document.getElementById('nav-user-avatar')) document.getElementById('nav-user-avatar').textContent = initials;
+
+      // Sinkronisasi Sidebar Profil Kiri
+      if (document.getElementById('side-user-avatar')) document.getElementById('side-user-avatar').textContent = initials;
+      if (document.getElementById('side-user-name')) document.getElementById('side-user-name').textContent = currentUserProfile.full_name;
+      if (document.getElementById('side-user-school')) document.getElementById('side-user-school').textContent = `${currentUserProfile.grade_level} • ${currentUserProfile.school_name}`;
+      if (document.getElementById('side-user-major')) document.getElementById('side-user-major').textContent = currentUserProfile.target_major || "-";
+      if (document.getElementById('side-user-segment')) {
+        document.getElementById('side-user-segment').textContent = currentUserProfile.segment === 'penentuan' ? 'Penentuan' : 'Eksplorasi';
+      }
 
       // Tampilkan data Pre-Test & Simulasi yang tersimpan di DB
       syncPretestUIFromProfile();
@@ -475,7 +756,7 @@
     // =====================================================
     async function fetchFeedFromSupabase() {
       const container = document.getElementById('feed-container');
-      container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Memuat postingan dari database...</p>`;
+      container.innerHTML = `<p class="text-xs text-slate-400 text-center py-8">Memuat postingan dari database...</p>`;
 
       const { data: posts, error } = await supabaseClient
         .from('forum_posts')
@@ -483,21 +764,21 @@
         .order('created_at', { ascending: false });
 
       if (error) {
-        container.innerHTML = `<p class="text-xs text-rose-500 text-center py-6">Gagal memuat feed: ${error.message}</p>`;
+        container.innerHTML = `<p class="text-xs text-rose-500 text-center py-8">Gagal memuat feed: ${error.message}</p>`;
         return;
       }
 
       if (!posts || posts.length === 0) {
         container.innerHTML = `
-          <div class="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center space-y-1">
-            <p class="font-bold text-sm">Belum ada postingan di database</p>
+          <div class="p-10 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center space-y-2 shadow-sm">
+            <div class="text-3xl">💬</div>
+            <p class="font-extrabold text-sm">Belum ada postingan di database</p>
             <p class="text-xs text-slate-400">Jadilah yang pertama menulis diskusi di Feed Forum!</p>
           </div>
         `;
         return;
       }
 
-      // Ambil semua komentar untuk postingan yang ada
       const postIds = posts.map(p => p.id);
       const { data: comments } = await supabaseClient
         .from('forum_comments')
@@ -515,51 +796,53 @@
         const postComments = commentsByPost[post.id] || [];
         const timeStr = new Date(post.created_at).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' });
         return `
-          <article class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
+          <article class="p-5 sm:p-6 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow space-y-3.5">
             <div class="flex items-center justify-between gap-2">
-              <div class="flex items-center gap-2.5">
-                <div class="w-9 h-9 rounded-full bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-300 font-bold flex items-center justify-center text-sm">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-500 text-white font-extrabold flex items-center justify-center text-sm shadow-xs">
                   ${post.is_anon ? '🕵️' : post.author_name.charAt(0).toUpperCase()}
                 </div>
                 <div>
-                  <div class="flex items-center gap-2">
-                    <span class="font-bold text-sm">${post.is_anon ? 'Siswa Anonim' : post.author_name}</span>
-                    <span class="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-purple-50 text-purple-700 dark:bg-purple-950/80 dark:text-purple-300">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="font-extrabold text-sm text-slate-900 dark:text-white">${post.is_anon ? 'Siswa Anonim' : post.author_name}</span>
+                    <span class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300 border border-purple-200/60 dark:border-purple-800/60">
                       ${post.tag}
                     </span>
                   </div>
-                  <p class="text-[11px] text-slate-400">${post.author_role} • ${timeStr}</p>
+                  <p class="text-[11px] text-slate-400 mt-0.5">${post.author_role} • ${timeStr}</p>
                 </div>
               </div>
             </div>
 
-            <p class="text-sm leading-relaxed text-slate-700 dark:text-slate-200">${post.content}</p>
+            <p class="text-xs sm:text-sm leading-relaxed text-slate-700 dark:text-slate-200">${post.content}</p>
 
-            <div class="flex items-center gap-4 pt-2 border-t border-slate-100 dark:border-slate-800 text-xs font-bold">
-              <button onclick="likePostInDB(${post.id}, ${post.likes_count || 0})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/50 transition">
+            <div class="flex items-center gap-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 text-xs font-bold">
+              <button onclick="likePostInDB(${post.id}, ${post.likes_count || 0})" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 text-slate-600 dark:text-slate-300 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/50 transition">
                 <span>❤️</span>
                 <span>${post.likes_count || 0} Like</span>
               </button>
-              <span class="flex items-center gap-1.5 px-3 py-1.5 text-slate-500">
+              <span class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800/70 text-slate-500 dark:text-slate-400">
                 <span>💬</span>
-                <span>${postComments.length} Comment</span>
+                <span>${postComments.length} Diskusi</span>
               </span>
             </div>
 
             <!-- Daftar Komentar dari Database -->
             <div class="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-2.5">
-              <div class="space-y-2">
-                ${postComments.map(c => `
-                  <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 text-xs space-y-0.5">
-                    <span class="font-bold text-purple-600 dark:text-purple-400">${c.author_name}</span>
-                    <p class="text-slate-700 dark:text-slate-300">${c.content}</p>
-                  </div>
-                `).join('')}
-              </div>
+              ${postComments.length > 0 ? `
+                <div class="space-y-2 pl-3 border-l-2 border-purple-200 dark:border-purple-900">
+                  ${postComments.map(c => `
+                    <div class="p-3 rounded-2xl bg-slate-50/90 dark:bg-slate-950/90 text-xs space-y-0.5">
+                      <span class="font-extrabold text-purple-600 dark:text-purple-400">${c.author_name}</span>
+                      <p class="text-slate-700 dark:text-slate-300 leading-relaxed">${c.content}</p>
+                    </div>
+                  `).join('')}
+                </div>
+              ` : ''}
 
               <div class="flex gap-2 pt-1">
-                <input id="comment-input-${post.id}" type="text" placeholder="Tulis komentar..." class="flex-1 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-xs focus:outline-none focus:border-purple-500" />
-                <button onclick="addCommentToDB(${post.id})" class="px-4 py-2 rounded-xl bg-purple-600 text-white font-bold text-xs">
+                <input id="comment-input-${post.id}" type="text" placeholder="Tulis balasan komentar..." class="flex-1 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-950 text-xs focus:outline-none focus:border-purple-500 transition" />
+                <button onclick="addCommentToDB(${post.id})" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs transition">
                   Kirim
                 </button>
               </div>
@@ -635,15 +918,20 @@
       if (currentUserProfile.pretest_major) {
         document.getElementById('db-major-result').textContent = currentUserProfile.pretest_major;
         document.getElementById('db-match-badge').textContent = currentUserProfile.pretest_match || "Tersimpan";
+        if (document.getElementById('side-major-result')) document.getElementById('side-major-result').textContent = currentUserProfile.pretest_major;
+        if (document.getElementById('side-match-badge')) document.getElementById('side-match-badge').textContent = currentUserProfile.pretest_match || "Tersimpan";
+
         const b = document.getElementById('pretest-badge');
         b.textContent = "✓ Tersimpan di DB";
-        b.className = "text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-700";
+        b.className = "text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300";
       }
       if (currentUserProfile.simulasi_score) {
         document.getElementById('db-sim-result').textContent = currentUserProfile.simulasi_score;
+        if (document.getElementById('side-sim-result')) document.getElementById('side-sim-result').textContent = currentUserProfile.simulasi_score;
+
         const b = document.getElementById('sim-badge');
         b.textContent = "✓ Tersimpan di DB";
-        b.className = "text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-700";
+        b.className = "text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300";
       }
     }
 
@@ -684,7 +972,7 @@
     // =====================================================
     async function fetchSeminarsFromSupabase() {
       const container = document.getElementById('seminar-container');
-      container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Memuat jadwal seminar dari database...</p>`;
+      container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Memuat jadwal seminar dari database...</p>`;
 
       const { data: seminars, error } = await supabaseClient
         .from('seminars')
@@ -692,7 +980,7 @@
         .order('created_at', { ascending: false });
 
       if (error || !seminars || seminars.length === 0) {
-        container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Belum ada jadwal seminar di database. Silakan tambahkan jadwal baru di atas.</p>`;
+        container.innerHTML = `<p class="text-xs text-slate-400 text-center py-8 bg-slate-50 dark:bg-slate-950 rounded-2xl">Belum ada jadwal seminar di database. Silakan tambahkan jadwal baru di atas.</p>`;
         return;
       }
 
@@ -706,13 +994,15 @@
       container.innerHTML = seminars.map(sem => {
         const isReg = registeredIds.has(sem.id);
         return `
-          <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div>
-              <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">${sem.schedule}</span>
-              <h4 class="font-bold text-sm mt-1">${sem.title}</h4>
-              <p class="text-xs text-slate-500">${sem.description}</p>
+          <div class="p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-950/60 hover:border-purple-300 dark:hover:border-purple-800 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="space-y-1">
+              <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300">
+                🗓️ ${sem.schedule}
+              </span>
+              <h4 class="font-extrabold text-sm text-slate-900 dark:text-white">${sem.title}</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">${sem.description}</p>
             </div>
-            <button onclick="registerSeminarInDB(${sem.id}, '${sem.title.replace(/'/g, "")}')" ${isReg ? 'disabled' : ''} class="shrink-0 px-4 py-2 rounded-xl text-xs font-bold ${isReg ? 'bg-emerald-600 text-white' : 'bg-purple-600 hover:bg-purple-700 text-white'}">
+            <button onclick="registerSeminarInDB(${sem.id}, '${sem.title.replace(/'/g, "")}')" ${isReg ? 'disabled' : ''} class="shrink-0 px-4 py-2.5 rounded-xl text-xs font-extrabold transition shadow-xs ${isReg ? 'bg-emerald-600 text-white cursor-default' : 'bg-purple-600 hover:bg-purple-700 text-white'}">
               ${isReg ? '✓ Terdaftar' : 'Ikut Seminar'}
             </button>
           </div>
@@ -780,17 +1070,19 @@
         .limit(30);
 
       if (error || !data || data.length === 0) {
-        container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Belum ada riwayat aktivitas di database untuk akun ini.</p>`;
+        container.innerHTML = `<p class="text-xs text-slate-400 text-center py-8 bg-slate-50 dark:bg-slate-950 rounded-2xl">Belum ada riwayat aktivitas di database untuk akun ini.</p>`;
         return;
       }
 
       container.innerHTML = data.map(item => {
         const timeStr = new Date(item.created_at).toLocaleString('id-ID', { dateStyle: 'short', timeStyle: 'short' });
         return `
-          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2 text-xs">
-            <div>
-              <span class="font-bold text-purple-600 dark:text-purple-400">[${item.activity_type}]</span>
-              <span class="font-medium ml-1">${item.activity_detail}</span>
+          <div class="p-3.5 rounded-2xl bg-slate-50/90 dark:bg-slate-950/80 border border-slate-200/80 dark:border-slate-800 flex items-center justify-between gap-3 text-xs">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="px-2.5 py-1 rounded-lg bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 font-extrabold text-[10px] shrink-0">
+                ${item.activity_type}
+              </span>
+              <span class="font-semibold text-slate-700 dark:text-slate-200 truncate">${item.activity_detail}</span>
             </div>
             <span class="text-[11px] text-slate-400 shrink-0">${timeStr}</span>
           </div>
@@ -805,16 +1097,16 @@
       ['forum', 'pretest', 'seminar', 'history'].forEach(item => {
         document.getElementById('sec-' + item).classList.add('hidden');
         const dBtn = document.getElementById('nav-' + item);
-        if (dBtn) dBtn.className = "px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-purple-600 transition";
+        if (dBtn) dBtn.className = "px-4 py-2 rounded-xl font-semibold text-xs sm:text-sm text-slate-600 dark:text-slate-300 hover:text-purple-600 transition";
         const mBtn = document.getElementById('mnav-' + item);
-        if (mBtn) mBtn.className = "px-3.5 py-1.5 rounded-lg font-semibold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap";
+        if (mBtn) mBtn.className = "px-3.5 py-1.5 rounded-xl font-semibold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap";
       });
 
       document.getElementById('sec-' + tab).classList.remove('hidden');
       const activeDBtn = document.getElementById('nav-' + tab);
-      if (activeDBtn) activeDBtn.className = "px-4 py-2 rounded-lg font-bold text-xs sm:text-sm bg-purple-600 text-white shadow-xs transition";
+      if (activeDBtn) activeDBtn.className = "px-4 py-2 rounded-xl font-bold text-xs sm:text-sm bg-purple-600 text-white shadow-sm transition";
       const activeMBtn = document.getElementById('mnav-' + tab);
-      if (activeMBtn) activeMBtn.className = "px-3.5 py-1.5 rounded-lg font-bold text-xs bg-purple-600 text-white whitespace-nowrap";
+      if (activeMBtn) activeMBtn.className = "px-3.5 py-1.5 rounded-xl font-bold text-xs bg-purple-600 text-white whitespace-nowrap";
     }
 
     function toggleTheme() {
